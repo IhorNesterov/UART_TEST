@@ -1,0 +1,2565 @@
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"NOS_Memory.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c"
+  20              		.section	.text.EE_VerifyPageFullyErased,"ax",%progbits
+  21              		.align	1
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	EE_VerifyPageFullyErased:
+  27              	.LVL0:
+  28              	.LFB131:
+   1:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** #include "NOS_Memory.h"
+   2:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+   3:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** /* Private typedef -----------------------------------------------------------*/
+   4:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** /* Private define ------------------------------------------------------------*/
+   5:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** /* Private macro -------------------------------------------------------------*/
+   6:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** /* Private variables ---------------------------------------------------------*/
+   7:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+   8:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** /* Global variable used to store variable value in read sequence */
+   9:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** uint16_t DataVar = 0;
+  10:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+  11:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** /* Virtual address defined by the user: 0xFFFF value is prohibited */
+  12:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** extern uint16_t VirtAddVarTab[NB_OF_VAR];
+  13:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+  14:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** /* Private function prototypes -----------------------------------------------*/
+  15:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** /* Private functions ---------------------------------------------------------*/
+  16:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** static HAL_StatusTypeDef EE_Format(void);
+  17:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** static uint16_t EE_FindValidPage(uint8_t Operation);
+  18:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** static uint16_t EE_VerifyPageFullWriteVariable(uint16_t VirtAddress, uint16_t Data);
+  19:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** static uint16_t EE_PageTransfer(uint16_t VirtAddress, uint16_t Data);
+  20:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** static uint16_t EE_VerifyPageFullyErased(uint32_t Address);
+  21:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+  22:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** /**
+  23:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   * @brief  Restore the pages to a known good state in case of page's status
+  24:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   *   corruption after a power loss.
+  25:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   * @param  None.
+  26:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   * @retval - Flash error code: on write Flash error
+  27:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   *         - FLASH_COMPLETE: on success
+  28:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   */
+  29:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** uint16_t EE_Init(void)
+  30:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** {
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s 			page 2
+
+
+  31:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   uint16_t PageStatus0 = 6, PageStatus1 = 6;
+  32:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   uint16_t VarIdx = 0;
+  33:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   uint16_t EepromStatus = 0, ReadStatus = 0;
+  34:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   int16_t x = -1;
+  35:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   HAL_StatusTypeDef  FlashStatus;
+  36:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   uint32_t SectorError = 0;
+  37:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   FLASH_EraseInitTypeDef pEraseInit;
+  38:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+  39:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+  40:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* Get Page0 status */
+  41:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   PageStatus0 = (*(__IO uint16_t*)PAGE0_BASE_ADDRESS);
+  42:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* Get Page1 status */
+  43:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   PageStatus1 = (*(__IO uint16_t*)PAGE1_BASE_ADDRESS);
+  44:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+  45:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   pEraseInit.TypeErase = TYPEERASE_SECTORS;
+  46:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   pEraseInit.Sector = PAGE0_ID;
+  47:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   pEraseInit.NbSectors = 1;
+  48:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   pEraseInit.VoltageRange = VOLTAGE_RANGE;
+  49:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   
+  50:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* Check for invalid header states and repair if necessary */
+  51:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   switch (PageStatus0)
+  52:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   {
+  53:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     case ERASED:
+  54:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       if (PageStatus1 == VALID_PAGE) /* Page0 erased, Page1 valid */
+  55:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       {
+  56:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           /* Erase Page0 */
+  57:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         if(!EE_VerifyPageFullyErased(PAGE0_BASE_ADDRESS))
+  58:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         {
+  59:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           FlashStatus = HAL_FLASHEx_Erase(&pEraseInit, &SectorError);
+  60:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           /* If erase operation was failed, a Flash error code is returned */
+  61:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           if (FlashStatus != HAL_OK)
+  62:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           {
+  63:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****             return FlashStatus;
+  64:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           }
+  65:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         }
+  66:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       }
+  67:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       else if (PageStatus1 == RECEIVE_DATA) /* Page0 erased, Page1 receive */
+  68:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       {
+  69:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         /* Erase Page0 */
+  70:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         if(!EE_VerifyPageFullyErased(PAGE0_BASE_ADDRESS))
+  71:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         { 
+  72:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           FlashStatus = HAL_FLASHEx_Erase(&pEraseInit, &SectorError);
+  73:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           /* If erase operation was failed, a Flash error code is returned */
+  74:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           if (FlashStatus != HAL_OK)
+  75:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           {
+  76:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****             return FlashStatus;
+  77:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           }
+  78:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         }
+  79:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         /* Mark Page1 as valid */
+  80:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         FlashStatus = HAL_FLASH_Program(TYPEPROGRAM_HALFWORD, PAGE1_BASE_ADDRESS, VALID_PAGE);
+  81:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         /* If program operation was failed, a Flash error code is returned */
+  82:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         if (FlashStatus != HAL_OK)
+  83:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         {
+  84:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           return FlashStatus;
+  85:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         }
+  86:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       }
+  87:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       else /* First EEPROM access (Page0&1 are erased) or invalid state -> format EEPROM */
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s 			page 3
+
+
+  88:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       {
+  89:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         /* Erase both Page0 and Page1 and set Page0 as valid page */
+  90:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         FlashStatus = EE_Format();
+  91:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         /* If erase/program operation was failed, a Flash error code is returned */
+  92:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         if (FlashStatus != HAL_OK)
+  93:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         {
+  94:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           return FlashStatus;
+  95:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         }
+  96:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       }
+  97:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       break;
+  98:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+  99:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     case RECEIVE_DATA:
+ 100:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       if (PageStatus1 == VALID_PAGE) /* Page0 receive, Page1 valid */
+ 101:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       {
+ 102:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         /* Transfer data from Page1 to Page0 */
+ 103:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         for (VarIdx = 0; VarIdx < NB_OF_VAR; VarIdx++)
+ 104:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         {
+ 105:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           if (( *(__IO uint16_t*)(PAGE0_BASE_ADDRESS + 6)) == VirtAddVarTab[VarIdx])
+ 106:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           {
+ 107:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****             x = VarIdx;
+ 108:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           }
+ 109:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           if (VarIdx != x)
+ 110:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           {
+ 111:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****             /* Read the last variables' updates */
+ 112:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****             ReadStatus = EE_ReadVariable(VirtAddVarTab[VarIdx], &DataVar);
+ 113:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****             /* In case variable corresponding to the virtual address was found */
+ 114:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****             if (ReadStatus != 0x1)
+ 115:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****             {
+ 116:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****               /* Transfer the variable to the Page0 */
+ 117:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****               EepromStatus = EE_VerifyPageFullWriteVariable(VirtAddVarTab[VarIdx], DataVar);
+ 118:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****               /* If program operation was failed, a Flash error code is returned */
+ 119:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****               if (EepromStatus != HAL_OK)
+ 120:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****               {
+ 121:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****                 return EepromStatus;
+ 122:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****               }
+ 123:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****             }
+ 124:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           }
+ 125:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         }
+ 126:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         /* Mark Page0 as valid */
+ 127:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         FlashStatus = HAL_FLASH_Program(TYPEPROGRAM_HALFWORD, PAGE0_BASE_ADDRESS, VALID_PAGE);
+ 128:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         /* If program operation was failed, a Flash error code is returned */
+ 129:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         if (FlashStatus != HAL_OK)
+ 130:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         {
+ 131:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           return FlashStatus;
+ 132:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         }
+ 133:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         pEraseInit.Sector = PAGE1_ID;
+ 134:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         pEraseInit.NbSectors = 1;
+ 135:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         pEraseInit.VoltageRange = VOLTAGE_RANGE;
+ 136:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         /* Erase Page1 */
+ 137:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         if(!EE_VerifyPageFullyErased(PAGE1_BASE_ADDRESS))
+ 138:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         { 
+ 139:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           FlashStatus = HAL_FLASHEx_Erase(&pEraseInit, &SectorError);
+ 140:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           /* If erase operation was failed, a Flash error code is returned */
+ 141:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           if (FlashStatus != HAL_OK)
+ 142:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           {
+ 143:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****             return FlashStatus;
+ 144:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           }
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s 			page 4
+
+
+ 145:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         }
+ 146:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       }
+ 147:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       else if (PageStatus1 == ERASED) /* Page0 receive, Page1 erased */
+ 148:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       {
+ 149:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         pEraseInit.Sector = PAGE1_ID;
+ 150:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         pEraseInit.NbSectors = 1;
+ 151:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         pEraseInit.VoltageRange = VOLTAGE_RANGE;
+ 152:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         /* Erase Page1 */
+ 153:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         if(!EE_VerifyPageFullyErased(PAGE1_BASE_ADDRESS))
+ 154:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         { 
+ 155:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           FlashStatus = HAL_FLASHEx_Erase(&pEraseInit, &SectorError);
+ 156:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           /* If erase operation was failed, a Flash error code is returned */
+ 157:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           if (FlashStatus != HAL_OK)
+ 158:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           {
+ 159:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****             return FlashStatus;
+ 160:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           }
+ 161:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         }
+ 162:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         /* Mark Page0 as valid */
+ 163:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         FlashStatus = HAL_FLASH_Program(TYPEPROGRAM_HALFWORD, PAGE0_BASE_ADDRESS, VALID_PAGE);
+ 164:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         /* If program operation was failed, a Flash error code is returned */
+ 165:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         if (FlashStatus != HAL_OK)
+ 166:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         {
+ 167:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           return FlashStatus;
+ 168:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         }
+ 169:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       }
+ 170:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       else /* Invalid state -> format eeprom */
+ 171:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       {
+ 172:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         /* Erase both Page0 and Page1 and set Page0 as valid page */
+ 173:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         FlashStatus = EE_Format();
+ 174:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         /* If erase/program operation was failed, a Flash error code is returned */
+ 175:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         if (FlashStatus != HAL_OK)
+ 176:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         {
+ 177:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           return FlashStatus;
+ 178:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         }
+ 179:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       }
+ 180:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       break;
+ 181:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 182:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     case VALID_PAGE:
+ 183:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       if (PageStatus1 == VALID_PAGE) /* Invalid state -> format eeprom */
+ 184:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       {
+ 185:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         /* Erase both Page0 and Page1 and set Page0 as valid page */
+ 186:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         FlashStatus = EE_Format();
+ 187:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         /* If erase/program operation was failed, a Flash error code is returned */
+ 188:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         if (FlashStatus != HAL_OK)
+ 189:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         {
+ 190:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           return FlashStatus;
+ 191:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         }
+ 192:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       }
+ 193:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       else if (PageStatus1 == ERASED) /* Page0 valid, Page1 erased */
+ 194:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       {
+ 195:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         pEraseInit.Sector = PAGE1_ID;
+ 196:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         pEraseInit.NbSectors = 1;
+ 197:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         pEraseInit.VoltageRange = VOLTAGE_RANGE;
+ 198:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         /* Erase Page1 */
+ 199:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         if(!EE_VerifyPageFullyErased(PAGE1_BASE_ADDRESS))
+ 200:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         { 
+ 201:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           FlashStatus = HAL_FLASHEx_Erase(&pEraseInit, &SectorError);
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s 			page 5
+
+
+ 202:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           /* If erase operation was failed, a Flash error code is returned */
+ 203:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           if (FlashStatus != HAL_OK)
+ 204:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           {
+ 205:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****             return FlashStatus;
+ 206:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           }
+ 207:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         }
+ 208:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       }
+ 209:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       else /* Page0 valid, Page1 receive */
+ 210:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       {
+ 211:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         /* Transfer data from Page0 to Page1 */
+ 212:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         for (VarIdx = 0; VarIdx < NB_OF_VAR; VarIdx++)
+ 213:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         {
+ 214:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           if ((*(__IO uint16_t*)(PAGE1_BASE_ADDRESS + 6)) == VirtAddVarTab[VarIdx])
+ 215:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           {
+ 216:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****             x = VarIdx;
+ 217:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           }
+ 218:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           if (VarIdx != x)
+ 219:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           {
+ 220:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****             /* Read the last variables' updates */
+ 221:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****             ReadStatus = EE_ReadVariable(VirtAddVarTab[VarIdx], &DataVar);
+ 222:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****             /* In case variable corresponding to the virtual address was found */
+ 223:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****             if (ReadStatus != 0x1)
+ 224:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****             {
+ 225:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****               /* Transfer the variable to the Page1 */
+ 226:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****               EepromStatus = EE_VerifyPageFullWriteVariable(VirtAddVarTab[VarIdx], DataVar);
+ 227:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****               /* If program operation was failed, a Flash error code is returned */
+ 228:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****               if (EepromStatus != HAL_OK)
+ 229:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****               {
+ 230:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****                 return EepromStatus;
+ 231:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****               }
+ 232:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****             }
+ 233:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           }
+ 234:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         }
+ 235:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         /* Mark Page1 as valid */
+ 236:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         FlashStatus = HAL_FLASH_Program(TYPEPROGRAM_HALFWORD, PAGE1_BASE_ADDRESS, VALID_PAGE);     
+ 237:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         /* If program operation was failed, a Flash error code is returned */
+ 238:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         if (FlashStatus != HAL_OK)
+ 239:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         {
+ 240:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           return FlashStatus;
+ 241:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         }
+ 242:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         pEraseInit.Sector = PAGE0_ID;
+ 243:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         pEraseInit.NbSectors = 1;
+ 244:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         pEraseInit.VoltageRange = VOLTAGE_RANGE;
+ 245:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         /* Erase Page0 */
+ 246:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         if(!EE_VerifyPageFullyErased(PAGE0_BASE_ADDRESS))
+ 247:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         { 
+ 248:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           FlashStatus = HAL_FLASHEx_Erase(&pEraseInit, &SectorError);
+ 249:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           /* If erase operation was failed, a Flash error code is returned */
+ 250:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           if (FlashStatus != HAL_OK)
+ 251:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           {
+ 252:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****             return FlashStatus;
+ 253:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           }
+ 254:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         }
+ 255:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       }
+ 256:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       break;
+ 257:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 258:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     default:  /* Any other state -> format eeprom */
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s 			page 6
+
+
+ 259:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       /* Erase both Page0 and Page1 and set Page0 as valid page */
+ 260:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       FlashStatus = EE_Format();
+ 261:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       /* If erase/program operation was failed, a Flash error code is returned */
+ 262:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       if (FlashStatus != HAL_OK)
+ 263:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       {
+ 264:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         return FlashStatus;
+ 265:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       }
+ 266:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       break;
+ 267:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   }
+ 268:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 269:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   return HAL_OK;
+ 270:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** }
+ 271:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 272:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** /**
+ 273:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   * @brief  Verify if specified page is fully erased.
+ 274:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   * @param  Address: page address
+ 275:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   *   This parameter can be one of the following values:
+ 276:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   *     @arg PAGE0_BASE_ADDRESS: Page0 base address
+ 277:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   *     @arg PAGE1_BASE_ADDRESS: Page1 base address
+ 278:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   * @retval page fully erased status:
+ 279:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   *           - 0: if Page not erased
+ 280:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   *           - 1: if Page erased
+ 281:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   */
+ 282:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** uint16_t EE_VerifyPageFullyErased(uint32_t Address)
+ 283:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** {
+  29              		.loc 1 283 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+ 284:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   uint32_t ReadStatus = 1;
+  34              		.loc 1 284 3 view .LVU1
+ 285:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   uint16_t AddressValue = 0x5555;
+  35              		.loc 1 285 3 view .LVU2
+ 286:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     
+ 287:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* Check each active page address starting from end */
+ 288:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   while (Address <= PAGE0_END_ADDRESS)
+  36              		.loc 1 288 3 view .LVU3
+  37              		.loc 1 288 9 is_stmt 0 view .LVU4
+  38 0000 00E0     		b	.L2
+  39              	.LVL1:
+  40              	.L7:
+ 289:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   {
+ 290:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     /* Get the current location content to be compared with virtual address */
+ 291:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     AddressValue = (*(__IO uint16_t*)Address);
+ 292:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 293:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     /* Compare the read address with the virtual address */
+ 294:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     if (AddressValue != ERASED)
+ 295:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     {
+ 296:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       
+ 297:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       /* In case variable value is read, reset ReadStatus flag */
+ 298:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       ReadStatus = 0;
+ 299:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 300:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       break;
+ 301:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     }
+ 302:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     /* Next address location */
+ 303:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     Address = Address + 4;
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s 			page 7
+
+
+  41              		.loc 1 303 5 is_stmt 1 view .LVU5
+  42              		.loc 1 303 13 is_stmt 0 view .LVU6
+  43 0002 0430     		adds	r0, r0, #4
+  44              	.LVL2:
+  45              	.L2:
+ 288:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   {
+  46              		.loc 1 288 18 is_stmt 1 view .LVU7
+  47 0004 064B     		ldr	r3, .L8
+  48 0006 9842     		cmp	r0, r3
+  49 0008 07D2     		bcs	.L6
+ 291:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+  50              		.loc 1 291 5 view .LVU8
+ 291:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+  51              		.loc 1 291 18 is_stmt 0 view .LVU9
+  52 000a 0388     		ldrh	r3, [r0]
+  53 000c 9BB2     		uxth	r3, r3
+  54              	.LVL3:
+ 294:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     {
+  55              		.loc 1 294 5 is_stmt 1 view .LVU10
+ 294:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     {
+  56              		.loc 1 294 8 is_stmt 0 view .LVU11
+  57 000e 4FF6FF72 		movw	r2, #65535
+  58 0012 9342     		cmp	r3, r2
+  59 0014 F5D0     		beq	.L7
+ 298:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+  60              		.loc 1 298 18 view .LVU12
+  61 0016 0020     		movs	r0, #0
+  62              	.LVL4:
+ 304:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   }
+ 305:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   
+ 306:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* Return ReadStatus value: (0: Page not erased, 1: Sector erased) */
+ 307:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   return ReadStatus;
+  63              		.loc 1 307 3 is_stmt 1 view .LVU13
+ 308:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** }
+  64              		.loc 1 308 1 is_stmt 0 view .LVU14
+  65 0018 7047     		bx	lr
+  66              	.LVL5:
+  67              	.L6:
+ 284:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   uint16_t AddressValue = 0x5555;
+  68              		.loc 1 284 12 view .LVU15
+  69 001a 0120     		movs	r0, #1
+  70              	.LVL6:
+ 284:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   uint16_t AddressValue = 0x5555;
+  71              		.loc 1 284 12 view .LVU16
+  72 001c 7047     		bx	lr
+  73              	.L9:
+  74 001e 00BF     		.align	2
+  75              	.L8:
+  76 0020 00C00008 		.word	134266880
+  77              		.cfi_endproc
+  78              	.LFE131:
+  80              		.section	.text.EE_FindValidPage,"ax",%progbits
+  81              		.align	1
+  82              		.syntax unified
+  83              		.thumb
+  84              		.thumb_func
+  86              	EE_FindValidPage:
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s 			page 8
+
+
+  87              	.LVL7:
+  88              	.LFB135:
+ 309:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 310:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** /**
+ 311:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   * @brief  Returns the last stored variable data, if found, which correspond to
+ 312:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   *   the passed virtual address
+ 313:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   * @param  VirtAddress: Variable virtual address
+ 314:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   * @param  Data: Global variable contains the read variable value
+ 315:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   * @retval Success or error status:
+ 316:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   *           - 0: if variable was found
+ 317:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   *           - 1: if the variable was not found
+ 318:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   *           - NO_VALID_PAGE: if no valid page was found.
+ 319:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   */
+ 320:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** uint16_t EE_ReadVariable(uint16_t VirtAddress, uint16_t* Data)
+ 321:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** {
+ 322:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   uint16_t ValidPage = PAGE0;
+ 323:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   uint16_t AddressValue = 0x5555, ReadStatus = 1;
+ 324:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   uint32_t Address = EEPROM_START_ADDRESS, PageStartAddress = EEPROM_START_ADDRESS;
+ 325:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 326:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* Get active Page for read operation */
+ 327:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   ValidPage = EE_FindValidPage(READ_FROM_VALID_PAGE);
+ 328:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 329:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* Check if there is no valid page */
+ 330:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   if (ValidPage == NO_VALID_PAGE)
+ 331:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   {
+ 332:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     return  NO_VALID_PAGE;
+ 333:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   }
+ 334:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 335:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* Get the valid Page start Address */
+ 336:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   PageStartAddress = (uint32_t)(EEPROM_START_ADDRESS + (uint32_t)(ValidPage * PAGE_SIZE));
+ 337:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 338:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* Get the valid Page end Address */
+ 339:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   Address = (uint32_t)((EEPROM_START_ADDRESS - 2) + (uint32_t)((1 + ValidPage) * PAGE_SIZE));
+ 340:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 341:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* Check each active page address starting from end */
+ 342:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   while (Address > (PageStartAddress + 2))
+ 343:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   {
+ 344:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     /* Get the current location content to be compared with virtual address */
+ 345:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     AddressValue = (*(__IO uint16_t*)Address);
+ 346:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 347:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     /* Compare the read address with the virtual address */
+ 348:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     if (AddressValue == VirtAddress)
+ 349:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     {
+ 350:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       /* Get content of Address-2 which is variable value */
+ 351:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       *Data = (*(__IO uint16_t*)(Address - 2));
+ 352:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 353:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       /* In case variable value is read, reset ReadStatus flag */
+ 354:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       ReadStatus = 0;
+ 355:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 356:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       break;
+ 357:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     }
+ 358:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     else
+ 359:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     {
+ 360:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       /* Next address location */
+ 361:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       Address = Address - 4;
+ 362:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     }
+ 363:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   }
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s 			page 9
+
+
+ 364:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 365:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* Return ReadStatus value: (0: variable exist, 1: variable doesn't exist) */
+ 366:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   return ReadStatus;
+ 367:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** }
+ 368:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 369:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** /**
+ 370:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   * @brief  Writes/updates variable data in EEPROM.
+ 371:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   * @param  VirtAddress: Variable virtual address
+ 372:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   * @param  Data: 16 bit data to be written
+ 373:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   * @retval Success or error status:
+ 374:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   *           - FLASH_COMPLETE: on success
+ 375:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   *           - PAGE_FULL: if valid page is full
+ 376:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   *           - NO_VALID_PAGE: if no valid page was found
+ 377:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   *           - Flash error code: on write Flash error
+ 378:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   */
+ 379:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** uint16_t EE_WriteVariable(uint16_t VirtAddress, uint16_t Data)
+ 380:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** {
+ 381:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   uint16_t Status = 0;
+ 382:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 383:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* Write the variable virtual address and value in the EEPROM */
+ 384:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   Status = EE_VerifyPageFullWriteVariable(VirtAddress, Data);
+ 385:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 386:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* In case the EEPROM active page is full */
+ 387:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   if (Status == PAGE_FULL)
+ 388:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   {
+ 389:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     /* Perform Page transfer */
+ 390:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     Status = EE_PageTransfer(VirtAddress, Data);
+ 391:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   }
+ 392:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 393:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* Return last operation status */
+ 394:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   return Status;
+ 395:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** }
+ 396:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 397:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** /**
+ 398:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   * @brief  Erases PAGE and PAGE1 and writes VALID_PAGE header to PAGE
+ 399:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   * @param  None
+ 400:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   * @retval Status of the last operation (Flash write or erase) done during
+ 401:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   *         EEPROM formatting
+ 402:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   */
+ 403:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** static HAL_StatusTypeDef EE_Format(void)
+ 404:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** {
+ 405:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   HAL_StatusTypeDef FlashStatus = HAL_OK;
+ 406:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   uint32_t SectorError = 0;
+ 407:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   FLASH_EraseInitTypeDef pEraseInit;
+ 408:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 409:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   pEraseInit.TypeErase = FLASH_TYPEERASE_SECTORS;  
+ 410:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   pEraseInit.Sector = PAGE0_ID;
+ 411:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   pEraseInit.NbSectors = 1;
+ 412:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   pEraseInit.VoltageRange = VOLTAGE_RANGE;
+ 413:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* Erase Page0 */
+ 414:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   if(!EE_VerifyPageFullyErased(PAGE0_BASE_ADDRESS))
+ 415:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   {
+ 416:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     FlashStatus = HAL_FLASHEx_Erase(&pEraseInit, &SectorError); 
+ 417:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     /* If erase operation was failed, a Flash error code is returned */
+ 418:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     if (FlashStatus != HAL_OK)
+ 419:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     {
+ 420:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       return FlashStatus;
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s 			page 10
+
+
+ 421:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     }
+ 422:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   }
+ 423:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* Set Page0 as valid page: Write VALID_PAGE at Page0 base address */
+ 424:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   FlashStatus = HAL_FLASH_Program(TYPEPROGRAM_HALFWORD, PAGE0_BASE_ADDRESS, VALID_PAGE); 
+ 425:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* If program operation was failed, a Flash error code is returned */
+ 426:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   if (FlashStatus != HAL_OK)
+ 427:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   {
+ 428:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     return FlashStatus;
+ 429:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   }
+ 430:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 431:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   pEraseInit.Sector = PAGE1_ID;
+ 432:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* Erase Page1 */
+ 433:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   if(!EE_VerifyPageFullyErased(PAGE1_BASE_ADDRESS))
+ 434:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   {  
+ 435:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     FlashStatus = HAL_FLASHEx_Erase(&pEraseInit, &SectorError); 
+ 436:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     /* If erase operation was failed, a Flash error code is returned */
+ 437:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     if (FlashStatus != HAL_OK)
+ 438:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     {
+ 439:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       return FlashStatus;
+ 440:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     }
+ 441:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   }
+ 442:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   
+ 443:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   return HAL_OK;
+ 444:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** }
+ 445:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 446:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** /**
+ 447:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   * @brief  Find valid Page for write or read operation
+ 448:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   * @param  Operation: operation to achieve on the valid page.
+ 449:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   *   This parameter can be one of the following values:
+ 450:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   *     @arg READ_FROM_VALID_PAGE: read operation from valid page
+ 451:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   *     @arg WRITE_IN_VALID_PAGE: write operation from valid page
+ 452:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   * @retval Valid page number (PAGE or PAGE1) or NO_VALID_PAGE in case
+ 453:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   *   of no valid page was found
+ 454:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   */
+ 455:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** static uint16_t EE_FindValidPage(uint8_t Operation)
+ 456:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** {
+  89              		.loc 1 456 1 is_stmt 1 view -0
+  90              		.cfi_startproc
+  91              		@ args = 0, pretend = 0, frame = 0
+  92              		@ frame_needed = 0, uses_anonymous_args = 0
+  93              		@ link register save eliminated.
+ 457:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   uint16_t PageStatus0 = 6, PageStatus1 = 6;
+  94              		.loc 1 457 3 view .LVU18
+ 458:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 459:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* Get Page0 actual status */
+ 460:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   PageStatus0 = (*(__IO uint16_t*)PAGE0_BASE_ADDRESS);
+  95              		.loc 1 460 3 view .LVU19
+  96              		.loc 1 460 15 is_stmt 0 view .LVU20
+  97 0000 114B     		ldr	r3, .L19
+  98 0002 1B88     		ldrh	r3, [r3]
+  99 0004 9BB2     		uxth	r3, r3
+ 100              	.LVL8:
+ 461:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 462:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* Get Page1 actual status */
+ 463:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   PageStatus1 = (*(__IO uint16_t*)PAGE1_BASE_ADDRESS);
+ 101              		.loc 1 463 3 is_stmt 1 view .LVU21
+ 102              		.loc 1 463 15 is_stmt 0 view .LVU22
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s 			page 11
+
+
+ 103 0006 114A     		ldr	r2, .L19+4
+ 104 0008 1288     		ldrh	r2, [r2]
+ 105 000a 92B2     		uxth	r2, r2
+ 106              	.LVL9:
+ 464:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 465:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* Write or read operation */
+ 466:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   switch (Operation)
+ 107              		.loc 1 466 3 is_stmt 1 view .LVU23
+ 108 000c 88B1     		cbz	r0, .L11
+ 109 000e 0128     		cmp	r0, #1
+ 110 0010 13D1     		bne	.L14
+ 467:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   {
+ 468:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     case WRITE_IN_VALID_PAGE:   /* ---- Write operation ---- */
+ 469:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       if (PageStatus1 == VALID_PAGE)
+ 111              		.loc 1 469 7 view .LVU24
+ 112              		.loc 1 469 10 is_stmt 0 view .LVU25
+ 113 0012 3AB9     		cbnz	r2, .L13
+ 470:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       {
+ 471:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         /* Page0 receiving data */
+ 472:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         if (PageStatus0 == RECEIVE_DATA)
+ 114              		.loc 1 472 9 is_stmt 1 view .LVU26
+ 115              		.loc 1 472 12 is_stmt 0 view .LVU27
+ 116 0014 4EF6EE61 		movw	r1, #61166
+ 117 0018 8B42     		cmp	r3, r1
+ 118 001a 01D0     		beq	.L18
+ 473:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         {
+ 474:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           return PAGE0;         /* Page0 valid */
+ 475:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         }
+ 476:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         else
+ 477:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         {
+ 478:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           return PAGE1;         /* Page1 valid */
+ 119              		.loc 1 478 18 view .LVU28
+ 120 001c 0123     		movs	r3, #1
+ 121              	.LVL10:
+ 122              		.loc 1 478 18 view .LVU29
+ 123 001e 0DE0     		b	.L12
+ 124              	.LVL11:
+ 125              	.L18:
+ 474:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         }
+ 126              		.loc 1 474 18 view .LVU30
+ 127 0020 1346     		mov	r3, r2
+ 128              	.LVL12:
+ 474:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         }
+ 129              		.loc 1 474 18 view .LVU31
+ 130 0022 0BE0     		b	.L12
+ 131              	.LVL13:
+ 132              	.L13:
+ 479:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         }
+ 480:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       }
+ 481:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       else if (PageStatus0 == VALID_PAGE)
+ 133              		.loc 1 481 12 is_stmt 1 view .LVU32
+ 134              		.loc 1 481 15 is_stmt 0 view .LVU33
+ 135 0024 63B9     		cbnz	r3, .L16
+ 482:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       {
+ 483:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         /* Page1 receiving data */
+ 484:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         if (PageStatus1 == RECEIVE_DATA)
+ 136              		.loc 1 484 9 is_stmt 1 view .LVU34
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s 			page 12
+
+
+ 137              		.loc 1 484 12 is_stmt 0 view .LVU35
+ 138 0026 4EF6EE61 		movw	r1, #61166
+ 139 002a 8A42     		cmp	r2, r1
+ 140 002c 06D1     		bne	.L12
+ 485:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         {
+ 486:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           return PAGE1;         /* Page1 valid */
+ 141              		.loc 1 486 18 view .LVU36
+ 142 002e 0123     		movs	r3, #1
+ 143              	.LVL14:
+ 144              		.loc 1 486 18 view .LVU37
+ 145 0030 04E0     		b	.L12
+ 146              	.LVL15:
+ 147              	.L11:
+ 487:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         }
+ 488:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         else
+ 489:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         {
+ 490:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           return PAGE0;         /* Page0 valid */
+ 491:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         }
+ 492:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       }
+ 493:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       else
+ 494:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       {
+ 495:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         return NO_VALID_PAGE;   /* No valid Page */
+ 496:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       }
+ 497:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 498:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     case READ_FROM_VALID_PAGE:  /* ---- Read operation ---- */
+ 499:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       if (PageStatus0 == VALID_PAGE)
+ 148              		.loc 1 499 7 is_stmt 1 view .LVU38
+ 149              		.loc 1 499 10 is_stmt 0 view .LVU39
+ 150 0032 1BB1     		cbz	r3, .L12
+ 500:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       {
+ 501:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         return PAGE0;           /* Page0 valid */
+ 502:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       }
+ 503:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       else if (PageStatus1 == VALID_PAGE)
+ 151              		.loc 1 503 12 is_stmt 1 view .LVU40
+ 152              		.loc 1 503 15 is_stmt 0 view .LVU41
+ 153 0034 32B9     		cbnz	r2, .L17
+ 504:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       {
+ 505:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         return PAGE1;           /* Page1 valid */
+ 154              		.loc 1 505 16 view .LVU42
+ 155 0036 0123     		movs	r3, #1
+ 156              	.LVL16:
+ 157              		.loc 1 505 16 view .LVU43
+ 158 0038 00E0     		b	.L12
+ 159              	.LVL17:
+ 160              	.L14:
+ 466:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   {
+ 161              		.loc 1 466 3 view .LVU44
+ 162 003a 0023     		movs	r3, #0
+ 163              	.LVL18:
+ 164              	.L12:
+ 506:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       }
+ 507:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       else
+ 508:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       {
+ 509:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         return NO_VALID_PAGE ;  /* No valid Page */
+ 510:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       }
+ 511:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 512:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     default:
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s 			page 13
+
+
+ 513:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       return PAGE0;             /* Page0 valid */
+ 514:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   }
+ 515:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** }
+ 165              		.loc 1 515 1 view .LVU45
+ 166 003c 1846     		mov	r0, r3
+ 167              	.LVL19:
+ 168              		.loc 1 515 1 view .LVU46
+ 169 003e 7047     		bx	lr
+ 170              	.LVL20:
+ 171              	.L16:
+ 495:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       }
+ 172              		.loc 1 495 16 view .LVU47
+ 173 0040 AB23     		movs	r3, #171
+ 174              	.LVL21:
+ 495:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       }
+ 175              		.loc 1 495 16 view .LVU48
+ 176 0042 FBE7     		b	.L12
+ 177              	.LVL22:
+ 178              	.L17:
+ 509:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       }
+ 179              		.loc 1 509 16 view .LVU49
+ 180 0044 AB23     		movs	r3, #171
+ 181              	.LVL23:
+ 509:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       }
+ 182              		.loc 1 509 16 view .LVU50
+ 183 0046 F9E7     		b	.L12
+ 184              	.L20:
+ 185              		.align	2
+ 186              	.L19:
+ 187 0048 00800008 		.word	134250496
+ 188 004c 00C00008 		.word	134266880
+ 189              		.cfi_endproc
+ 190              	.LFE135:
+ 192              		.section	.text.EE_VerifyPageFullWriteVariable,"ax",%progbits
+ 193              		.align	1
+ 194              		.syntax unified
+ 195              		.thumb
+ 196              		.thumb_func
+ 198              	EE_VerifyPageFullWriteVariable:
+ 199              	.LVL24:
+ 200              	.LFB136:
+ 516:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 517:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** /**
+ 518:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   * @brief  Verify if active page is full and Writes variable in EEPROM.
+ 519:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   * @param  VirtAddress: 16 bit virtual address of the variable
+ 520:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   * @param  Data: 16 bit data to be written as variable value
+ 521:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   * @retval Success or error status:
+ 522:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   *           - FLASH_COMPLETE: on success
+ 523:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   *           - PAGE_FULL: if valid page is full
+ 524:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   *           - NO_VALID_PAGE: if no valid page was found
+ 525:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   *           - Flash error code: on write Flash error
+ 526:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   */
+ 527:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** static uint16_t EE_VerifyPageFullWriteVariable(uint16_t VirtAddress, uint16_t Data)
+ 528:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** {
+ 201              		.loc 1 528 1 is_stmt 1 view -0
+ 202              		.cfi_startproc
+ 203              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s 			page 14
+
+
+ 204              		@ frame_needed = 0, uses_anonymous_args = 0
+ 205              		.loc 1 528 1 is_stmt 0 view .LVU52
+ 206 0000 70B5     		push	{r4, r5, r6, lr}
+ 207              		.cfi_def_cfa_offset 16
+ 208              		.cfi_offset 4, -16
+ 209              		.cfi_offset 5, -12
+ 210              		.cfi_offset 6, -8
+ 211              		.cfi_offset 14, -4
+ 212 0002 0646     		mov	r6, r0
+ 213 0004 0D46     		mov	r5, r1
+ 529:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   HAL_StatusTypeDef FlashStatus = HAL_OK;
+ 214              		.loc 1 529 3 is_stmt 1 view .LVU53
+ 215              	.LVL25:
+ 530:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   uint16_t ValidPage = PAGE0;
+ 216              		.loc 1 530 3 view .LVU54
+ 531:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   uint32_t Address = EEPROM_START_ADDRESS, PageEndAddress = EEPROM_START_ADDRESS+PAGE_SIZE;
+ 217              		.loc 1 531 3 view .LVU55
+ 532:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 533:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* Get valid Page for write operation */
+ 534:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   ValidPage = EE_FindValidPage(WRITE_IN_VALID_PAGE);
+ 218              		.loc 1 534 3 view .LVU56
+ 219              		.loc 1 534 15 is_stmt 0 view .LVU57
+ 220 0006 0120     		movs	r0, #1
+ 221              	.LVL26:
+ 222              		.loc 1 534 15 view .LVU58
+ 223 0008 FFF7FEFF 		bl	EE_FindValidPage
+ 224              	.LVL27:
+ 535:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   
+ 536:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* Check if there is no valid page */
+ 537:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   if (ValidPage == NO_VALID_PAGE)
+ 225              		.loc 1 537 3 is_stmt 1 view .LVU59
+ 226              		.loc 1 537 6 is_stmt 0 view .LVU60
+ 227 000c AB28     		cmp	r0, #171
+ 228 000e 1ED0     		beq	.L22
+ 538:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   {
+ 539:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     return  NO_VALID_PAGE;
+ 540:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   }
+ 541:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 542:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* Get the valid Page start Address */
+ 543:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   Address = (uint32_t)(EEPROM_START_ADDRESS + (uint32_t)(ValidPage * PAGE_SIZE));
+ 229              		.loc 1 543 3 is_stmt 1 view .LVU61
+ 230              		.loc 1 543 13 is_stmt 0 view .LVU62
+ 231 0010 00F50054 		add	r4, r0, #8192
+ 232 0014 0234     		adds	r4, r4, #2
+ 233              		.loc 1 543 11 view .LVU63
+ 234 0016 A403     		lsls	r4, r4, #14
+ 235              	.LVL28:
+ 544:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 545:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* Get the valid Page end Address */
+ 546:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   PageEndAddress = (uint32_t)((EEPROM_START_ADDRESS - 1) + (uint32_t)((ValidPage + 1) * PAGE_SIZE))
+ 236              		.loc 1 546 3 is_stmt 1 view .LVU64
+ 237              		.loc 1 546 82 is_stmt 0 view .LVU65
+ 238 0018 0130     		adds	r0, r0, #1
+ 239              	.LVL29:
+ 240              		.loc 1 546 18 view .LVU66
+ 241 001a 0D4B     		ldr	r3, .L30
+ 242 001c 03EB803C 		add	ip, r3, r0, lsl #14
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s 			page 15
+
+
+ 243              	.LVL30:
+ 547:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 548:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* Check each active page address starting from beginning */
+ 549:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   while (Address < PageEndAddress)
+ 244              		.loc 1 549 3 is_stmt 1 view .LVU67
+ 245              	.L23:
+ 246              		.loc 1 549 18 view .LVU68
+ 247 0020 6445     		cmp	r4, ip
+ 248 0022 13D2     		bcs	.L28
+ 550:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   {
+ 551:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     /* Verify if Address and Address+2 contents are 0xFFFFFFFF */
+ 552:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     if ((*(__IO uint32_t*)Address) == 0xFFFFFFFF)
+ 249              		.loc 1 552 5 view .LVU69
+ 250              		.loc 1 552 10 is_stmt 0 view .LVU70
+ 251 0024 2368     		ldr	r3, [r4]
+ 252              		.loc 1 552 8 view .LVU71
+ 253 0026 B3F1FF3F 		cmp	r3, #-1
+ 254 002a 01D0     		beq	.L29
+ 553:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     {
+ 554:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       /* Set variable data */
+ 555:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       FlashStatus = HAL_FLASH_Program(TYPEPROGRAM_HALFWORD, Address, Data);       
+ 556:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       /* If program operation was failed, a Flash error code is returned */
+ 557:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       if (FlashStatus != HAL_OK)
+ 558:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       {
+ 559:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         return FlashStatus;
+ 560:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       }
+ 561:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       /* Set variable virtual address */
+ 562:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       FlashStatus = HAL_FLASH_Program(TYPEPROGRAM_HALFWORD, Address + 2, VirtAddress);       
+ 563:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       /* Return program operation status */
+ 564:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       return FlashStatus;
+ 565:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     }
+ 566:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     else
+ 567:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     {
+ 568:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       /* Next address location */
+ 569:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       Address = Address + 4;
+ 255              		.loc 1 569 7 is_stmt 1 view .LVU72
+ 256              		.loc 1 569 15 is_stmt 0 view .LVU73
+ 257 002c 0434     		adds	r4, r4, #4
+ 258              	.LVL31:
+ 259              		.loc 1 569 15 view .LVU74
+ 260 002e F7E7     		b	.L23
+ 261              	.L29:
+ 555:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       /* If program operation was failed, a Flash error code is returned */
+ 262              		.loc 1 555 7 is_stmt 1 view .LVU75
+ 555:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       /* If program operation was failed, a Flash error code is returned */
+ 263              		.loc 1 555 21 is_stmt 0 view .LVU76
+ 264 0030 2A46     		mov	r2, r5
+ 265 0032 0023     		movs	r3, #0
+ 266 0034 2146     		mov	r1, r4
+ 267 0036 0120     		movs	r0, #1
+ 268 0038 FFF7FEFF 		bl	HAL_FLASH_Program
+ 269              	.LVL32:
+ 557:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       {
+ 270              		.loc 1 557 7 is_stmt 1 view .LVU77
+ 557:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       {
+ 271              		.loc 1 557 10 is_stmt 0 view .LVU78
+ 272 003c 38B9     		cbnz	r0, .L22
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s 			page 16
+
+
+ 562:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       /* Return program operation status */
+ 273              		.loc 1 562 7 is_stmt 1 view .LVU79
+ 562:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       /* Return program operation status */
+ 274              		.loc 1 562 21 is_stmt 0 view .LVU80
+ 275 003e 3246     		mov	r2, r6
+ 276 0040 0023     		movs	r3, #0
+ 277 0042 A11C     		adds	r1, r4, #2
+ 278 0044 0120     		movs	r0, #1
+ 279              	.LVL33:
+ 562:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       /* Return program operation status */
+ 280              		.loc 1 562 21 view .LVU81
+ 281 0046 FFF7FEFF 		bl	HAL_FLASH_Program
+ 282              	.LVL34:
+ 564:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     }
+ 283              		.loc 1 564 7 is_stmt 1 view .LVU82
+ 564:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     }
+ 284              		.loc 1 564 14 is_stmt 0 view .LVU83
+ 285 004a 00E0     		b	.L22
+ 286              	.LVL35:
+ 287              	.L28:
+ 570:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     }
+ 571:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   }
+ 572:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 573:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* Return PAGE_FULL in case the valid page is full */
+ 574:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   return PAGE_FULL;
+ 288              		.loc 1 574 10 view .LVU84
+ 289 004c 8020     		movs	r0, #128
+ 290              	.LVL36:
+ 291              	.L22:
+ 575:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** }
+ 292              		.loc 1 575 1 view .LVU85
+ 293 004e 70BD     		pop	{r4, r5, r6, pc}
+ 294              	.L31:
+ 295              		.align	2
+ 296              	.L30:
+ 297 0050 FF7F0008 		.word	134250495
+ 298              		.cfi_endproc
+ 299              	.LFE136:
+ 301              		.section	.text.EE_Format,"ax",%progbits
+ 302              		.align	1
+ 303              		.syntax unified
+ 304              		.thumb
+ 305              		.thumb_func
+ 307              	EE_Format:
+ 308              	.LFB134:
+ 404:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   HAL_StatusTypeDef FlashStatus = HAL_OK;
+ 309              		.loc 1 404 1 is_stmt 1 view -0
+ 310              		.cfi_startproc
+ 311              		@ args = 0, pretend = 0, frame = 24
+ 312              		@ frame_needed = 0, uses_anonymous_args = 0
+ 313 0000 10B5     		push	{r4, lr}
+ 314              		.cfi_def_cfa_offset 8
+ 315              		.cfi_offset 4, -8
+ 316              		.cfi_offset 14, -4
+ 317 0002 86B0     		sub	sp, sp, #24
+ 318              		.cfi_def_cfa_offset 32
+ 405:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   uint32_t SectorError = 0;
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s 			page 17
+
+
+ 319              		.loc 1 405 3 view .LVU87
+ 320              	.LVL37:
+ 406:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   FLASH_EraseInitTypeDef pEraseInit;
+ 321              		.loc 1 406 3 view .LVU88
+ 406:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   FLASH_EraseInitTypeDef pEraseInit;
+ 322              		.loc 1 406 12 is_stmt 0 view .LVU89
+ 323 0004 0023     		movs	r3, #0
+ 324 0006 0593     		str	r3, [sp, #20]
+ 407:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 325              		.loc 1 407 3 is_stmt 1 view .LVU90
+ 409:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   pEraseInit.Sector = PAGE0_ID;
+ 326              		.loc 1 409 3 view .LVU91
+ 409:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   pEraseInit.Sector = PAGE0_ID;
+ 327              		.loc 1 409 24 is_stmt 0 view .LVU92
+ 328 0008 0093     		str	r3, [sp]
+ 410:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   pEraseInit.NbSectors = 1;
+ 329              		.loc 1 410 3 is_stmt 1 view .LVU93
+ 410:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   pEraseInit.NbSectors = 1;
+ 330              		.loc 1 410 21 is_stmt 0 view .LVU94
+ 331 000a 0223     		movs	r3, #2
+ 332 000c 0293     		str	r3, [sp, #8]
+ 411:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   pEraseInit.VoltageRange = VOLTAGE_RANGE;
+ 333              		.loc 1 411 3 is_stmt 1 view .LVU95
+ 411:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   pEraseInit.VoltageRange = VOLTAGE_RANGE;
+ 334              		.loc 1 411 24 is_stmt 0 view .LVU96
+ 335 000e 0122     		movs	r2, #1
+ 336 0010 0392     		str	r2, [sp, #12]
+ 412:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* Erase Page0 */
+ 337              		.loc 1 412 3 is_stmt 1 view .LVU97
+ 412:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* Erase Page0 */
+ 338              		.loc 1 412 27 is_stmt 0 view .LVU98
+ 339 0012 0493     		str	r3, [sp, #16]
+ 414:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   {
+ 340              		.loc 1 414 3 is_stmt 1 view .LVU99
+ 414:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   {
+ 341              		.loc 1 414 7 is_stmt 0 view .LVU100
+ 342 0014 1048     		ldr	r0, .L37
+ 343 0016 FFF7FEFF 		bl	EE_VerifyPageFullyErased
+ 344              	.LVL38:
+ 414:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   {
+ 345              		.loc 1 414 5 view .LVU101
+ 346 001a 28B9     		cbnz	r0, .L33
+ 416:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     /* If erase operation was failed, a Flash error code is returned */
+ 347              		.loc 1 416 5 is_stmt 1 view .LVU102
+ 416:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     /* If erase operation was failed, a Flash error code is returned */
+ 348              		.loc 1 416 19 is_stmt 0 view .LVU103
+ 349 001c 05A9     		add	r1, sp, #20
+ 350 001e 6846     		mov	r0, sp
+ 351 0020 FFF7FEFF 		bl	HAL_FLASHEx_Erase
+ 352              	.LVL39:
+ 418:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     {
+ 353              		.loc 1 418 5 is_stmt 1 view .LVU104
+ 418:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     {
+ 354              		.loc 1 418 8 is_stmt 0 view .LVU105
+ 355 0024 0446     		mov	r4, r0
+ 356 0026 38B9     		cbnz	r0, .L34
+ 357              	.LVL40:
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s 			page 18
+
+
+ 358              	.L33:
+ 424:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* If program operation was failed, a Flash error code is returned */
+ 359              		.loc 1 424 3 is_stmt 1 view .LVU106
+ 424:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* If program operation was failed, a Flash error code is returned */
+ 360              		.loc 1 424 17 is_stmt 0 view .LVU107
+ 361 0028 0022     		movs	r2, #0
+ 362 002a 0023     		movs	r3, #0
+ 363 002c 0A49     		ldr	r1, .L37
+ 364 002e 0120     		movs	r0, #1
+ 365 0030 FFF7FEFF 		bl	HAL_FLASH_Program
+ 366              	.LVL41:
+ 426:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   {
+ 367              		.loc 1 426 3 is_stmt 1 view .LVU108
+ 426:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   {
+ 368              		.loc 1 426 6 is_stmt 0 view .LVU109
+ 369 0034 0446     		mov	r4, r0
+ 370 0036 10B1     		cbz	r0, .L36
+ 371              	.LVL42:
+ 372              	.L34:
+ 444:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 373              		.loc 1 444 1 view .LVU110
+ 374 0038 2046     		mov	r0, r4
+ 375 003a 06B0     		add	sp, sp, #24
+ 376              		.cfi_remember_state
+ 377              		.cfi_def_cfa_offset 8
+ 378              		@ sp needed
+ 379 003c 10BD     		pop	{r4, pc}
+ 380              	.LVL43:
+ 381              	.L36:
+ 382              		.cfi_restore_state
+ 431:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* Erase Page1 */
+ 383              		.loc 1 431 3 is_stmt 1 view .LVU111
+ 431:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* Erase Page1 */
+ 384              		.loc 1 431 21 is_stmt 0 view .LVU112
+ 385 003e 0323     		movs	r3, #3
+ 386 0040 0293     		str	r3, [sp, #8]
+ 433:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   {  
+ 387              		.loc 1 433 3 is_stmt 1 view .LVU113
+ 433:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   {  
+ 388              		.loc 1 433 7 is_stmt 0 view .LVU114
+ 389 0042 0648     		ldr	r0, .L37+4
+ 390              	.LVL44:
+ 433:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   {  
+ 391              		.loc 1 433 7 view .LVU115
+ 392 0044 FFF7FEFF 		bl	EE_VerifyPageFullyErased
+ 393              	.LVL45:
+ 433:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   {  
+ 394              		.loc 1 433 5 view .LVU116
+ 395 0048 0028     		cmp	r0, #0
+ 396 004a F5D1     		bne	.L34
+ 435:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     /* If erase operation was failed, a Flash error code is returned */
+ 397              		.loc 1 435 5 is_stmt 1 view .LVU117
+ 435:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     /* If erase operation was failed, a Flash error code is returned */
+ 398              		.loc 1 435 19 is_stmt 0 view .LVU118
+ 399 004c 05A9     		add	r1, sp, #20
+ 400 004e 6846     		mov	r0, sp
+ 401 0050 FFF7FEFF 		bl	HAL_FLASHEx_Erase
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s 			page 19
+
+
+ 402              	.LVL46:
+ 403 0054 0446     		mov	r4, r0
+ 404              	.LVL47:
+ 437:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     {
+ 405              		.loc 1 437 5 is_stmt 1 view .LVU119
+ 406 0056 EFE7     		b	.L34
+ 407              	.L38:
+ 408              		.align	2
+ 409              	.L37:
+ 410 0058 00800008 		.word	134250496
+ 411 005c 00C00008 		.word	134266880
+ 412              		.cfi_endproc
+ 413              	.LFE134:
+ 415              		.section	.text.EE_ReadVariable,"ax",%progbits
+ 416              		.align	1
+ 417              		.global	EE_ReadVariable
+ 418              		.syntax unified
+ 419              		.thumb
+ 420              		.thumb_func
+ 422              	EE_ReadVariable:
+ 423              	.LVL48:
+ 424              	.LFB132:
+ 321:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   uint16_t ValidPage = PAGE0;
+ 425              		.loc 1 321 1 view -0
+ 426              		.cfi_startproc
+ 427              		@ args = 0, pretend = 0, frame = 0
+ 428              		@ frame_needed = 0, uses_anonymous_args = 0
+ 321:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   uint16_t ValidPage = PAGE0;
+ 429              		.loc 1 321 1 is_stmt 0 view .LVU121
+ 430 0000 38B5     		push	{r3, r4, r5, lr}
+ 431              		.cfi_def_cfa_offset 16
+ 432              		.cfi_offset 3, -16
+ 433              		.cfi_offset 4, -12
+ 434              		.cfi_offset 5, -8
+ 435              		.cfi_offset 14, -4
+ 436 0002 0446     		mov	r4, r0
+ 437 0004 0D46     		mov	r5, r1
+ 322:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   uint16_t AddressValue = 0x5555, ReadStatus = 1;
+ 438              		.loc 1 322 3 is_stmt 1 view .LVU122
+ 439              	.LVL49:
+ 323:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   uint32_t Address = EEPROM_START_ADDRESS, PageStartAddress = EEPROM_START_ADDRESS;
+ 440              		.loc 1 323 3 view .LVU123
+ 324:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 441              		.loc 1 324 3 view .LVU124
+ 327:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 442              		.loc 1 327 3 view .LVU125
+ 327:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 443              		.loc 1 327 15 is_stmt 0 view .LVU126
+ 444 0006 0020     		movs	r0, #0
+ 445              	.LVL50:
+ 327:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 446              		.loc 1 327 15 view .LVU127
+ 447 0008 FFF7FEFF 		bl	EE_FindValidPage
+ 448              	.LVL51:
+ 330:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   {
+ 449              		.loc 1 330 3 is_stmt 1 view .LVU128
+ 330:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   {
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s 			page 20
+
+
+ 450              		.loc 1 330 6 is_stmt 0 view .LVU129
+ 451 000c AB28     		cmp	r0, #171
+ 452 000e 19D0     		beq	.L40
+ 336:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 453              		.loc 1 336 3 is_stmt 1 view .LVU130
+ 336:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 454              		.loc 1 336 22 is_stmt 0 view .LVU131
+ 455 0010 00F5005C 		add	ip, r0, #8192
+ 456 0014 0CF1020C 		add	ip, ip, #2
+ 336:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 457              		.loc 1 336 20 view .LVU132
+ 458 0018 4FEA8C3C 		lsl	ip, ip, #14
+ 459              	.LVL52:
+ 339:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 460              		.loc 1 339 3 is_stmt 1 view .LVU133
+ 339:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 461              		.loc 1 339 67 is_stmt 0 view .LVU134
+ 462 001c 0130     		adds	r0, r0, #1
+ 463              	.LVL53:
+ 339:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 464              		.loc 1 339 11 view .LVU135
+ 465 001e 0A4B     		ldr	r3, .L47
+ 466 0020 03EB8033 		add	r3, r3, r0, lsl #14
+ 467              	.LVL54:
+ 342:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   {
+ 468              		.loc 1 342 3 is_stmt 1 view .LVU136
+ 469              	.L41:
+ 342:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   {
+ 470              		.loc 1 342 18 view .LVU137
+ 342:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   {
+ 471              		.loc 1 342 38 is_stmt 0 view .LVU138
+ 472 0024 0CF10202 		add	r2, ip, #2
+ 342:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   {
+ 473              		.loc 1 342 18 view .LVU139
+ 474 0028 9A42     		cmp	r2, r3
+ 475 002a 0AD2     		bcs	.L45
+ 345:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 476              		.loc 1 345 5 is_stmt 1 view .LVU140
+ 345:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 477              		.loc 1 345 18 is_stmt 0 view .LVU141
+ 478 002c 1A88     		ldrh	r2, [r3]
+ 479 002e 92B2     		uxth	r2, r2
+ 480              	.LVL55:
+ 348:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     {
+ 481              		.loc 1 348 5 is_stmt 1 view .LVU142
+ 348:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     {
+ 482              		.loc 1 348 8 is_stmt 0 view .LVU143
+ 483 0030 A242     		cmp	r2, r4
+ 484 0032 01D0     		beq	.L46
+ 361:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     }
+ 485              		.loc 1 361 7 is_stmt 1 view .LVU144
+ 361:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     }
+ 486              		.loc 1 361 15 is_stmt 0 view .LVU145
+ 487 0034 043B     		subs	r3, r3, #4
+ 488              	.LVL56:
+ 361:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     }
+ 489              		.loc 1 361 15 view .LVU146
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s 			page 21
+
+
+ 490 0036 F5E7     		b	.L41
+ 491              	.L46:
+ 351:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 492              		.loc 1 351 7 is_stmt 1 view .LVU147
+ 351:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 493              		.loc 1 351 16 is_stmt 0 view .LVU148
+ 494 0038 33F8023C 		ldrh	r3, [r3, #-2]
+ 495              	.LVL57:
+ 351:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 496              		.loc 1 351 13 view .LVU149
+ 497 003c 2B80     		strh	r3, [r5]	@ movhi
+ 354:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 498              		.loc 1 354 7 is_stmt 1 view .LVU150
+ 499              	.LVL58:
+ 356:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     }
+ 500              		.loc 1 356 7 view .LVU151
+ 354:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 501              		.loc 1 354 18 is_stmt 0 view .LVU152
+ 502 003e 0020     		movs	r0, #0
+ 356:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     }
+ 503              		.loc 1 356 7 view .LVU153
+ 504 0040 00E0     		b	.L40
+ 505              	.LVL59:
+ 506              	.L45:
+ 323:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   uint32_t Address = EEPROM_START_ADDRESS, PageStartAddress = EEPROM_START_ADDRESS;
+ 507              		.loc 1 323 35 view .LVU154
+ 508 0042 0120     		movs	r0, #1
+ 509              	.LVL60:
+ 510              	.L40:
+ 367:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 511              		.loc 1 367 1 view .LVU155
+ 512 0044 38BD     		pop	{r3, r4, r5, pc}
+ 513              	.LVL61:
+ 514              	.L48:
+ 367:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 515              		.loc 1 367 1 view .LVU156
+ 516 0046 00BF     		.align	2
+ 517              	.L47:
+ 518 0048 FE7F0008 		.word	134250494
+ 519              		.cfi_endproc
+ 520              	.LFE132:
+ 522              		.section	.text.EE_Init,"ax",%progbits
+ 523              		.align	1
+ 524              		.global	EE_Init
+ 525              		.syntax unified
+ 526              		.thumb
+ 527              		.thumb_func
+ 529              	EE_Init:
+ 530              	.LFB130:
+  30:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   uint16_t PageStatus0 = 6, PageStatus1 = 6;
+ 531              		.loc 1 30 1 is_stmt 1 view -0
+ 532              		.cfi_startproc
+ 533              		@ args = 0, pretend = 0, frame = 24
+ 534              		@ frame_needed = 0, uses_anonymous_args = 0
+ 535 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 536              		.cfi_def_cfa_offset 20
+ 537              		.cfi_offset 4, -20
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s 			page 22
+
+
+ 538              		.cfi_offset 5, -16
+ 539              		.cfi_offset 6, -12
+ 540              		.cfi_offset 7, -8
+ 541              		.cfi_offset 14, -4
+ 542 0002 87B0     		sub	sp, sp, #28
+ 543              		.cfi_def_cfa_offset 48
+  31:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   uint16_t VarIdx = 0;
+ 544              		.loc 1 31 3 view .LVU158
+ 545              	.LVL62:
+  32:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   uint16_t EepromStatus = 0, ReadStatus = 0;
+ 546              		.loc 1 32 3 view .LVU159
+  33:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   int16_t x = -1;
+ 547              		.loc 1 33 3 view .LVU160
+  34:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   HAL_StatusTypeDef  FlashStatus;
+ 548              		.loc 1 34 3 view .LVU161
+  35:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   uint32_t SectorError = 0;
+ 549              		.loc 1 35 3 view .LVU162
+  36:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   FLASH_EraseInitTypeDef pEraseInit;
+ 550              		.loc 1 36 3 view .LVU163
+  36:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   FLASH_EraseInitTypeDef pEraseInit;
+ 551              		.loc 1 36 12 is_stmt 0 view .LVU164
+ 552 0004 0023     		movs	r3, #0
+ 553 0006 0593     		str	r3, [sp, #20]
+  37:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 554              		.loc 1 37 3 is_stmt 1 view .LVU165
+  41:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* Get Page1 status */
+ 555              		.loc 1 41 3 view .LVU166
+  41:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* Get Page1 status */
+ 556              		.loc 1 41 15 is_stmt 0 view .LVU167
+ 557 0008 8E4A     		ldr	r2, .L99
+ 558 000a 1588     		ldrh	r5, [r2]
+ 559 000c ADB2     		uxth	r5, r5
+ 560              	.LVL63:
+  43:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 561              		.loc 1 43 3 is_stmt 1 view .LVU168
+  43:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 562              		.loc 1 43 15 is_stmt 0 view .LVU169
+ 563 000e 02F58042 		add	r2, r2, #16384
+ 564 0012 1488     		ldrh	r4, [r2]
+ 565 0014 A4B2     		uxth	r4, r4
+ 566              	.LVL64:
+  45:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   pEraseInit.Sector = PAGE0_ID;
+ 567              		.loc 1 45 3 is_stmt 1 view .LVU170
+  45:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   pEraseInit.Sector = PAGE0_ID;
+ 568              		.loc 1 45 24 is_stmt 0 view .LVU171
+ 569 0016 0093     		str	r3, [sp]
+  46:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   pEraseInit.NbSectors = 1;
+ 570              		.loc 1 46 3 is_stmt 1 view .LVU172
+  46:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   pEraseInit.NbSectors = 1;
+ 571              		.loc 1 46 21 is_stmt 0 view .LVU173
+ 572 0018 0223     		movs	r3, #2
+ 573 001a 0293     		str	r3, [sp, #8]
+  47:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   pEraseInit.VoltageRange = VOLTAGE_RANGE;
+ 574              		.loc 1 47 3 is_stmt 1 view .LVU174
+  47:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   pEraseInit.VoltageRange = VOLTAGE_RANGE;
+ 575              		.loc 1 47 24 is_stmt 0 view .LVU175
+ 576 001c 0122     		movs	r2, #1
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s 			page 23
+
+
+ 577 001e 0392     		str	r2, [sp, #12]
+  48:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   
+ 578              		.loc 1 48 3 is_stmt 1 view .LVU176
+  48:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   
+ 579              		.loc 1 48 27 is_stmt 0 view .LVU177
+ 580 0020 0493     		str	r3, [sp, #16]
+  51:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   {
+ 581              		.loc 1 51 3 is_stmt 1 view .LVU178
+ 582 0022 4EF6EE63 		movw	r3, #61166
+ 583 0026 9D42     		cmp	r5, r3
+ 584 0028 3FD0     		beq	.L50
+ 585 002a 4FF6FF73 		movw	r3, #65535
+ 586 002e 9D42     		cmp	r5, r3
+ 587 0030 0AD0     		beq	.L51
+ 588 0032 002D     		cmp	r5, #0
+ 589 0034 00F0A380 		beq	.L87
+ 260:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       /* If erase/program operation was failed, a Flash error code is returned */
+ 590              		.loc 1 260 7 view .LVU179
+ 260:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       /* If erase/program operation was failed, a Flash error code is returned */
+ 591              		.loc 1 260 21 is_stmt 0 view .LVU180
+ 592 0038 FFF7FEFF 		bl	EE_Format
+ 593              	.LVL65:
+ 262:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       {
+ 594              		.loc 1 262 7 is_stmt 1 view .LVU181
+ 262:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       {
+ 595              		.loc 1 262 10 is_stmt 0 view .LVU182
+ 596 003c 0446     		mov	r4, r0
+ 597              	.LVL66:
+ 262:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       {
+ 598              		.loc 1 262 10 view .LVU183
+ 599 003e 00B9     		cbnz	r0, .L55
+ 269:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** }
+ 600              		.loc 1 269 10 view .LVU184
+ 601 0040 0024     		movs	r4, #0
+ 602              	.LVL67:
+ 603              	.L55:
+ 270:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 604              		.loc 1 270 1 view .LVU185
+ 605 0042 2046     		mov	r0, r4
+ 606 0044 07B0     		add	sp, sp, #28
+ 607              		.cfi_remember_state
+ 608              		.cfi_def_cfa_offset 20
+ 609              		@ sp needed
+ 610 0046 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 611              	.LVL68:
+ 612              	.L51:
+ 613              		.cfi_restore_state
+  54:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       {
+ 614              		.loc 1 54 7 is_stmt 1 view .LVU186
+  54:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       {
+ 615              		.loc 1 54 10 is_stmt 0 view .LVU187
+ 616 0048 54B1     		cbz	r4, .L88
+  67:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       {
+ 617              		.loc 1 67 12 is_stmt 1 view .LVU188
+  67:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       {
+ 618              		.loc 1 67 15 is_stmt 0 view .LVU189
+ 619 004a 4EF6EE63 		movw	r3, #61166
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s 			page 24
+
+
+ 620 004e 9C42     		cmp	r4, r3
+ 621 0050 15D0     		beq	.L89
+  90:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         /* If erase/program operation was failed, a Flash error code is returned */
+ 622              		.loc 1 90 9 is_stmt 1 view .LVU190
+  90:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         /* If erase/program operation was failed, a Flash error code is returned */
+ 623              		.loc 1 90 23 is_stmt 0 view .LVU191
+ 624 0052 FFF7FEFF 		bl	EE_Format
+ 625              	.LVL69:
+  92:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         {
+ 626              		.loc 1 92 9 is_stmt 1 view .LVU192
+  92:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         {
+ 627              		.loc 1 92 12 is_stmt 0 view .LVU193
+ 628 0056 0446     		mov	r4, r0
+ 629              	.LVL70:
+  92:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         {
+ 630              		.loc 1 92 12 view .LVU194
+ 631 0058 0028     		cmp	r0, #0
+ 632 005a F2D1     		bne	.L55
+ 269:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** }
+ 633              		.loc 1 269 10 view .LVU195
+ 634 005c 0024     		movs	r4, #0
+ 635 005e F0E7     		b	.L55
+ 636              	.LVL71:
+ 637              	.L88:
+  57:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         {
+ 638              		.loc 1 57 9 is_stmt 1 view .LVU196
+  57:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         {
+ 639              		.loc 1 57 13 is_stmt 0 view .LVU197
+ 640 0060 7848     		ldr	r0, .L99
+ 641 0062 FFF7FEFF 		bl	EE_VerifyPageFullyErased
+ 642              	.LVL72:
+  57:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         {
+ 643              		.loc 1 57 11 view .LVU198
+ 644 0066 0546     		mov	r5, r0
+ 645              	.LVL73:
+  57:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         {
+ 646              		.loc 1 57 11 view .LVU199
+ 647 0068 0028     		cmp	r0, #0
+ 648 006a EAD1     		bne	.L55
+  59:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           /* If erase operation was failed, a Flash error code is returned */
+ 649              		.loc 1 59 11 is_stmt 1 view .LVU200
+  59:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           /* If erase operation was failed, a Flash error code is returned */
+ 650              		.loc 1 59 25 is_stmt 0 view .LVU201
+ 651 006c 05A9     		add	r1, sp, #20
+ 652 006e 6846     		mov	r0, sp
+ 653 0070 FFF7FEFF 		bl	HAL_FLASHEx_Erase
+ 654              	.LVL74:
+  61:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           {
+ 655              		.loc 1 61 11 is_stmt 1 view .LVU202
+  61:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           {
+ 656              		.loc 1 61 14 is_stmt 0 view .LVU203
+ 657 0074 0446     		mov	r4, r0
+ 658              	.LVL75:
+  61:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           {
+ 659              		.loc 1 61 14 view .LVU204
+ 660 0076 0028     		cmp	r0, #0
+ 661 0078 E3D1     		bne	.L55
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s 			page 25
+
+
+ 269:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** }
+ 662              		.loc 1 269 10 view .LVU205
+ 663 007a 2C46     		mov	r4, r5
+ 664 007c E1E7     		b	.L55
+ 665              	.LVL76:
+ 666              	.L89:
+  70:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         { 
+ 667              		.loc 1 70 9 is_stmt 1 view .LVU206
+  70:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         { 
+ 668              		.loc 1 70 13 is_stmt 0 view .LVU207
+ 669 007e 7148     		ldr	r0, .L99
+ 670 0080 FFF7FEFF 		bl	EE_VerifyPageFullyErased
+ 671              	.LVL77:
+  70:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         { 
+ 672              		.loc 1 70 11 view .LVU208
+ 673 0084 30B9     		cbnz	r0, .L57
+  72:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           /* If erase operation was failed, a Flash error code is returned */
+ 674              		.loc 1 72 11 is_stmt 1 view .LVU209
+  72:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           /* If erase operation was failed, a Flash error code is returned */
+ 675              		.loc 1 72 25 is_stmt 0 view .LVU210
+ 676 0086 05A9     		add	r1, sp, #20
+ 677 0088 6846     		mov	r0, sp
+ 678 008a FFF7FEFF 		bl	HAL_FLASHEx_Erase
+ 679              	.LVL78:
+  74:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           {
+ 680              		.loc 1 74 11 is_stmt 1 view .LVU211
+  74:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           {
+ 681              		.loc 1 74 14 is_stmt 0 view .LVU212
+ 682 008e 0446     		mov	r4, r0
+ 683              	.LVL79:
+  74:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           {
+ 684              		.loc 1 74 14 view .LVU213
+ 685 0090 0028     		cmp	r0, #0
+ 686 0092 D6D1     		bne	.L55
+ 687              	.LVL80:
+ 688              	.L57:
+  80:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         /* If program operation was failed, a Flash error code is returned */
+ 689              		.loc 1 80 9 is_stmt 1 view .LVU214
+  80:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         /* If program operation was failed, a Flash error code is returned */
+ 690              		.loc 1 80 23 is_stmt 0 view .LVU215
+ 691 0094 0022     		movs	r2, #0
+ 692 0096 0023     		movs	r3, #0
+ 693 0098 6B49     		ldr	r1, .L99+4
+ 694 009a 0120     		movs	r0, #1
+ 695 009c FFF7FEFF 		bl	HAL_FLASH_Program
+ 696              	.LVL81:
+  82:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         {
+ 697              		.loc 1 82 9 is_stmt 1 view .LVU216
+  82:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         {
+ 698              		.loc 1 82 12 is_stmt 0 view .LVU217
+ 699 00a0 0446     		mov	r4, r0
+ 700 00a2 0028     		cmp	r0, #0
+ 701 00a4 CDD1     		bne	.L55
+ 269:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** }
+ 702              		.loc 1 269 10 view .LVU218
+ 703 00a6 0024     		movs	r4, #0
+ 704 00a8 CBE7     		b	.L55
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s 			page 26
+
+
+ 705              	.LVL82:
+ 706              	.L50:
+ 100:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       {
+ 707              		.loc 1 100 7 is_stmt 1 view .LVU219
+ 100:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       {
+ 708              		.loc 1 100 10 is_stmt 0 view .LVU220
+ 709 00aa 5CB3     		cbz	r4, .L75
+ 147:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       {
+ 710              		.loc 1 147 12 is_stmt 1 view .LVU221
+ 147:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       {
+ 711              		.loc 1 147 15 is_stmt 0 view .LVU222
+ 712 00ac 4FF6FF73 		movw	r3, #65535
+ 713 00b0 9C42     		cmp	r4, r3
+ 714 00b2 4AD0     		beq	.L90
+ 173:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         /* If erase/program operation was failed, a Flash error code is returned */
+ 715              		.loc 1 173 9 is_stmt 1 view .LVU223
+ 173:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         /* If erase/program operation was failed, a Flash error code is returned */
+ 716              		.loc 1 173 23 is_stmt 0 view .LVU224
+ 717 00b4 FFF7FEFF 		bl	EE_Format
+ 718              	.LVL83:
+ 175:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         {
+ 719              		.loc 1 175 9 is_stmt 1 view .LVU225
+ 175:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         {
+ 720              		.loc 1 175 12 is_stmt 0 view .LVU226
+ 721 00b8 0446     		mov	r4, r0
+ 722              	.LVL84:
+ 175:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         {
+ 723              		.loc 1 175 12 view .LVU227
+ 724 00ba 0028     		cmp	r0, #0
+ 725 00bc C1D1     		bne	.L55
+ 269:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** }
+ 726              		.loc 1 269 10 view .LVU228
+ 727 00be 0024     		movs	r4, #0
+ 728 00c0 BFE7     		b	.L55
+ 729              	.LVL85:
+ 730              	.L92:
+ 107:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           }
+ 731              		.loc 1 107 13 is_stmt 1 view .LVU229
+ 107:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           }
+ 732              		.loc 1 107 15 is_stmt 0 view .LVU230
+ 733 00c2 2FB2     		sxth	r7, r5
+ 734              	.LVL86:
+ 107:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           }
+ 735              		.loc 1 107 15 view .LVU231
+ 736 00c4 0CE0     		b	.L60
+ 737              	.L61:
+ 103:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         {
+ 738              		.loc 1 103 52 is_stmt 1 discriminator 2 view .LVU232
+ 739 00c6 0135     		adds	r5, r5, #1
+ 740              	.LVL87:
+ 103:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         {
+ 741              		.loc 1 103 52 is_stmt 0 discriminator 2 view .LVU233
+ 742 00c8 ADB2     		uxth	r5, r5
+ 743              	.LVL88:
+ 744              	.L58:
+ 103:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         {
+ 745              		.loc 1 103 33 is_stmt 1 discriminator 1 view .LVU234
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s 			page 27
+
+
+ 746 00ca 022D     		cmp	r5, #2
+ 747 00cc 1ED8     		bhi	.L91
+ 105:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           {
+ 748              		.loc 1 105 11 view .LVU235
+ 105:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           {
+ 749              		.loc 1 105 17 is_stmt 0 view .LVU236
+ 750 00ce 5D4B     		ldr	r3, .L99
+ 751 00d0 DB88     		ldrh	r3, [r3, #6]
+ 752 00d2 9BB2     		uxth	r3, r3
+ 105:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           {
+ 753              		.loc 1 105 60 view .LVU237
+ 754 00d4 2E46     		mov	r6, r5
+ 105:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           {
+ 755              		.loc 1 105 76 view .LVU238
+ 756 00d6 5D4A     		ldr	r2, .L99+8
+ 757 00d8 32F81500 		ldrh	r0, [r2, r5, lsl #1]
+ 105:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           {
+ 758              		.loc 1 105 14 view .LVU239
+ 759 00dc 8342     		cmp	r3, r0
+ 760 00de F0D0     		beq	.L92
+ 761              	.L60:
+ 109:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           {
+ 762              		.loc 1 109 11 is_stmt 1 view .LVU240
+ 109:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           {
+ 763              		.loc 1 109 14 is_stmt 0 view .LVU241
+ 764 00e0 BE42     		cmp	r6, r7
+ 765 00e2 F0D0     		beq	.L61
+ 112:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****             /* In case variable corresponding to the virtual address was found */
+ 766              		.loc 1 112 13 is_stmt 1 view .LVU242
+ 112:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****             /* In case variable corresponding to the virtual address was found */
+ 767              		.loc 1 112 26 is_stmt 0 view .LVU243
+ 768 00e4 5A49     		ldr	r1, .L99+12
+ 769 00e6 FFF7FEFF 		bl	EE_ReadVariable
+ 770              	.LVL89:
+ 114:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****             {
+ 771              		.loc 1 114 13 is_stmt 1 view .LVU244
+ 114:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****             {
+ 772              		.loc 1 114 16 is_stmt 0 view .LVU245
+ 773 00ea 0128     		cmp	r0, #1
+ 774 00ec EBD0     		beq	.L61
+ 117:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****               /* If program operation was failed, a Flash error code is returned */
+ 775              		.loc 1 117 15 is_stmt 1 view .LVU246
+ 117:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****               /* If program operation was failed, a Flash error code is returned */
+ 776              		.loc 1 117 30 is_stmt 0 view .LVU247
+ 777 00ee 584B     		ldr	r3, .L99+12
+ 778 00f0 1988     		ldrh	r1, [r3]
+ 779 00f2 564B     		ldr	r3, .L99+8
+ 780 00f4 33F81600 		ldrh	r0, [r3, r6, lsl #1]
+ 781              	.LVL90:
+ 117:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****               /* If program operation was failed, a Flash error code is returned */
+ 782              		.loc 1 117 30 view .LVU248
+ 783 00f8 FFF7FEFF 		bl	EE_VerifyPageFullWriteVariable
+ 784              	.LVL91:
+ 119:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****               {
+ 785              		.loc 1 119 15 is_stmt 1 view .LVU249
+ 119:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****               {
+ 786              		.loc 1 119 18 is_stmt 0 view .LVU250
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s 			page 28
+
+
+ 787 00fc 0028     		cmp	r0, #0
+ 788 00fe E2D0     		beq	.L61
+ 121:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****               }
+ 789              		.loc 1 121 24 view .LVU251
+ 790 0100 0446     		mov	r4, r0
+ 791              	.LVL92:
+ 121:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****               }
+ 792              		.loc 1 121 24 view .LVU252
+ 793 0102 9EE7     		b	.L55
+ 794              	.LVL93:
+ 795              	.L75:
+ 103:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         {
+ 796              		.loc 1 103 21 view .LVU253
+ 797 0104 2546     		mov	r5, r4
+ 798              	.LVL94:
+  34:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   HAL_StatusTypeDef  FlashStatus;
+ 799              		.loc 1 34 11 view .LVU254
+ 800 0106 4FF0FF37 		mov	r7, #-1
+ 801 010a DEE7     		b	.L58
+ 802              	.LVL95:
+ 803              	.L91:
+ 127:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         /* If program operation was failed, a Flash error code is returned */
+ 804              		.loc 1 127 9 is_stmt 1 view .LVU255
+ 127:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         /* If program operation was failed, a Flash error code is returned */
+ 805              		.loc 1 127 23 is_stmt 0 view .LVU256
+ 806 010c 0022     		movs	r2, #0
+ 807 010e 0023     		movs	r3, #0
+ 808 0110 4C49     		ldr	r1, .L99
+ 809 0112 0120     		movs	r0, #1
+ 810 0114 FFF7FEFF 		bl	HAL_FLASH_Program
+ 811              	.LVL96:
+ 129:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         {
+ 812              		.loc 1 129 9 is_stmt 1 view .LVU257
+ 129:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         {
+ 813              		.loc 1 129 12 is_stmt 0 view .LVU258
+ 814 0118 08B1     		cbz	r0, .L63
+ 131:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         }
+ 815              		.loc 1 131 11 is_stmt 1 view .LVU259
+ 131:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         }
+ 816              		.loc 1 131 18 is_stmt 0 view .LVU260
+ 817 011a 0446     		mov	r4, r0
+ 818              	.LVL97:
+ 131:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         }
+ 819              		.loc 1 131 18 view .LVU261
+ 820 011c 91E7     		b	.L55
+ 821              	.LVL98:
+ 822              	.L63:
+ 133:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         pEraseInit.NbSectors = 1;
+ 823              		.loc 1 133 9 is_stmt 1 view .LVU262
+ 133:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         pEraseInit.NbSectors = 1;
+ 824              		.loc 1 133 27 is_stmt 0 view .LVU263
+ 825 011e 0323     		movs	r3, #3
+ 826 0120 0293     		str	r3, [sp, #8]
+ 134:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         pEraseInit.VoltageRange = VOLTAGE_RANGE;
+ 827              		.loc 1 134 9 is_stmt 1 view .LVU264
+ 134:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         pEraseInit.VoltageRange = VOLTAGE_RANGE;
+ 828              		.loc 1 134 30 is_stmt 0 view .LVU265
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s 			page 29
+
+
+ 829 0122 0123     		movs	r3, #1
+ 830 0124 0393     		str	r3, [sp, #12]
+ 135:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         /* Erase Page1 */
+ 831              		.loc 1 135 9 is_stmt 1 view .LVU266
+ 135:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         /* Erase Page1 */
+ 832              		.loc 1 135 33 is_stmt 0 view .LVU267
+ 833 0126 0223     		movs	r3, #2
+ 834 0128 0493     		str	r3, [sp, #16]
+ 137:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         { 
+ 835              		.loc 1 137 9 is_stmt 1 view .LVU268
+ 137:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         { 
+ 836              		.loc 1 137 13 is_stmt 0 view .LVU269
+ 837 012a 4748     		ldr	r0, .L99+4
+ 838              	.LVL99:
+ 137:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         { 
+ 839              		.loc 1 137 13 view .LVU270
+ 840 012c FFF7FEFF 		bl	EE_VerifyPageFullyErased
+ 841              	.LVL100:
+ 137:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         { 
+ 842              		.loc 1 137 11 view .LVU271
+ 843 0130 0546     		mov	r5, r0
+ 844              	.LVL101:
+ 137:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         { 
+ 845              		.loc 1 137 11 view .LVU272
+ 846 0132 0028     		cmp	r0, #0
+ 847 0134 85D1     		bne	.L55
+ 139:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           /* If erase operation was failed, a Flash error code is returned */
+ 848              		.loc 1 139 11 is_stmt 1 view .LVU273
+ 139:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           /* If erase operation was failed, a Flash error code is returned */
+ 849              		.loc 1 139 25 is_stmt 0 view .LVU274
+ 850 0136 05A9     		add	r1, sp, #20
+ 851 0138 6846     		mov	r0, sp
+ 852 013a FFF7FEFF 		bl	HAL_FLASHEx_Erase
+ 853              	.LVL102:
+ 141:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           {
+ 854              		.loc 1 141 11 is_stmt 1 view .LVU275
+ 141:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           {
+ 855              		.loc 1 141 14 is_stmt 0 view .LVU276
+ 856 013e 0446     		mov	r4, r0
+ 857              	.LVL103:
+ 141:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           {
+ 858              		.loc 1 141 14 view .LVU277
+ 859 0140 0028     		cmp	r0, #0
+ 860 0142 7FF47EAF 		bne	.L55
+ 269:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** }
+ 861              		.loc 1 269 10 view .LVU278
+ 862 0146 2C46     		mov	r4, r5
+ 863 0148 7BE7     		b	.L55
+ 864              	.LVL104:
+ 865              	.L90:
+ 149:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         pEraseInit.NbSectors = 1;
+ 866              		.loc 1 149 9 is_stmt 1 view .LVU279
+ 149:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         pEraseInit.NbSectors = 1;
+ 867              		.loc 1 149 27 is_stmt 0 view .LVU280
+ 868 014a 0323     		movs	r3, #3
+ 869 014c 0293     		str	r3, [sp, #8]
+ 150:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         pEraseInit.VoltageRange = VOLTAGE_RANGE;
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s 			page 30
+
+
+ 870              		.loc 1 150 9 is_stmt 1 view .LVU281
+ 151:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         /* Erase Page1 */
+ 871              		.loc 1 151 9 view .LVU282
+ 153:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         { 
+ 872              		.loc 1 153 9 view .LVU283
+ 153:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         { 
+ 873              		.loc 1 153 13 is_stmt 0 view .LVU284
+ 874 014e 3E48     		ldr	r0, .L99+4
+ 875 0150 FFF7FEFF 		bl	EE_VerifyPageFullyErased
+ 876              	.LVL105:
+ 153:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         { 
+ 877              		.loc 1 153 11 view .LVU285
+ 878 0154 38B9     		cbnz	r0, .L65
+ 155:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           /* If erase operation was failed, a Flash error code is returned */
+ 879              		.loc 1 155 11 is_stmt 1 view .LVU286
+ 155:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           /* If erase operation was failed, a Flash error code is returned */
+ 880              		.loc 1 155 25 is_stmt 0 view .LVU287
+ 881 0156 05A9     		add	r1, sp, #20
+ 882 0158 6846     		mov	r0, sp
+ 883 015a FFF7FEFF 		bl	HAL_FLASHEx_Erase
+ 884              	.LVL106:
+ 157:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           {
+ 885              		.loc 1 157 11 is_stmt 1 view .LVU288
+ 157:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           {
+ 886              		.loc 1 157 14 is_stmt 0 view .LVU289
+ 887 015e 0446     		mov	r4, r0
+ 888              	.LVL107:
+ 157:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           {
+ 889              		.loc 1 157 14 view .LVU290
+ 890 0160 0028     		cmp	r0, #0
+ 891 0162 7FF46EAF 		bne	.L55
+ 892              	.LVL108:
+ 893              	.L65:
+ 163:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         /* If program operation was failed, a Flash error code is returned */
+ 894              		.loc 1 163 9 is_stmt 1 view .LVU291
+ 163:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         /* If program operation was failed, a Flash error code is returned */
+ 895              		.loc 1 163 23 is_stmt 0 view .LVU292
+ 896 0166 0022     		movs	r2, #0
+ 897 0168 0023     		movs	r3, #0
+ 898 016a 3649     		ldr	r1, .L99
+ 899 016c 0120     		movs	r0, #1
+ 900 016e FFF7FEFF 		bl	HAL_FLASH_Program
+ 901              	.LVL109:
+ 165:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         {
+ 902              		.loc 1 165 9 is_stmt 1 view .LVU293
+ 165:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         {
+ 903              		.loc 1 165 12 is_stmt 0 view .LVU294
+ 904 0172 0446     		mov	r4, r0
+ 905 0174 0028     		cmp	r0, #0
+ 906 0176 7FF464AF 		bne	.L55
+ 269:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** }
+ 907              		.loc 1 269 10 view .LVU295
+ 908 017a 0024     		movs	r4, #0
+ 909 017c 61E7     		b	.L55
+ 910              	.LVL110:
+ 911              	.L87:
+ 183:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       {
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s 			page 31
+
+
+ 912              		.loc 1 183 7 is_stmt 1 view .LVU296
+ 183:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       {
+ 913              		.loc 1 183 10 is_stmt 0 view .LVU297
+ 914 017e 3CB1     		cbz	r4, .L93
+ 193:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       {
+ 915              		.loc 1 193 12 is_stmt 1 view .LVU298
+ 193:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       {
+ 916              		.loc 1 193 15 is_stmt 0 view .LVU299
+ 917 0180 4FF6FF73 		movw	r3, #65535
+ 918 0184 9C42     		cmp	r4, r3
+ 919 0186 0AD0     		beq	.L94
+ 212:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         {
+ 920              		.loc 1 212 21 view .LVU300
+ 921 0188 2E46     		mov	r6, r5
+  34:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   HAL_StatusTypeDef  FlashStatus;
+ 922              		.loc 1 34 11 view .LVU301
+ 923 018a 4FF0FF37 		mov	r7, #-1
+ 924 018e 1CE0     		b	.L67
+ 925              	.L93:
+ 186:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         /* If erase/program operation was failed, a Flash error code is returned */
+ 926              		.loc 1 186 9 is_stmt 1 view .LVU302
+ 186:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         /* If erase/program operation was failed, a Flash error code is returned */
+ 927              		.loc 1 186 23 is_stmt 0 view .LVU303
+ 928 0190 FFF7FEFF 		bl	EE_Format
+ 929              	.LVL111:
+ 188:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         {
+ 930              		.loc 1 188 9 is_stmt 1 view .LVU304
+ 188:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         {
+ 931              		.loc 1 188 12 is_stmt 0 view .LVU305
+ 932 0194 0028     		cmp	r0, #0
+ 933 0196 3FF454AF 		beq	.L55
+ 190:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         }
+ 934              		.loc 1 190 11 is_stmt 1 view .LVU306
+ 190:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         }
+ 935              		.loc 1 190 18 is_stmt 0 view .LVU307
+ 936 019a 0446     		mov	r4, r0
+ 937              	.LVL112:
+ 190:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         }
+ 938              		.loc 1 190 18 view .LVU308
+ 939 019c 51E7     		b	.L55
+ 940              	.LVL113:
+ 941              	.L94:
+ 195:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         pEraseInit.NbSectors = 1;
+ 942              		.loc 1 195 9 is_stmt 1 view .LVU309
+ 195:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         pEraseInit.NbSectors = 1;
+ 943              		.loc 1 195 27 is_stmt 0 view .LVU310
+ 944 019e 0323     		movs	r3, #3
+ 945 01a0 0293     		str	r3, [sp, #8]
+ 196:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         pEraseInit.VoltageRange = VOLTAGE_RANGE;
+ 946              		.loc 1 196 9 is_stmt 1 view .LVU311
+ 197:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         /* Erase Page1 */
+ 947              		.loc 1 197 9 view .LVU312
+ 199:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         { 
+ 948              		.loc 1 199 9 view .LVU313
+ 199:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         { 
+ 949              		.loc 1 199 13 is_stmt 0 view .LVU314
+ 950 01a2 2948     		ldr	r0, .L99+4
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s 			page 32
+
+
+ 951 01a4 FFF7FEFF 		bl	EE_VerifyPageFullyErased
+ 952              	.LVL114:
+ 199:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         { 
+ 953              		.loc 1 199 11 view .LVU315
+ 954 01a8 0446     		mov	r4, r0
+ 955              	.LVL115:
+ 199:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         { 
+ 956              		.loc 1 199 11 view .LVU316
+ 957 01aa 08B1     		cbz	r0, .L95
+ 269:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** }
+ 958              		.loc 1 269 10 view .LVU317
+ 959 01ac 2C46     		mov	r4, r5
+ 960 01ae 48E7     		b	.L55
+ 961              	.L95:
+ 201:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           /* If erase operation was failed, a Flash error code is returned */
+ 962              		.loc 1 201 11 is_stmt 1 view .LVU318
+ 201:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           /* If erase operation was failed, a Flash error code is returned */
+ 963              		.loc 1 201 25 is_stmt 0 view .LVU319
+ 964 01b0 05A9     		add	r1, sp, #20
+ 965 01b2 6846     		mov	r0, sp
+ 966 01b4 FFF7FEFF 		bl	HAL_FLASHEx_Erase
+ 967              	.LVL116:
+ 203:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           {
+ 968              		.loc 1 203 11 is_stmt 1 view .LVU320
+ 203:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           {
+ 969              		.loc 1 203 14 is_stmt 0 view .LVU321
+ 970 01b8 0028     		cmp	r0, #0
+ 971 01ba 3FF442AF 		beq	.L55
+ 205:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           }
+ 972              		.loc 1 205 13 is_stmt 1 view .LVU322
+ 205:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           }
+ 973              		.loc 1 205 20 is_stmt 0 view .LVU323
+ 974 01be 0446     		mov	r4, r0
+ 975 01c0 3FE7     		b	.L55
+ 976              	.LVL117:
+ 977              	.L97:
+ 216:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           }
+ 978              		.loc 1 216 13 is_stmt 1 view .LVU324
+ 216:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           }
+ 979              		.loc 1 216 15 is_stmt 0 view .LVU325
+ 980 01c2 37B2     		sxth	r7, r6
+ 981              	.LVL118:
+ 216:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           }
+ 982              		.loc 1 216 15 view .LVU326
+ 983 01c4 0CE0     		b	.L68
+ 984              	.L69:
+ 212:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         {
+ 985              		.loc 1 212 52 is_stmt 1 discriminator 2 view .LVU327
+ 986 01c6 0136     		adds	r6, r6, #1
+ 987              	.LVL119:
+ 212:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         {
+ 988              		.loc 1 212 52 is_stmt 0 discriminator 2 view .LVU328
+ 989 01c8 B6B2     		uxth	r6, r6
+ 990              	.LVL120:
+ 991              	.L67:
+ 212:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         {
+ 992              		.loc 1 212 33 is_stmt 1 discriminator 1 view .LVU329
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s 			page 33
+
+
+ 993 01ca 022E     		cmp	r6, #2
+ 994 01cc 1AD8     		bhi	.L96
+ 214:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           {
+ 995              		.loc 1 214 11 view .LVU330
+ 214:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           {
+ 996              		.loc 1 214 16 is_stmt 0 view .LVU331
+ 997 01ce 1E4B     		ldr	r3, .L99+4
+ 998 01d0 DB88     		ldrh	r3, [r3, #6]
+ 999 01d2 9BB2     		uxth	r3, r3
+ 214:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           {
+ 1000              		.loc 1 214 59 view .LVU332
+ 1001 01d4 3446     		mov	r4, r6
+ 214:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           {
+ 1002              		.loc 1 214 75 view .LVU333
+ 1003 01d6 1D4A     		ldr	r2, .L99+8
+ 1004 01d8 32F81600 		ldrh	r0, [r2, r6, lsl #1]
+ 214:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           {
+ 1005              		.loc 1 214 14 view .LVU334
+ 1006 01dc 8342     		cmp	r3, r0
+ 1007 01de F0D0     		beq	.L97
+ 1008              	.L68:
+ 218:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           {
+ 1009              		.loc 1 218 11 is_stmt 1 view .LVU335
+ 218:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           {
+ 1010              		.loc 1 218 14 is_stmt 0 view .LVU336
+ 1011 01e0 BC42     		cmp	r4, r7
+ 1012 01e2 F0D0     		beq	.L69
+ 221:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****             /* In case variable corresponding to the virtual address was found */
+ 1013              		.loc 1 221 13 is_stmt 1 view .LVU337
+ 221:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****             /* In case variable corresponding to the virtual address was found */
+ 1014              		.loc 1 221 26 is_stmt 0 view .LVU338
+ 1015 01e4 1A49     		ldr	r1, .L99+12
+ 1016 01e6 FFF7FEFF 		bl	EE_ReadVariable
+ 1017              	.LVL121:
+ 223:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****             {
+ 1018              		.loc 1 223 13 is_stmt 1 view .LVU339
+ 223:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****             {
+ 1019              		.loc 1 223 16 is_stmt 0 view .LVU340
+ 1020 01ea 0128     		cmp	r0, #1
+ 1021 01ec EBD0     		beq	.L69
+ 226:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****               /* If program operation was failed, a Flash error code is returned */
+ 1022              		.loc 1 226 15 is_stmt 1 view .LVU341
+ 226:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****               /* If program operation was failed, a Flash error code is returned */
+ 1023              		.loc 1 226 30 is_stmt 0 view .LVU342
+ 1024 01ee 184B     		ldr	r3, .L99+12
+ 1025 01f0 1988     		ldrh	r1, [r3]
+ 1026 01f2 164B     		ldr	r3, .L99+8
+ 1027 01f4 33F81400 		ldrh	r0, [r3, r4, lsl #1]
+ 1028              	.LVL122:
+ 226:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****               /* If program operation was failed, a Flash error code is returned */
+ 1029              		.loc 1 226 30 view .LVU343
+ 1030 01f8 FFF7FEFF 		bl	EE_VerifyPageFullWriteVariable
+ 1031              	.LVL123:
+ 228:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****               {
+ 1032              		.loc 1 228 15 is_stmt 1 view .LVU344
+ 228:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****               {
+ 1033              		.loc 1 228 18 is_stmt 0 view .LVU345
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s 			page 34
+
+
+ 1034 01fc 0446     		mov	r4, r0
+ 1035 01fe 0028     		cmp	r0, #0
+ 1036 0200 E1D0     		beq	.L69
+ 1037 0202 1EE7     		b	.L55
+ 1038              	.LVL124:
+ 1039              	.L96:
+ 236:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         /* If program operation was failed, a Flash error code is returned */
+ 1040              		.loc 1 236 9 is_stmt 1 view .LVU346
+ 236:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         /* If program operation was failed, a Flash error code is returned */
+ 1041              		.loc 1 236 23 is_stmt 0 view .LVU347
+ 1042 0204 0022     		movs	r2, #0
+ 1043 0206 0023     		movs	r3, #0
+ 1044 0208 0F49     		ldr	r1, .L99+4
+ 1045 020a 0120     		movs	r0, #1
+ 1046 020c FFF7FEFF 		bl	HAL_FLASH_Program
+ 1047              	.LVL125:
+ 238:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         {
+ 1048              		.loc 1 238 9 is_stmt 1 view .LVU348
+ 238:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         {
+ 1049              		.loc 1 238 12 is_stmt 0 view .LVU349
+ 1050 0210 0446     		mov	r4, r0
+ 1051 0212 0028     		cmp	r0, #0
+ 1052 0214 7FF415AF 		bne	.L55
+ 242:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         pEraseInit.NbSectors = 1;
+ 1053              		.loc 1 242 9 is_stmt 1 view .LVU350
+ 242:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         pEraseInit.NbSectors = 1;
+ 1054              		.loc 1 242 27 is_stmt 0 view .LVU351
+ 1055 0218 0223     		movs	r3, #2
+ 1056 021a 0293     		str	r3, [sp, #8]
+ 243:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         pEraseInit.VoltageRange = VOLTAGE_RANGE;
+ 1057              		.loc 1 243 9 is_stmt 1 view .LVU352
+ 243:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         pEraseInit.VoltageRange = VOLTAGE_RANGE;
+ 1058              		.loc 1 243 30 is_stmt 0 view .LVU353
+ 1059 021c 0122     		movs	r2, #1
+ 1060 021e 0392     		str	r2, [sp, #12]
+ 244:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         /* Erase Page0 */
+ 1061              		.loc 1 244 9 is_stmt 1 view .LVU354
+ 244:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         /* Erase Page0 */
+ 1062              		.loc 1 244 33 is_stmt 0 view .LVU355
+ 1063 0220 0493     		str	r3, [sp, #16]
+ 246:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         { 
+ 1064              		.loc 1 246 9 is_stmt 1 view .LVU356
+ 246:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         { 
+ 1065              		.loc 1 246 13 is_stmt 0 view .LVU357
+ 1066 0222 0848     		ldr	r0, .L99
+ 1067              	.LVL126:
+ 246:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         { 
+ 1068              		.loc 1 246 13 view .LVU358
+ 1069 0224 FFF7FEFF 		bl	EE_VerifyPageFullyErased
+ 1070              	.LVL127:
+ 246:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         { 
+ 1071              		.loc 1 246 11 view .LVU359
+ 1072 0228 0446     		mov	r4, r0
+ 1073 022a 08B1     		cbz	r0, .L98
+ 269:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** }
+ 1074              		.loc 1 269 10 view .LVU360
+ 1075 022c 2C46     		mov	r4, r5
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s 			page 35
+
+
+ 1076 022e 08E7     		b	.L55
+ 1077              	.L98:
+ 248:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           /* If erase operation was failed, a Flash error code is returned */
+ 1078              		.loc 1 248 11 is_stmt 1 view .LVU361
+ 248:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           /* If erase operation was failed, a Flash error code is returned */
+ 1079              		.loc 1 248 25 is_stmt 0 view .LVU362
+ 1080 0230 05A9     		add	r1, sp, #20
+ 1081 0232 6846     		mov	r0, sp
+ 1082 0234 FFF7FEFF 		bl	HAL_FLASHEx_Erase
+ 1083              	.LVL128:
+ 250:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           {
+ 1084              		.loc 1 250 11 is_stmt 1 view .LVU363
+ 250:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           {
+ 1085              		.loc 1 250 14 is_stmt 0 view .LVU364
+ 1086 0238 0028     		cmp	r0, #0
+ 1087 023a 3FF402AF 		beq	.L55
+ 252:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           }
+ 1088              		.loc 1 252 13 is_stmt 1 view .LVU365
+ 252:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           }
+ 1089              		.loc 1 252 20 is_stmt 0 view .LVU366
+ 1090 023e 0446     		mov	r4, r0
+ 1091 0240 FFE6     		b	.L55
+ 1092              	.L100:
+ 1093 0242 00BF     		.align	2
+ 1094              	.L99:
+ 1095 0244 00800008 		.word	134250496
+ 1096 0248 00C00008 		.word	134266880
+ 1097 024c 00000000 		.word	VirtAddVarTab
+ 1098 0250 00000000 		.word	DataVar
+ 1099              		.cfi_endproc
+ 1100              	.LFE130:
+ 1102              		.section	.text.EE_PageTransfer,"ax",%progbits
+ 1103              		.align	1
+ 1104              		.syntax unified
+ 1105              		.thumb
+ 1106              		.thumb_func
+ 1108              	EE_PageTransfer:
+ 1109              	.LVL129:
+ 1110              	.LFB137:
+ 576:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 577:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** /**
+ 578:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   * @brief  Transfers last updated variables data from the full Page to
+ 579:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   *   an empty one.
+ 580:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   * @param  VirtAddress: 16 bit virtual address of the variable
+ 581:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   * @param  Data: 16 bit data to be written as variable value
+ 582:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   * @retval Success or error status:
+ 583:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   *           - FLASH_COMPLETE: on success
+ 584:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   *           - PAGE_FULL: if valid page is full
+ 585:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   *           - NO_VALID_PAGE: if no valid page was found
+ 586:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   *           - Flash error code: on write Flash error
+ 587:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   */
+ 588:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** static uint16_t EE_PageTransfer(uint16_t VirtAddress, uint16_t Data)
+ 589:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** {
+ 1111              		.loc 1 589 1 is_stmt 1 view -0
+ 1112              		.cfi_startproc
+ 1113              		@ args = 0, pretend = 0, frame = 24
+ 1114              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s 			page 36
+
+
+ 1115              		.loc 1 589 1 is_stmt 0 view .LVU368
+ 1116 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 1117              		.cfi_def_cfa_offset 24
+ 1118              		.cfi_offset 4, -24
+ 1119              		.cfi_offset 5, -20
+ 1120              		.cfi_offset 6, -16
+ 1121              		.cfi_offset 7, -12
+ 1122              		.cfi_offset 8, -8
+ 1123              		.cfi_offset 14, -4
+ 1124 0004 86B0     		sub	sp, sp, #24
+ 1125              		.cfi_def_cfa_offset 48
+ 1126 0006 0546     		mov	r5, r0
+ 1127 0008 8846     		mov	r8, r1
+ 590:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   HAL_StatusTypeDef FlashStatus = HAL_OK;
+ 1128              		.loc 1 590 3 is_stmt 1 view .LVU369
+ 1129              	.LVL130:
+ 591:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   uint32_t NewPageAddress = EEPROM_START_ADDRESS;
+ 1130              		.loc 1 591 3 view .LVU370
+ 592:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   uint16_t OldPageId=0;
+ 1131              		.loc 1 592 3 view .LVU371
+ 593:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   uint16_t ValidPage = PAGE0, VarIdx = 0;
+ 1132              		.loc 1 593 3 view .LVU372
+ 594:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   uint16_t EepromStatus = 0, ReadStatus = 0;
+ 1133              		.loc 1 594 3 view .LVU373
+ 595:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   uint32_t SectorError = 0;
+ 1134              		.loc 1 595 3 view .LVU374
+ 1135              		.loc 1 595 12 is_stmt 0 view .LVU375
+ 1136 000a 0020     		movs	r0, #0
+ 1137              	.LVL131:
+ 1138              		.loc 1 595 12 view .LVU376
+ 1139 000c 0590     		str	r0, [sp, #20]
+ 596:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   FLASH_EraseInitTypeDef pEraseInit;
+ 1140              		.loc 1 596 3 is_stmt 1 view .LVU377
+ 597:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 598:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* Get active Page for read operation */
+ 599:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   ValidPage = EE_FindValidPage(READ_FROM_VALID_PAGE);
+ 1141              		.loc 1 599 3 view .LVU378
+ 1142              		.loc 1 599 15 is_stmt 0 view .LVU379
+ 1143 000e FFF7FEFF 		bl	EE_FindValidPage
+ 1144              	.LVL132:
+ 600:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 601:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   if (ValidPage == PAGE1)       /* Page1 valid */
+ 1145              		.loc 1 601 3 is_stmt 1 view .LVU380
+ 1146              		.loc 1 601 6 is_stmt 0 view .LVU381
+ 1147 0012 0128     		cmp	r0, #1
+ 1148 0014 10D0     		beq	.L110
+ 602:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   {
+ 603:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     /* New page address where variable will be moved to */
+ 604:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     NewPageAddress = PAGE0_BASE_ADDRESS;
+ 605:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 606:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     /* Old page ID where variable will be taken from */
+ 607:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     OldPageId = PAGE1_ID;
+ 608:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   }
+ 609:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   else if (ValidPage == PAGE0)  /* Page0 valid */
+ 1149              		.loc 1 609 8 is_stmt 1 view .LVU382
+ 1150              		.loc 1 609 11 is_stmt 0 view .LVU383
+ 1151 0016 0028     		cmp	r0, #0
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s 			page 37
+
+
+ 1152 0018 47D1     		bne	.L111
+ 610:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   {
+ 611:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     /* New page address  where variable will be moved to */
+ 612:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     NewPageAddress = PAGE1_BASE_ADDRESS;
+ 613:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 614:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     /* Old page ID where variable will be taken from */
+ 615:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     OldPageId = PAGE0_ID;
+ 1153              		.loc 1 615 15 view .LVU384
+ 1154 001a 0227     		movs	r7, #2
+ 612:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 1155              		.loc 1 612 20 view .LVU385
+ 1156 001c 244E     		ldr	r6, .L116
+ 1157              	.L102:
+ 1158              	.LVL133:
+ 616:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   }
+ 617:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   else
+ 618:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   {
+ 619:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     return NO_VALID_PAGE;       /* No valid Page */
+ 620:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   }
+ 621:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 622:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* Set the new Page status to RECEIVE_DATA status */
+ 623:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   FlashStatus = HAL_FLASH_Program(TYPEPROGRAM_HALFWORD, NewPageAddress, RECEIVE_DATA);  
+ 1159              		.loc 1 623 3 is_stmt 1 view .LVU386
+ 1160              		.loc 1 623 17 is_stmt 0 view .LVU387
+ 1161 001e 4EF6EE62 		movw	r2, #61166
+ 1162 0022 0023     		movs	r3, #0
+ 1163 0024 3146     		mov	r1, r6
+ 1164 0026 0120     		movs	r0, #1
+ 1165              	.LVL134:
+ 1166              		.loc 1 623 17 view .LVU388
+ 1167 0028 FFF7FEFF 		bl	HAL_FLASH_Program
+ 1168              	.LVL135:
+ 624:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* If program operation was failed, a Flash error code is returned */
+ 625:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   if (FlashStatus != HAL_OK)
+ 1169              		.loc 1 625 3 is_stmt 1 view .LVU389
+ 1170              		.loc 1 625 6 is_stmt 0 view .LVU390
+ 1171 002c 0446     		mov	r4, r0
+ 1172 002e 30B1     		cbz	r0, .L114
+ 1173              	.LVL136:
+ 1174              	.L103:
+ 626:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   {
+ 627:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     return FlashStatus;
+ 628:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   }
+ 629:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   
+ 630:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* Write the variable passed as parameter in the new active page */
+ 631:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   EepromStatus = EE_VerifyPageFullWriteVariable(VirtAddress, Data);
+ 632:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* If program operation was failed, a Flash error code is returned */
+ 633:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   if (EepromStatus != HAL_OK)
+ 634:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   {
+ 635:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     return EepromStatus;
+ 636:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   }
+ 637:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 638:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* Transfer process: transfer variables from old to the new active page */
+ 639:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   for (VarIdx = 0; VarIdx < NB_OF_VAR; VarIdx++)
+ 640:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   {
+ 641:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     if (VirtAddVarTab[VarIdx] != VirtAddress)  /* Check each variable except the one passed as para
+ 642:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     {
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s 			page 38
+
+
+ 643:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       /* Read the other last variable updates */
+ 644:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       ReadStatus = EE_ReadVariable(VirtAddVarTab[VarIdx], &DataVar);
+ 645:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       /* In case variable corresponding to the virtual address was found */
+ 646:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       if (ReadStatus != 0x1)
+ 647:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       {
+ 648:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         /* Transfer the variable to the new active page */
+ 649:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         EepromStatus = EE_VerifyPageFullWriteVariable(VirtAddVarTab[VarIdx], DataVar);
+ 650:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         /* If program operation was failed, a Flash error code is returned */
+ 651:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         if (EepromStatus != HAL_OK)
+ 652:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         {
+ 653:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           return EepromStatus;
+ 654:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         }
+ 655:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       }
+ 656:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     }
+ 657:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   }
+ 658:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 659:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   pEraseInit.TypeErase = TYPEERASE_SECTORS;
+ 660:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   pEraseInit.Sector = OldPageId;
+ 661:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   pEraseInit.NbSectors = 1;
+ 662:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   pEraseInit.VoltageRange = VOLTAGE_RANGE;
+ 663:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   
+ 664:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* Erase the old Page: Set old Page status to ERASED status */
+ 665:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   FlashStatus = HAL_FLASHEx_Erase(&pEraseInit, &SectorError);  
+ 666:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* If erase operation was failed, a Flash error code is returned */
+ 667:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   if (FlashStatus != HAL_OK)
+ 668:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   {
+ 669:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     return FlashStatus;
+ 670:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   }
+ 671:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 672:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* Set new Page status to VALID_PAGE status */
+ 673:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   FlashStatus = HAL_FLASH_Program(TYPEPROGRAM_HALFWORD, NewPageAddress, VALID_PAGE);   
+ 674:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* If program operation was failed, a Flash error code is returned */
+ 675:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   if (FlashStatus != HAL_OK)
+ 676:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   {
+ 677:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     return FlashStatus;
+ 678:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   }
+ 679:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** 
+ 680:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   /* Return last operation flash status */
+ 681:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   return FlashStatus;
+ 682:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** }...
+ 1175              		.loc 1 682 1 view .LVU391
+ 1176 0030 2046     		mov	r0, r4
+ 1177 0032 06B0     		add	sp, sp, #24
+ 1178              		.cfi_remember_state
+ 1179              		.cfi_def_cfa_offset 24
+ 1180              		@ sp needed
+ 1181 0034 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 1182              	.LVL137:
+ 1183              	.L110:
+ 1184              		.cfi_restore_state
+ 607:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     OldPageId = PAGE1_ID;
+ 1185              		.loc 1 607 15 view .LVU392
+ 1186 0038 0327     		movs	r7, #3
+ 604:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     NewPageAddress = PAGE0_BASE_ADDRESS;
+ 1187              		.loc 1 604 20 view .LVU393
+ 1188 003a 1E4E     		ldr	r6, .L116+4
+ 1189 003c EFE7     		b	.L102
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s 			page 39
+
+
+ 1190              	.LVL138:
+ 1191              	.L114:
+ 631:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   EepromStatus = EE_VerifyPageFullWriteVariable(VirtAddress, Data);
+ 1192              		.loc 1 631 3 is_stmt 1 view .LVU394
+ 631:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   EepromStatus = EE_VerifyPageFullWriteVariable(VirtAddress, Data);
+ 1193              		.loc 1 631 18 is_stmt 0 view .LVU395
+ 1194 003e 4146     		mov	r1, r8
+ 1195 0040 2846     		mov	r0, r5
+ 1196              	.LVL139:
+ 631:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   EepromStatus = EE_VerifyPageFullWriteVariable(VirtAddress, Data);
+ 1197              		.loc 1 631 18 view .LVU396
+ 1198 0042 FFF7FEFF 		bl	EE_VerifyPageFullWriteVariable
+ 1199              	.LVL140:
+ 633:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   if (EepromStatus != HAL_OK)
+ 1200              		.loc 1 633 3 is_stmt 1 view .LVU397
+ 633:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   if (EepromStatus != HAL_OK)
+ 1201              		.loc 1 633 6 is_stmt 0 view .LVU398
+ 1202 0046 0446     		mov	r4, r0
+ 1203 0048 10B1     		cbz	r0, .L105
+ 1204 004a F1E7     		b	.L103
+ 1205              	.LVL141:
+ 1206              	.L106:
+ 639:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   for (VarIdx = 0; VarIdx < NB_OF_VAR; VarIdx++)
+ 1207              		.loc 1 639 46 is_stmt 1 discriminator 2 view .LVU399
+ 1208 004c 0134     		adds	r4, r4, #1
+ 1209              	.LVL142:
+ 639:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   for (VarIdx = 0; VarIdx < NB_OF_VAR; VarIdx++)
+ 1210              		.loc 1 639 46 is_stmt 0 discriminator 2 view .LVU400
+ 1211 004e A4B2     		uxth	r4, r4
+ 1212              	.LVL143:
+ 1213              	.L105:
+ 639:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   for (VarIdx = 0; VarIdx < NB_OF_VAR; VarIdx++)
+ 1214              		.loc 1 639 27 is_stmt 1 discriminator 1 view .LVU401
+ 1215 0050 022C     		cmp	r4, #2
+ 1216 0052 14D8     		bhi	.L115
+ 641:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     if (VirtAddVarTab[VarIdx] != VirtAddress)  /* Check each variable except the one passed as para
+ 1217              		.loc 1 641 5 view .LVU402
+ 641:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     if (VirtAddVarTab[VarIdx] != VirtAddress)  /* Check each variable except the one passed as para
+ 1218              		.loc 1 641 22 is_stmt 0 view .LVU403
+ 1219 0054 184B     		ldr	r3, .L116+8
+ 1220 0056 33F81400 		ldrh	r0, [r3, r4, lsl #1]
+ 641:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     if (VirtAddVarTab[VarIdx] != VirtAddress)  /* Check each variable except the one passed as para
+ 1221              		.loc 1 641 8 view .LVU404
+ 1222 005a A842     		cmp	r0, r5
+ 1223 005c F6D0     		beq	.L106
+ 644:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       ReadStatus = EE_ReadVariable(VirtAddVarTab[VarIdx], &DataVar);
+ 1224              		.loc 1 644 7 is_stmt 1 view .LVU405
+ 644:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       ReadStatus = EE_ReadVariable(VirtAddVarTab[VarIdx], &DataVar);
+ 1225              		.loc 1 644 20 is_stmt 0 view .LVU406
+ 1226 005e 1749     		ldr	r1, .L116+12
+ 1227 0060 FFF7FEFF 		bl	EE_ReadVariable
+ 1228              	.LVL144:
+ 646:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       if (ReadStatus != 0x1)
+ 1229              		.loc 1 646 7 is_stmt 1 view .LVU407
+ 646:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****       if (ReadStatus != 0x1)
+ 1230              		.loc 1 646 10 is_stmt 0 view .LVU408
+ 1231 0064 0128     		cmp	r0, #1
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s 			page 40
+
+
+ 1232 0066 F1D0     		beq	.L106
+ 649:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         EepromStatus = EE_VerifyPageFullWriteVariable(VirtAddVarTab[VarIdx], DataVar);
+ 1233              		.loc 1 649 9 is_stmt 1 view .LVU409
+ 649:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         EepromStatus = EE_VerifyPageFullWriteVariable(VirtAddVarTab[VarIdx], DataVar);
+ 1234              		.loc 1 649 24 is_stmt 0 view .LVU410
+ 1235 0068 144B     		ldr	r3, .L116+12
+ 1236 006a 1988     		ldrh	r1, [r3]
+ 1237 006c 124B     		ldr	r3, .L116+8
+ 1238 006e 33F81400 		ldrh	r0, [r3, r4, lsl #1]
+ 1239              	.LVL145:
+ 649:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         EepromStatus = EE_VerifyPageFullWriteVariable(VirtAddVarTab[VarIdx], DataVar);
+ 1240              		.loc 1 649 24 view .LVU411
+ 1241 0072 FFF7FEFF 		bl	EE_VerifyPageFullWriteVariable
+ 1242              	.LVL146:
+ 651:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         if (EepromStatus != HAL_OK)
+ 1243              		.loc 1 651 9 is_stmt 1 view .LVU412
+ 651:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****         if (EepromStatus != HAL_OK)
+ 1244              		.loc 1 651 12 is_stmt 0 view .LVU413
+ 1245 0076 0028     		cmp	r0, #0
+ 1246 0078 E8D0     		beq	.L106
+ 653:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           return EepromStatus;
+ 1247              		.loc 1 653 18 view .LVU414
+ 1248 007a 0446     		mov	r4, r0
+ 1249              	.LVL147:
+ 653:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****           return EepromStatus;
+ 1250              		.loc 1 653 18 view .LVU415
+ 1251 007c D8E7     		b	.L103
+ 1252              	.LVL148:
+ 1253              	.L115:
+ 659:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   pEraseInit.TypeErase = TYPEERASE_SECTORS;
+ 1254              		.loc 1 659 3 is_stmt 1 view .LVU416
+ 659:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   pEraseInit.TypeErase = TYPEERASE_SECTORS;
+ 1255              		.loc 1 659 24 is_stmt 0 view .LVU417
+ 1256 007e 0023     		movs	r3, #0
+ 1257 0080 0093     		str	r3, [sp]
+ 660:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   pEraseInit.Sector = OldPageId;
+ 1258              		.loc 1 660 3 is_stmt 1 view .LVU418
+ 660:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   pEraseInit.Sector = OldPageId;
+ 1259              		.loc 1 660 21 is_stmt 0 view .LVU419
+ 1260 0082 0297     		str	r7, [sp, #8]
+ 661:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   pEraseInit.NbSectors = 1;
+ 1261              		.loc 1 661 3 is_stmt 1 view .LVU420
+ 661:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   pEraseInit.NbSectors = 1;
+ 1262              		.loc 1 661 24 is_stmt 0 view .LVU421
+ 1263 0084 0123     		movs	r3, #1
+ 1264 0086 0393     		str	r3, [sp, #12]
+ 662:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   pEraseInit.VoltageRange = VOLTAGE_RANGE;
+ 1265              		.loc 1 662 3 is_stmt 1 view .LVU422
+ 662:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   pEraseInit.VoltageRange = VOLTAGE_RANGE;
+ 1266              		.loc 1 662 27 is_stmt 0 view .LVU423
+ 1267 0088 0223     		movs	r3, #2
+ 1268 008a 0493     		str	r3, [sp, #16]
+ 665:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   FlashStatus = HAL_FLASHEx_Erase(&pEraseInit, &SectorError);  
+ 1269              		.loc 1 665 3 is_stmt 1 view .LVU424
+ 665:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   FlashStatus = HAL_FLASHEx_Erase(&pEraseInit, &SectorError);  
+ 1270              		.loc 1 665 17 is_stmt 0 view .LVU425
+ 1271 008c 05A9     		add	r1, sp, #20
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s 			page 41
+
+
+ 1272 008e 6846     		mov	r0, sp
+ 1273 0090 FFF7FEFF 		bl	HAL_FLASHEx_Erase
+ 1274              	.LVL149:
+ 667:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   if (FlashStatus != HAL_OK)
+ 1275              		.loc 1 667 3 is_stmt 1 view .LVU426
+ 667:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   if (FlashStatus != HAL_OK)
+ 1276              		.loc 1 667 6 is_stmt 0 view .LVU427
+ 1277 0094 0446     		mov	r4, r0
+ 1278              	.LVL150:
+ 667:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   if (FlashStatus != HAL_OK)
+ 1279              		.loc 1 667 6 view .LVU428
+ 1280 0096 0028     		cmp	r0, #0
+ 1281 0098 CAD1     		bne	.L103
+ 673:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   FlashStatus = HAL_FLASH_Program(TYPEPROGRAM_HALFWORD, NewPageAddress, VALID_PAGE);   
+ 1282              		.loc 1 673 3 is_stmt 1 view .LVU429
+ 673:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   FlashStatus = HAL_FLASH_Program(TYPEPROGRAM_HALFWORD, NewPageAddress, VALID_PAGE);   
+ 1283              		.loc 1 673 17 is_stmt 0 view .LVU430
+ 1284 009a 0022     		movs	r2, #0
+ 1285 009c 0023     		movs	r3, #0
+ 1286 009e 3146     		mov	r1, r6
+ 1287 00a0 0120     		movs	r0, #1
+ 1288              	.LVL151:
+ 673:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   FlashStatus = HAL_FLASH_Program(TYPEPROGRAM_HALFWORD, NewPageAddress, VALID_PAGE);   
+ 1289              		.loc 1 673 17 view .LVU431
+ 1290 00a2 FFF7FEFF 		bl	HAL_FLASH_Program
+ 1291              	.LVL152:
+ 675:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   if (FlashStatus != HAL_OK)
+ 1292              		.loc 1 675 3 is_stmt 1 view .LVU432
+ 675:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   if (FlashStatus != HAL_OK)
+ 1293              		.loc 1 675 6 is_stmt 0 view .LVU433
+ 1294 00a6 0446     		mov	r4, r0
+ 1295 00a8 C2E7     		b	.L103
+ 1296              	.LVL153:
+ 1297              	.L111:
+ 619:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     return NO_VALID_PAGE;       /* No valid Page */
+ 1298              		.loc 1 619 12 view .LVU434
+ 1299 00aa AB24     		movs	r4, #171
+ 1300 00ac C0E7     		b	.L103
+ 1301              	.L117:
+ 1302 00ae 00BF     		.align	2
+ 1303              	.L116:
+ 1304 00b0 00C00008 		.word	134266880
+ 1305 00b4 00800008 		.word	134250496
+ 1306 00b8 00000000 		.word	VirtAddVarTab
+ 1307 00bc 00000000 		.word	DataVar
+ 1308              		.cfi_endproc
+ 1309              	.LFE137:
+ 1311              		.section	.text.EE_WriteVariable,"ax",%progbits
+ 1312              		.align	1
+ 1313              		.global	EE_WriteVariable
+ 1314              		.syntax unified
+ 1315              		.thumb
+ 1316              		.thumb_func
+ 1318              	EE_WriteVariable:
+ 1319              	.LVL154:
+ 1320              	.LFB133:
+ 380:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** {
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s 			page 42
+
+
+ 1321              		.loc 1 380 1 is_stmt 1 view -0
+ 1322              		.cfi_startproc
+ 1323              		@ args = 0, pretend = 0, frame = 0
+ 1324              		@ frame_needed = 0, uses_anonymous_args = 0
+ 380:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** {
+ 1325              		.loc 1 380 1 is_stmt 0 view .LVU436
+ 1326 0000 38B5     		push	{r3, r4, r5, lr}
+ 1327              		.cfi_def_cfa_offset 16
+ 1328              		.cfi_offset 3, -16
+ 1329              		.cfi_offset 4, -12
+ 1330              		.cfi_offset 5, -8
+ 1331              		.cfi_offset 14, -4
+ 1332 0002 0446     		mov	r4, r0
+ 1333 0004 0D46     		mov	r5, r1
+ 381:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   uint16_t Status = 0;
+ 1334              		.loc 1 381 3 is_stmt 1 view .LVU437
+ 1335              	.LVL155:
+ 384:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   Status = EE_VerifyPageFullWriteVariable(VirtAddress, Data);
+ 1336              		.loc 1 384 3 view .LVU438
+ 384:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   Status = EE_VerifyPageFullWriteVariable(VirtAddress, Data);
+ 1337              		.loc 1 384 12 is_stmt 0 view .LVU439
+ 1338 0006 FFF7FEFF 		bl	EE_VerifyPageFullWriteVariable
+ 1339              	.LVL156:
+ 387:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   if (Status == PAGE_FULL)
+ 1340              		.loc 1 387 3 is_stmt 1 view .LVU440
+ 387:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   if (Status == PAGE_FULL)
+ 1341              		.loc 1 387 6 is_stmt 0 view .LVU441
+ 1342 000a 8028     		cmp	r0, #128
+ 1343 000c 00D0     		beq	.L121
+ 1344              	.L119:
+ 394:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****   return Status;
+ 1345              		.loc 1 394 3 is_stmt 1 view .LVU442
+ 395:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c **** }
+ 1346              		.loc 1 395 1 is_stmt 0 view .LVU443
+ 1347 000e 38BD     		pop	{r3, r4, r5, pc}
+ 1348              	.L121:
+ 390:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     Status = EE_PageTransfer(VirtAddress, Data);
+ 1349              		.loc 1 390 5 is_stmt 1 view .LVU444
+ 390:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     Status = EE_PageTransfer(VirtAddress, Data);
+ 1350              		.loc 1 390 14 is_stmt 0 view .LVU445
+ 1351 0010 2946     		mov	r1, r5
+ 1352 0012 2046     		mov	r0, r4
+ 1353              	.LVL157:
+ 390:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     Status = EE_PageTransfer(VirtAddress, Data);
+ 1354              		.loc 1 390 14 view .LVU446
+ 1355 0014 FFF7FEFF 		bl	EE_PageTransfer
+ 1356              	.LVL158:
+ 390:Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c ****     Status = EE_PageTransfer(VirtAddress, Data);
+ 1357              		.loc 1 390 14 view .LVU447
+ 1358 0018 F9E7     		b	.L119
+ 1359              		.cfi_endproc
+ 1360              	.LFE133:
+ 1362              		.global	DataVar
+ 1363              		.section	.bss.DataVar,"aw",%nobits
+ 1364              		.align	1
+ 1367              	DataVar:
+ 1368 0000 0000     		.space	2
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s 			page 43
+
+
+ 1369              		.text
+ 1370              	.Letext0:
+ 1371              		.file 2 "c:\\users\\igorn\\appdata\\roaming\\code\\user\\globalstorage\\bmd.stm32-for-vscode\\@xpa
+ 1372              		.file 3 "c:\\users\\igorn\\appdata\\roaming\\code\\user\\globalstorage\\bmd.stm32-for-vscode\\@xpa
+ 1373              		.file 4 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+ 1374              		.file 5 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h"
+ 1375              		.file 6 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h"
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s 			page 44
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 NOS_Memory.c
+C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s:21     .text.EE_VerifyPageFullyErased:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s:26     .text.EE_VerifyPageFullyErased:00000000 EE_VerifyPageFullyErased
+C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s:76     .text.EE_VerifyPageFullyErased:00000020 $d
+C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s:81     .text.EE_FindValidPage:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s:86     .text.EE_FindValidPage:00000000 EE_FindValidPage
+C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s:187    .text.EE_FindValidPage:00000048 $d
+C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s:193    .text.EE_VerifyPageFullWriteVariable:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s:198    .text.EE_VerifyPageFullWriteVariable:00000000 EE_VerifyPageFullWriteVariable
+C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s:297    .text.EE_VerifyPageFullWriteVariable:00000050 $d
+C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s:302    .text.EE_Format:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s:307    .text.EE_Format:00000000 EE_Format
+C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s:410    .text.EE_Format:00000058 $d
+C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s:416    .text.EE_ReadVariable:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s:422    .text.EE_ReadVariable:00000000 EE_ReadVariable
+C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s:518    .text.EE_ReadVariable:00000048 $d
+C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s:523    .text.EE_Init:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s:529    .text.EE_Init:00000000 EE_Init
+C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s:1095   .text.EE_Init:00000244 $d
+C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s:1367   .bss.DataVar:00000000 DataVar
+C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s:1103   .text.EE_PageTransfer:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s:1108   .text.EE_PageTransfer:00000000 EE_PageTransfer
+C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s:1304   .text.EE_PageTransfer:000000b0 $d
+C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s:1312   .text.EE_WriteVariable:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s:1318   .text.EE_WriteVariable:00000000 EE_WriteVariable
+C:\Users\igorn\AppData\Local\Temp\cctI0TPV.s:1364   .bss.DataVar:00000000 $d
+
+UNDEFINED SYMBOLS
+HAL_FLASH_Program
+HAL_FLASHEx_Erase
+VirtAddVarTab

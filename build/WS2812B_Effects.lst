@@ -1,0 +1,243 @@
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccJtRI9X.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"WS2812B_Effects.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c"
+  20              		.section	.text.visInit,"ax",%progbits
+  21              		.align	1
+  22              		.global	visInit
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	visInit:
+  28              	.LFB130:
+   1:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** #include <stdint.h>
+   2:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** 
+   3:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** #include "stm32f4xx_hal.h"
+   4:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** #include "WS2812B_Core.h"
+   5:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** #include <stdlib.h>
+   6:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** extern WS2812_Struct ws2812b;
+   7:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** // RGB Framebuffers
+   8:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** uint8_t frameBuffer1[3*8*96];
+   9:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** uint8_t frameBuffer2[3*8*64];
+  10:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** uint8_t frameBuffer3[3*8*32];
+  11:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** 
+  12:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** // Helper defines
+  13:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** #define newColor(r, g, b) (((uint32_t)(r) << 16) | ((uint32_t)(g) <<  8) | (b))
+  14:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** #define Red(c) ((uint8_t)((c >> 16) & 0xFF))
+  15:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** #define Green(c) ((uint8_t)((c >> 8) & 0xFF))
+  16:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** #define Blue(c) ((uint8_t)(c & 0xFF))
+  17:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** 
+  18:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** void visInit()
+  19:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** {
+  29              		.loc 1 19 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33 0000 08B5     		push	{r3, lr}
+  34              		.cfi_def_cfa_offset 8
+  35              		.cfi_offset 3, -8
+  36              		.cfi_offset 14, -4
+  20:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** 		// Set output channel/pin, GPIO_PIN_0 = 0, for GPIO_PIN_5 = 5 - this has to correspond to WS2812B
+  21:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** 		ws2812b.item[0].channel = 2;
+  37              		.loc 1 21 3 view .LVU1
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccJtRI9X.s 			page 2
+
+
+  38              		.loc 1 21 27 is_stmt 0 view .LVU2
+  39 0002 0D4B     		ldr	r3, .L3
+  40 0004 0222     		movs	r2, #2
+  41 0006 1A73     		strb	r2, [r3, #12]
+  22:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** 		ws2812b.item[0].frameBufferPointer = frameBuffer1;
+  42              		.loc 1 22 3 is_stmt 1 view .LVU3
+  43              		.loc 1 22 38 is_stmt 0 view .LVU4
+  44 0008 0C4A     		ldr	r2, .L3+4
+  45 000a 1A60     		str	r2, [r3]
+  23:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** 	    ws2812b.item[0].frameBufferSize = sizeof(frameBuffer1);
+  46              		.loc 1 23 6 is_stmt 1 view .LVU5
+  47              		.loc 1 23 38 is_stmt 0 view .LVU6
+  48 000c 4FF41062 		mov	r2, #2304
+  49 0010 5A60     		str	r2, [r3, #4]
+  24:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** 		ws2812b.item[1].channel = 3;
+  50              		.loc 1 24 3 is_stmt 1 view .LVU7
+  51              		.loc 1 24 27 is_stmt 0 view .LVU8
+  52 0012 0322     		movs	r2, #3
+  53 0014 1A77     		strb	r2, [r3, #28]
+  25:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** 		ws2812b.item[1].frameBufferPointer = frameBuffer2;
+  54              		.loc 1 25 3 is_stmt 1 view .LVU9
+  55              		.loc 1 25 38 is_stmt 0 view .LVU10
+  56 0016 0A4A     		ldr	r2, .L3+8
+  57 0018 1A61     		str	r2, [r3, #16]
+  26:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** 	    ws2812b.item[1].frameBufferSize = sizeof(frameBuffer2);
+  58              		.loc 1 26 6 is_stmt 1 view .LVU11
+  59              		.loc 1 26 38 is_stmt 0 view .LVU12
+  60 001a 4FF4C062 		mov	r2, #1536
+  61 001e 5A61     		str	r2, [r3, #20]
+  27:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** 		ws2812b.item[2].channel = 0;
+  62              		.loc 1 27 3 is_stmt 1 view .LVU13
+  63              		.loc 1 27 27 is_stmt 0 view .LVU14
+  64 0020 0022     		movs	r2, #0
+  65 0022 83F82C20 		strb	r2, [r3, #44]
+  28:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** 		ws2812b.item[2].frameBufferPointer = frameBuffer3;
+  66              		.loc 1 28 3 is_stmt 1 view .LVU15
+  67              		.loc 1 28 38 is_stmt 0 view .LVU16
+  68 0026 074A     		ldr	r2, .L3+12
+  69 0028 1A62     		str	r2, [r3, #32]
+  29:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** 	    ws2812b.item[2].frameBufferSize = sizeof(frameBuffer3);
+  70              		.loc 1 29 6 is_stmt 1 view .LVU17
+  71              		.loc 1 29 38 is_stmt 0 view .LVU18
+  72 002a 4FF44072 		mov	r2, #768
+  73 002e 5A62     		str	r2, [r3, #36]
+  30:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** 	ws2812b_init();
+  74              		.loc 1 30 2 is_stmt 1 view .LVU19
+  75 0030 FFF7FEFF 		bl	ws2812b_init
+  76              	.LVL0:
+  31:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** }
+  77              		.loc 1 31 1 is_stmt 0 view .LVU20
+  78 0034 08BD     		pop	{r3, pc}
+  79              	.L4:
+  80 0036 00BF     		.align	2
+  81              	.L3:
+  82 0038 00000000 		.word	ws2812b
+  83 003c 00000000 		.word	frameBuffer1
+  84 0040 00000000 		.word	frameBuffer2
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccJtRI9X.s 			page 3
+
+
+  85 0044 00000000 		.word	frameBuffer3
+  86              		.cfi_endproc
+  87              	.LFE130:
+  89              		.section	.text.visHandle,"ax",%progbits
+  90              		.align	1
+  91              		.global	visHandle
+  92              		.syntax unified
+  93              		.thumb
+  94              		.thumb_func
+  96              	visHandle:
+  97              	.LFB131:
+  32:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** 
+  33:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** 
+  34:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** void visHandle()
+  35:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** {
+  98              		.loc 1 35 1 is_stmt 1 view -0
+  99              		.cfi_startproc
+ 100              		@ args = 0, pretend = 0, frame = 0
+ 101              		@ frame_needed = 0, uses_anonymous_args = 0
+ 102 0000 08B5     		push	{r3, lr}
+ 103              		.cfi_def_cfa_offset 8
+ 104              		.cfi_offset 3, -8
+ 105              		.cfi_offset 14, -4
+  36:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** 
+  37:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** 	if(ws2812b.transferComplete)
+ 106              		.loc 1 37 2 view .LVU22
+ 107              		.loc 1 37 12 is_stmt 0 view .LVU23
+ 108 0002 064B     		ldr	r3, .L9
+ 109 0004 93F83030 		ldrb	r3, [r3, #48]	@ zero_extendqisi2
+ 110              		.loc 1 37 4 view .LVU24
+ 111 0008 03B9     		cbnz	r3, .L8
+ 112              	.L5:
+  38:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** 	{
+  39:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** 		// Update your framebuffer here or swap buffers
+  40:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** 
+  41:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** 		// Signal that buffer is changed and transfer new data
+  42:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** 		ws2812b.startTransfer = 1;
+  43:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** 		ws2812b_handle();
+  44:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** 	}
+  45:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** 	
+  46:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** }...
+ 113              		.loc 1 46 1 view .LVU25
+ 114 000a 08BD     		pop	{r3, pc}
+ 115              	.L8:
+  42:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** 		ws2812b.startTransfer = 1;
+ 116              		.loc 1 42 3 is_stmt 1 view .LVU26
+  42:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** 		ws2812b.startTransfer = 1;
+ 117              		.loc 1 42 25 is_stmt 0 view .LVU27
+ 118 000c 034B     		ldr	r3, .L9
+ 119 000e 0122     		movs	r2, #1
+ 120 0010 83F83120 		strb	r2, [r3, #49]
+  43:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** 		ws2812b_handle();
+ 121              		.loc 1 43 3 is_stmt 1 view .LVU28
+ 122 0014 FFF7FEFF 		bl	ws2812b_handle
+ 123              	.LVL1:
+ 124              		.loc 1 46 1 is_stmt 0 view .LVU29
+ 125 0018 F7E7     		b	.L5
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccJtRI9X.s 			page 4
+
+
+ 126              	.L10:
+ 127 001a 00BF     		.align	2
+ 128              	.L9:
+ 129 001c 00000000 		.word	ws2812b
+ 130              		.cfi_endproc
+ 131              	.LFE131:
+ 133              		.global	frameBuffer3
+ 134              		.section	.bss.frameBuffer3,"aw",%nobits
+ 135              		.align	2
+ 138              	frameBuffer3:
+ 139 0000 00000000 		.space	768
+ 139      00000000 
+ 139      00000000 
+ 139      00000000 
+ 139      00000000 
+ 140              		.global	frameBuffer2
+ 141              		.section	.bss.frameBuffer2,"aw",%nobits
+ 142              		.align	2
+ 145              	frameBuffer2:
+ 146 0000 00000000 		.space	1536
+ 146      00000000 
+ 146      00000000 
+ 146      00000000 
+ 146      00000000 
+ 147              		.global	frameBuffer1
+ 148              		.section	.bss.frameBuffer1,"aw",%nobits
+ 149              		.align	2
+ 152              	frameBuffer1:
+ 153 0000 00000000 		.space	2304
+ 153      00000000 
+ 153      00000000 
+ 153      00000000 
+ 153      00000000 
+ 154              		.text
+ 155              	.Letext0:
+ 156              		.file 2 "c:\\users\\igorn\\appdata\\roaming\\code\\user\\globalstorage\\bmd.stm32-for-vscode\\@xpa
+ 157              		.file 3 "c:\\users\\igorn\\appdata\\roaming\\code\\user\\globalstorage\\bmd.stm32-for-vscode\\@xpa
+ 158              		.file 4 "Core/Src/NOS_LIB_Driver/Inc/WS2812B_Core.h"
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccJtRI9X.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 WS2812B_Effects.c
+C:\Users\igorn\AppData\Local\Temp\ccJtRI9X.s:21     .text.visInit:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\ccJtRI9X.s:27     .text.visInit:00000000 visInit
+C:\Users\igorn\AppData\Local\Temp\ccJtRI9X.s:82     .text.visInit:00000038 $d
+C:\Users\igorn\AppData\Local\Temp\ccJtRI9X.s:152    .bss.frameBuffer1:00000000 frameBuffer1
+C:\Users\igorn\AppData\Local\Temp\ccJtRI9X.s:145    .bss.frameBuffer2:00000000 frameBuffer2
+C:\Users\igorn\AppData\Local\Temp\ccJtRI9X.s:138    .bss.frameBuffer3:00000000 frameBuffer3
+C:\Users\igorn\AppData\Local\Temp\ccJtRI9X.s:90     .text.visHandle:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\ccJtRI9X.s:96     .text.visHandle:00000000 visHandle
+C:\Users\igorn\AppData\Local\Temp\ccJtRI9X.s:129    .text.visHandle:0000001c $d
+C:\Users\igorn\AppData\Local\Temp\ccJtRI9X.s:135    .bss.frameBuffer3:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\ccJtRI9X.s:142    .bss.frameBuffer2:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\ccJtRI9X.s:149    .bss.frameBuffer1:00000000 $d
+
+UNDEFINED SYMBOLS
+ws2812b_init
+ws2812b
+ws2812b_handle
