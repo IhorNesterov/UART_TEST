@@ -8,24 +8,6 @@
 #ifndef NOS_WS2812B_STRIP
 #define NOS_WS2812B_STRIP
 
-
-/**
-  * @brief  Strip structure.
-  * Warning : No Base init avalaible
-  * @param frameBuffer pointer on core frame buffer in WS2812B_Core 
-  * @param pixels pointer on pixelBuffer
-  * @param pixelCount int count of Leds in strip
-  * @param bright int (0-100) brightness of led
-  * @retval void,in future will be NOS_System_State
-  */
-typedef struct NOS_WS2812B_STRIP_t
-{
-    uint8_t* frameBuffer;
-    PixelColor* pixels;
-    int pixelCount;
-    int bright;
-}WS2812B_Strip;
-
 /**
   * @brief  Initialization of strip struct.
   * Warning : No Base init avalaible

@@ -197,6 +197,54 @@ typedef struct NOS_ModBus_Struct_t
 typedef enum Language_e{English,Ukrainian} Language;
 typedef enum MoveDirection_e {UP,DOWN,RIGHT,LEFT} MoveDirection;
 
+
+typedef enum Button_State_e
+{
+    Idle,pressed,released,pressDone
+}Button_State;
+
+typedef struct NOS_Button_t
+{
+    bool pressed;
+    bool released;
+    bool pressDone;
+
+    uint32_t timer;
+    uint32_t pressedTime;
+    uint32_t releasedTime;
+    uint32_t lastDoneTime;
+
+}NOS_Button;
+
+typedef struct SinValue_t
+{
+    int value;
+
+    int minValue;
+    int maxValue;
+    int increment;
+    bool rise;
+    bool fall;
+}SinValue;
+
+
+/**
+  * @brief  Strip structure.
+  * Warning : No Base init avalaible
+  * @param frameBuffer pointer on core frame buffer in WS2812B_Core 
+  * @param pixels pointer on pixelBuffer
+  * @param pixelCount int count of Leds in strip
+  * @param bright int (0-100) brightness of led
+  * @retval void,in future will be NOS_System_State
+  */
+typedef struct NOS_WS2812B_STRIP_t
+{
+    uint8_t* frameBuffer;
+    PixelColor* pixels;
+    int pixelCount;
+    int bright;
+}WS2812B_Strip;
+
 /* STM32 Core structures begin*/
 
 

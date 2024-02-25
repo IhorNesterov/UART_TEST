@@ -3,6 +3,7 @@
 #include "NOS_Includes.h"
 
 uint16_t GetCRC16 (uint8_t *nData, uint8_t wLength);
+
 void NOS_ModBus_ParseMasterCommand(ModBus_Master_Command* master,uint8_t* buff,uint8_t offset);
 void NOS_ModBus_ParseSlaveCommand(ModBus_Slave_Command* slave,uint8_t* buff,uint8_t offset);
 

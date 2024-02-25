@@ -67,6 +67,12 @@ bool endReceive = false;
 int receiveTime = 0;
 
 SinValue bright = {0};
+
+NOS_Button button = {0};
+
+GPIO_PIN PA6 = {0};
+GPIO_PIN PA7 = {0};
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -162,26 +168,32 @@ int main(void)
   NOS_TimeEvent_Init(&uartTestEvent, 1000);
   NOS_WS2812B_Strip_TestFill(&stripA);
   NOS_Math_SinValue_Init(&bright,20,60,1);
+
+  NOS_Button_Init(&button);
+
+  NOS_GPIO_PinInit(&PA6,GPIOA,GPIO_PIN_6,0);
+  NOS_GPIO_PinInit(&PA7,GPIOA,GPIO_PIN_7,0);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+
+    if(rx_flag)
+    {
+      char mess[] = "Recieved!"; 
+      NOS_WS2812B_Strip_SetPixelByRGB(&stripA,29,0x00a529c4);
+      HAL_UART_Transmit(&huart2,&mess,10,1000);
+      rx_flag = false;
+    }
+
     if (NOS_TimeEvent_Check(&tetrisUpdateEvent))
     { 
-      if(rx_flag)
-      {
-        char mess[] = "Recieved!"; 
-        NOS_WS2812B_Strip_SetPixelByRGB(&stripA,29,0x00a529c4);
-        HAL_UART_Transmit(&huart2,&mess,10,1000);
-        rx_flag = false;
-      }
       NOS_Math_SinValue_Handler(&bright);
       NOS_TimeEvent_FinishEvent(&tetrisUpdateEvent);
     }
     
-
     if (NOS_TimeEvent_Check(&screenUpdateEvent))
     {
       stripA.bright = NOS_Math_GetSinValue(&bright);
@@ -190,6 +202,26 @@ int main(void)
 
       NOS_TimeEvent_FinishEvent(&screenUpdateEvent);
     }
+
+    if(NOS_Button_CheckPressDone(&button))
+    {
+      HAL_UART_Transmit(&huart2,button.lastDoneTime,sizeof(uint32_t),1000);
+      NOS_WS2812B_Strip_SetPixelByRGB(&stripA,30,0x00a529c4);
+
+      NOS_Button_PressDoneHandler(&button);
+      HAL_GPIO_TogglePin(PA6.Port,PA6.Pin);
+    }
+
+    if(NOS_Button_isPressed(&button))
+    {
+      HAL_GPIO_WritePin(PA7.Port,PA7.Pin,0);
+    }
+    else
+    {
+      HAL_GPIO_WritePin(PA7.Port,PA7.Pin,1);
+    }
+
+
 
     /* USER CODE END WHILE */
 
@@ -322,11 +354,23 @@ static void MX_USART2_UART_Init(void)
   */
 static void MX_GPIO_Init(void)
 {
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
 /* USER CODE BEGIN MX_GPIO_Init_1 */
 /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPIOE_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
+
+  /*Configure GPIO pins : PE3 PE4 */
+  GPIO_InitStruct.Pin = GPIO_PIN_3|GPIO_PIN_4;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI3_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI3_IRQn);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */
@@ -344,13 +388,23 @@ void SysTick_Handler(void)
   NOS_TimeEvent_TickHandler(&tetrisUpdateEvent);
   NOS_TimeEvent_TickHandler(&screenUpdateEvent);
   NOS_TimeEvent_TickHandler(&uartTestEvent);
-
-  if(startReceive)
-  {
-    receiveTime++;
-  }
+  NOS_Button_TimerHandler(&button);
+  receiveTime++;
   /* USER CODE END SysTick_IRQn 1 */
 }
+
+void EXTI3_IRQHandler(void)
+{
+  /* USER CODE BEGIN EXTI3_IRQn 0 */
+
+  /* USER CODE END EXTI3_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_3);
+  /* USER CODE BEGIN EXTI3_IRQn 1 */
+
+
+  /* USER CODE END EXTI3_IRQn 1 */
+}
+
 /* USER CODE END 4 */
 
 /**

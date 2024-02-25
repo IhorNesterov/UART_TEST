@@ -35,7 +35,8 @@ build/main.o: Core/Src/main.c Core/Inc/main.h \
  Core/Inc/../Src/NOS_LIB_Driver/Inc/NOS_Time.h \
  Core/Inc/../Src/NOS_LIB_Driver/Inc/NOS_ModBus.h \
  Core/Inc/../Src/NOS_LIB_Driver/Inc/NOS_GPIO.h \
- Core/Inc/../Src/NOS_LIB_Driver/Inc/NOS_Math.h
+ Core/Inc/../Src/NOS_LIB_Driver/Inc/NOS_Math.h \
+ Core/Inc/../Src/NOS_LIB_Driver/Inc/NOS_Button.h
 Core/Inc/main.h:
 Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 Core/Inc/stm32f4xx_hal_conf.h:
@@ -76,3 +77,4 @@ Core/Inc/../Src/NOS_LIB_Driver/Inc/NOS_Time.h:
 Core/Inc/../Src/NOS_LIB_Driver/Inc/NOS_ModBus.h:
 Core/Inc/../Src/NOS_LIB_Driver/Inc/NOS_GPIO.h:
 Core/Inc/../Src/NOS_LIB_Driver/Inc/NOS_Math.h:
+Core/Inc/../Src/NOS_LIB_Driver/Inc/NOS_Button.h:

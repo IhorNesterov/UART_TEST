@@ -8,6 +8,8 @@
 #include "NOS_ModBus.h"
 #include "NOS_GPIO.h"
 #include "NOS_Math.h"
+
+#include "NOS_Button.h"
 //#include "NOS_BaseColors.h"
 //#include "NOS_BitOperations.h"
 #endif 
