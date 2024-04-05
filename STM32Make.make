@@ -38,10 +38,12 @@ BUILD_DIR = build
 C_SOURCES =  \
 Core/Src/NOS_16_Games/Tetris/NOS_WS2812B_TetrisGame.c \
 Core/Src/NOS_LIB_Driver/Src/NOS_BaseColors.c \
+Core/Src/NOS_LIB_Driver/Src/NOS_Button.c \
+Core/Src/NOS_LIB_Driver/Src/NOS_FlashMemory.c \
 Core/Src/NOS_LIB_Driver/Src/NOS_GPIO.c \
 Core/Src/NOS_LIB_Driver/Src/NOS_Math.c \
-Core/Src/NOS_LIB_Driver/Src/NOS_Memory.c \
 Core/Src/NOS_LIB_Driver/Src/NOS_ModBus.c \
+Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c \
 Core/Src/NOS_LIB_Driver/Src/NOS_Time.c \
 Core/Src/NOS_LIB_Driver/Src/NOS_WS2812B_Strip.c \
 Core/Src/NOS_LIB_Driver/Src/WS2812B.c \
@@ -60,13 +62,17 @@ Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c \
 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c \
 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c \
 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c \
+Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pcd.c \
+Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pcd_ex.c \
 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c \
 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c \
 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c \
 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c \
+Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c \
 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c \
 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c \
-Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c
+Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c \
+Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_usb.c
 
 
 CPP_SOURCES = \

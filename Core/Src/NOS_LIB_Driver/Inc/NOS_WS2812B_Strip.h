@@ -31,6 +31,8 @@ void NOS_WS2812B_Strip_CoreSetPixel(WS2812B_Strip* strip,int pixelPos,uint8_t r,
 
 void NOS_WS2812B_Strip_SetPixel(WS2812B_Strip* strip,int pixelPos,uint8_t r, uint8_t g, uint8_t b);
 
+void NOS_WS2812B_Strip_ColorFill(WS2812B_Strip* strip,PixelColor color);
+
 void NOS_WS2812B_Strip_Clear(WS2812B_Strip* strip);
 
 void NOS_WS2812B_Strip_Update(WS2812B_Strip* strip);
@@ -38,5 +40,7 @@ void NOS_WS2812B_Strip_Update(WS2812B_Strip* strip);
 void NOS_WS2812B_Strip_TestFill(WS2812B_Strip* strip);
 
 void NOS_WS2812B_Strip_SetPixelByRGB(WS2812B_Strip* strip,int pixelPos,uint32_t rgb);
+
+void NOS_WS2812B_Strip_SetBright(WS2812B_Strip* strip,uint8_t bright);
 
 #endif

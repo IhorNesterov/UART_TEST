@@ -64,6 +64,14 @@ void NOS_WS2812B_Strip_TestFill(WS2812B_Strip* strip)
     }
 }
 
+void NOS_WS2812B_Strip_ColorFill(WS2812B_Strip* strip,PixelColor color)
+{
+    for(int i = 0; i < strip->pixelCount; i++)
+    {
+        NOS_WS2812B_Strip_SetPixel(strip,i,color.R,color.G,color.B);
+    }
+}
+
 void NOS_WS2812B_Strip_SetPixelByRGB(WS2812B_Strip* strip,int pixelPos,uint32_t rgb)
 {
     uint8_t R = (rgb & 0x00FF0000) >> 16;
@@ -71,4 +79,9 @@ void NOS_WS2812B_Strip_SetPixelByRGB(WS2812B_Strip* strip,int pixelPos,uint32_t 
     uint8_t B = rgb & 0x000000FF;
 
     NOS_WS2812B_Strip_SetPixel(strip,pixelPos,R,G,B);
+}
+
+void NOS_WS2812B_Strip_SetBright(WS2812B_Strip* strip,uint8_t bright)
+{
+    strip->bright = bright;
 }

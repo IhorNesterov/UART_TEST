@@ -1,4 +1,4 @@
-#include "NOS_Memory.h"
+#include "NOS_FlashMemory.h"
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/

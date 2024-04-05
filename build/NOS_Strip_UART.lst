@@ -1,0 +1,574 @@
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccOHxlbG.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"NOS_Strip_UART.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c"
+  20              		.section	.rodata.NOS_Strip_Uart_ParseCommand.str1.4,"aMS",%progbits,1
+  21              		.align	2
+  22              	.LC0:
+  23 0000 72656164 		.ascii	"ready!\000"
+  23      792100
+  24              		.section	.text.NOS_Strip_Uart_ParseCommand,"ax",%progbits
+  25              		.align	1
+  26              		.global	NOS_Strip_Uart_ParseCommand
+  27              		.syntax unified
+  28              		.thumb
+  29              		.thumb_func
+  31              	NOS_Strip_Uart_ParseCommand:
+  32              	.LVL0:
+  33              	.LFB130:
+   1:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c **** #include "NOS_Strip_UART.h"
+   2:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c **** #include "NOS_WS2812B_Strip.h"
+   3:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c **** 
+   4:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c **** 
+   5:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c **** const char* NOS_Strip_Uart_ParseCommand(WS2812B_Strip* strip,uint8_t* command)
+   6:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c **** {
+  34              		.loc 1 6 1 view -0
+  35              		.cfi_startproc
+  36              		@ args = 0, pretend = 0, frame = 0
+  37              		@ frame_needed = 0, uses_anonymous_args = 0
+   7:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****     NOS_Short tempShort;
+  38              		.loc 1 7 5 view .LVU1
+   8:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****     int currPos = 4;
+  39              		.loc 1 8 5 view .LVU2
+   9:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****     int tempInt1,tempInt2;
+  40              		.loc 1 9 5 view .LVU3
+  10:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****     uint8_t r,g,b;
+  41              		.loc 1 10 5 view .LVU4
+  11:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c **** 
+  12:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****     if(command != NULL)
+  42              		.loc 1 12 5 view .LVU5
+  43              		.loc 1 12 7 is_stmt 0 view .LVU6
+  44 0000 0029     		cmp	r1, #0
+  45 0002 00F08380 		beq	.L21
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccOHxlbG.s 			page 2
+
+
+   6:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****     NOS_Short tempShort;
+  46              		.loc 1 6 1 view .LVU7
+  47 0006 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+  48              		.cfi_def_cfa_offset 28
+  49              		.cfi_offset 4, -28
+  50              		.cfi_offset 5, -24
+  51              		.cfi_offset 6, -20
+  52              		.cfi_offset 7, -16
+  53              		.cfi_offset 8, -12
+  54              		.cfi_offset 9, -8
+  55              		.cfi_offset 14, -4
+  56 000a 83B0     		sub	sp, sp, #12
+  57              		.cfi_def_cfa_offset 40
+  58 000c 0446     		mov	r4, r0
+  59 000e 0D46     		mov	r5, r1
+  13:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****     {
+  14:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****             switch (command[3])
+  60              		.loc 1 14 13 is_stmt 1 view .LVU8
+  61              		.loc 1 14 28 is_stmt 0 view .LVU9
+  62 0010 CB78     		ldrb	r3, [r1, #3]	@ zero_extendqisi2
+  63              		.loc 1 14 13 view .LVU10
+  64 0012 203B     		subs	r3, r3, #32
+  65 0014 152B     		cmp	r3, #21
+  66 0016 5FD8     		bhi	.L3
+  67 0018 DFE803F0 		tbb	[pc, r3]
+  68              	.L5:
+  69 001c 76       		.byte	(.L17-.L5)/2
+  70 001d 5E       		.byte	(.L3-.L5)/2
+  71 001e 5E       		.byte	(.L3-.L5)/2
+  72 001f 5E       		.byte	(.L3-.L5)/2
+  73 0020 5E       		.byte	(.L3-.L5)/2
+  74 0021 5E       		.byte	(.L3-.L5)/2
+  75 0022 5E       		.byte	(.L3-.L5)/2
+  76 0023 5E       		.byte	(.L3-.L5)/2
+  77 0024 5E       		.byte	(.L3-.L5)/2
+  78 0025 5E       		.byte	(.L3-.L5)/2
+  79 0026 5E       		.byte	(.L3-.L5)/2
+  80 0027 5E       		.byte	(.L3-.L5)/2
+  81 0028 5E       		.byte	(.L3-.L5)/2
+  82 0029 5E       		.byte	(.L3-.L5)/2
+  83 002a 5E       		.byte	(.L3-.L5)/2
+  84 002b 5E       		.byte	(.L3-.L5)/2
+  85 002c 0B       		.byte	(.L9-.L5)/2
+  86 002d 1B       		.byte	(.L8-.L5)/2
+  87 002e 3C       		.byte	(.L7-.L5)/2
+  88 002f 4E       		.byte	(.L6-.L5)/2
+  89 0030 5E       		.byte	(.L3-.L5)/2
+  90 0031 52       		.byte	(.L4-.L5)/2
+  91              		.p2align 1
+  92              	.L9:
+  15:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****             {
+  16:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****             case CHECK_CONNECTION:
+  17:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 return "ready!";
+  18:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****             
+  19:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****             case SET_ONE_PIXEL_COLOR_COMMAND:
+  20:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c **** 
+  21:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 //pixelPos 
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccOHxlbG.s 			page 3
+
+
+  22:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 tempShort.bytes[1] = command[4];
+  93              		.loc 1 22 17 is_stmt 1 view .LVU11
+  94              		.loc 1 22 36 is_stmt 0 view .LVU12
+  95 0032 0B79     		ldrb	r3, [r1, #4]	@ zero_extendqisi2
+  96 0034 4FF00001 		mov	r1, #0	@ movhi
+  97              	.LVL1:
+  98              		.loc 1 22 36 view .LVU13
+  99 0038 63F30F21 		bfi	r1, r3, #8, #8
+ 100              	.LVL2:
+  23:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 tempShort.bytes[0] = command[5];
+ 101              		.loc 1 23 17 is_stmt 1 view .LVU14
+ 102              		.loc 1 23 36 is_stmt 0 view .LVU15
+ 103 003c 6B79     		ldrb	r3, [r5, #5]	@ zero_extendqisi2
+ 104 003e 63F30701 		bfi	r1, r3, #0, #8
+  24:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 tempInt1 = tempShort.data;
+ 105              		.loc 1 24 17 is_stmt 1 view .LVU16
+ 106              	.LVL3:
+  25:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c **** 
+  26:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 //color
+  27:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 r = command[6];
+ 107              		.loc 1 27 17 view .LVU17
+  28:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 g = command[7];
+ 108              		.loc 1 28 17 view .LVU18
+  29:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 b = command[8];
+ 109              		.loc 1 29 17 view .LVU19
+ 110              		.loc 1 29 19 is_stmt 0 view .LVU20
+ 111 0042 2B7A     		ldrb	r3, [r5, #8]	@ zero_extendqisi2
+ 112              	.LVL4:
+  30:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c **** 
+  31:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 NOS_WS2812B_Strip_SetPixel(strip,tempInt1,r,g,b);
+ 113              		.loc 1 31 17 is_stmt 1 view .LVU21
+ 114 0044 0093     		str	r3, [sp]
+ 115              	.LVL5:
+ 116              		.loc 1 31 17 is_stmt 0 view .LVU22
+ 117 0046 EB79     		ldrb	r3, [r5, #7]	@ zero_extendqisi2
+ 118              	.LVL6:
+ 119              		.loc 1 31 17 view .LVU23
+ 120 0048 AA79     		ldrb	r2, [r5, #6]	@ zero_extendqisi2
+ 121 004a 89B2     		uxth	r1, r1
+ 122              	.LVL7:
+ 123              		.loc 1 31 17 view .LVU24
+ 124 004c FFF7FEFF 		bl	NOS_WS2812B_Strip_SetPixel
+ 125              	.LVL8:
+  32:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 break;
+ 126              		.loc 1 32 17 is_stmt 1 view .LVU25
+ 127 0050 43E0     		b	.L1
+ 128              	.LVL9:
+ 129              	.L8:
+  33:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c **** 
+  34:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****             case SET_ROW_PIXEL_COLOR_COMMAND:
+  35:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c **** 
+  36:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 //pixelPos
+  37:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 tempShort.bytes[1] = command[currPos++];
+ 130              		.loc 1 37 17 view .LVU26
+ 131              		.loc 1 37 45 is_stmt 0 view .LVU27
+ 132 0052 0B79     		ldrb	r3, [r1, #4]	@ zero_extendqisi2
+ 133              		.loc 1 37 36 view .LVU28
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccOHxlbG.s 			page 4
+
+
+ 134 0054 4FF00001 		mov	r1, #0	@ movhi
+ 135              	.LVL10:
+ 136              		.loc 1 37 36 view .LVU29
+ 137 0058 63F30F21 		bfi	r1, r3, #8, #8
+ 138              	.LVL11:
+  38:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 tempShort.bytes[0] = command[currPos++];
+ 139              		.loc 1 38 17 is_stmt 1 view .LVU30
+ 140              		.loc 1 38 45 is_stmt 0 view .LVU31
+ 141 005c 6B79     		ldrb	r3, [r5, #5]	@ zero_extendqisi2
+ 142              		.loc 1 38 36 view .LVU32
+ 143 005e 63F30701 		bfi	r1, r3, #0, #8
+  39:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 tempInt1 = tempShort.data;
+ 144              		.loc 1 39 17 is_stmt 1 view .LVU33
+ 145              		.loc 1 39 37 is_stmt 0 view .LVU34
+ 146 0062 8EB2     		uxth	r6, r1
+ 147              	.LVL12:
+  40:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c **** 
+  41:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 //pixelCount
+  42:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 tempShort.bytes[1] = command[currPos++];
+ 148              		.loc 1 42 17 is_stmt 1 view .LVU35
+ 149              		.loc 1 42 45 is_stmt 0 view .LVU36
+ 150 0064 AB79     		ldrb	r3, [r5, #6]	@ zero_extendqisi2
+ 151              		.loc 1 42 36 view .LVU37
+ 152 0066 63F30F21 		bfi	r1, r3, #8, #8
+  43:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 tempShort.bytes[0] = command[currPos++];
+ 153              		.loc 1 43 17 is_stmt 1 view .LVU38
+ 154              	.LVL13:
+ 155              		.loc 1 43 45 is_stmt 0 view .LVU39
+ 156 006a EB79     		ldrb	r3, [r5, #7]	@ zero_extendqisi2
+ 157              		.loc 1 43 36 view .LVU40
+ 158 006c 63F30701 		bfi	r1, r3, #0, #8
+  44:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 tempInt2 = tempShort.data;
+ 159              		.loc 1 44 17 is_stmt 1 view .LVU41
+ 160              		.loc 1 44 37 is_stmt 0 view .LVU42
+ 161 0070 8FB2     		uxth	r7, r1
+ 162              	.LVL14:
+  45:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c **** 
+  46:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 //color
+  47:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 r = command[currPos++];
+ 163              		.loc 1 47 17 is_stmt 1 view .LVU43
+ 164              		.loc 1 47 19 is_stmt 0 view .LVU44
+ 165 0072 95F80890 		ldrb	r9, [r5, #8]	@ zero_extendqisi2
+ 166              	.LVL15:
+  48:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 g = command[currPos++];
+ 167              		.loc 1 48 17 is_stmt 1 view .LVU45
+ 168              		.loc 1 48 19 is_stmt 0 view .LVU46
+ 169 0076 95F80980 		ldrb	r8, [r5, #9]	@ zero_extendqisi2
+ 170              	.LVL16:
+  49:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 b = command[currPos++];
+ 171              		.loc 1 49 17 is_stmt 1 view .LVU47
+ 172              		.loc 1 49 19 is_stmt 0 view .LVU48
+ 173 007a AD7A     		ldrb	r5, [r5, #10]	@ zero_extendqisi2
+ 174              	.LVL17:
+  50:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c **** 
+  51:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 //fill in row
+  52:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 for(int i = tempInt1; i < tempInt2; i++)
+ 175              		.loc 1 52 17 is_stmt 1 view .LVU49
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccOHxlbG.s 			page 5
+
+
+ 176              	.LBB2:
+ 177              		.loc 1 52 21 view .LVU50
+ 178              		.loc 1 52 17 is_stmt 0 view .LVU51
+ 179 007c 07E0     		b	.L11
+ 180              	.LVL18:
+ 181              	.L12:
+  53:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 {
+  54:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                     NOS_WS2812B_Strip_SetPixel(strip,i,r,g,b);
+ 182              		.loc 1 54 21 is_stmt 1 discriminator 3 view .LVU52
+ 183 007e 0095     		str	r5, [sp]
+ 184 0080 4346     		mov	r3, r8
+ 185 0082 4A46     		mov	r2, r9
+ 186 0084 3146     		mov	r1, r6
+ 187              	.LVL19:
+ 188              		.loc 1 54 21 is_stmt 0 discriminator 3 view .LVU53
+ 189 0086 2046     		mov	r0, r4
+ 190 0088 FFF7FEFF 		bl	NOS_WS2812B_Strip_SetPixel
+ 191              	.LVL20:
+  52:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 {
+ 192              		.loc 1 52 54 is_stmt 1 discriminator 3 view .LVU54
+ 193 008c 0136     		adds	r6, r6, #1
+ 194              	.LVL21:
+ 195              	.L11:
+  52:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 {
+ 196              		.loc 1 52 41 discriminator 1 view .LVU55
+ 197 008e BE42     		cmp	r6, r7
+ 198 0090 F5DB     		blt	.L12
+  52:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 {
+ 199              		.loc 1 52 41 is_stmt 0 discriminator 1 view .LVU56
+ 200 0092 22E0     		b	.L1
+ 201              	.LVL22:
+ 202              	.L7:
+  52:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 {
+ 203              		.loc 1 52 41 discriminator 1 view .LVU57
+ 204              	.LBE2:
+  55:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 }
+  56:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c **** 
+  57:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 break;
+  58:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c **** 
+  59:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****             case SET_ALL_PIXEL_ONE_COLOR_COMMAND:
+  60:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c **** 
+  61:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 //color
+  62:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 r = command[currPos++];
+ 205              		.loc 1 62 17 is_stmt 1 view .LVU58
+ 206              		.loc 1 62 19 is_stmt 0 view .LVU59
+ 207 0094 91F80480 		ldrb	r8, [r1, #4]	@ zero_extendqisi2
+ 208              	.LVL23:
+  63:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 g = command[currPos++];
+ 209              		.loc 1 63 17 is_stmt 1 view .LVU60
+ 210              		.loc 1 63 19 is_stmt 0 view .LVU61
+ 211 0098 4F79     		ldrb	r7, [r1, #5]	@ zero_extendqisi2
+ 212              	.LVL24:
+  64:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 b = command[currPos++];
+ 213              		.loc 1 64 17 is_stmt 1 view .LVU62
+ 214              		.loc 1 64 19 is_stmt 0 view .LVU63
+ 215 009a 8E79     		ldrb	r6, [r1, #6]	@ zero_extendqisi2
+ 216              	.LVL25:
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccOHxlbG.s 			page 6
+
+
+  65:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c **** 
+  66:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 //fill all pixels
+  67:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 for(int i = 0; i < strip->pixelCount; i++)
+ 217              		.loc 1 67 17 is_stmt 1 view .LVU64
+ 218              	.LBB3:
+ 219              		.loc 1 67 21 view .LVU65
+ 220              		.loc 1 67 25 is_stmt 0 view .LVU66
+ 221 009c 0025     		movs	r5, #0
+ 222              		.loc 1 67 17 view .LVU67
+ 223 009e 07E0     		b	.L13
+ 224              	.LVL26:
+ 225              	.L14:
+  68:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 {
+  69:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                     NOS_WS2812B_Strip_SetPixel(strip,i,r,g,b);
+ 226              		.loc 1 69 21 is_stmt 1 discriminator 3 view .LVU68
+ 227 00a0 0096     		str	r6, [sp]
+ 228 00a2 3B46     		mov	r3, r7
+ 229 00a4 4246     		mov	r2, r8
+ 230 00a6 2946     		mov	r1, r5
+ 231 00a8 2046     		mov	r0, r4
+ 232 00aa FFF7FEFF 		bl	NOS_WS2812B_Strip_SetPixel
+ 233              	.LVL27:
+  67:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 {
+ 234              		.loc 1 67 56 discriminator 3 view .LVU69
+ 235 00ae 0135     		adds	r5, r5, #1
+ 236              	.LVL28:
+ 237              	.L13:
+  67:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 {
+ 238              		.loc 1 67 34 discriminator 1 view .LVU70
+  67:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 {
+ 239              		.loc 1 67 41 is_stmt 0 discriminator 1 view .LVU71
+ 240 00b0 A368     		ldr	r3, [r4, #8]
+  67:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 {
+ 241              		.loc 1 67 34 discriminator 1 view .LVU72
+ 242 00b2 AB42     		cmp	r3, r5
+ 243 00b4 F4DC     		bgt	.L14
+ 244 00b6 10E0     		b	.L1
+ 245              	.LVL29:
+ 246              	.L6:
+  67:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 {
+ 247              		.loc 1 67 34 discriminator 1 view .LVU73
+ 248              	.LBE3:
+  70:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 }
+  71:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c **** 
+  72:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 break;
+  73:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c **** 
+  74:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****             case SET_BRIGHT_COMMAND:
+  75:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c **** 
+  76:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 NOS_WS2812B_Strip_SetBright(strip,command[currPos++]);
+ 249              		.loc 1 76 17 is_stmt 1 view .LVU74
+ 250              		.loc 1 76 17 is_stmt 0 view .LVU75
+ 251 00b8 0979     		ldrb	r1, [r1, #4]	@ zero_extendqisi2
+ 252              	.LVL30:
+ 253              		.loc 1 76 17 view .LVU76
+ 254 00ba FFF7FEFF 		bl	NOS_WS2812B_Strip_SetBright
+ 255              	.LVL31:
+  77:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c **** 
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccOHxlbG.s 			page 7
+
+
+  78:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 break;
+ 256              		.loc 1 78 17 is_stmt 1 view .LVU77
+  79:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c **** 
+  80:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****             case SET_ALL_PIXEL_COMMAND:
+  81:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c **** 
+  82:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 //Pixel count
+  83:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 tempShort.bytes[1] = command[currPos++];
+  84:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 tempShort.bytes[0] = command[currPos++];
+  85:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 tempInt1 = tempShort.data;
+  86:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c **** 
+  87:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 if(tempInt1 <= strip->pixelCount)
+  88:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 {
+  89:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                     for(int i = 0; i < tempInt1; i++)
+  90:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                     {
+  91:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                         r = command[currPos++];
+  92:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                         g = command[currPos++];
+  93:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                         b = command[currPos++];
+  94:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c **** 
+  95:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                         NOS_WS2812B_Strip_SetPixel(strip,i,r,g,b);
+  96:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                     }
+  97:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 }
+  98:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c **** 
+  99:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                       
+ 100:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****             default:
+ 101:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 return false;
+ 102:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 break;
+ 257              		.loc 1 102 17 view .LVU78
+ 103:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****             }
+ 104:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c **** 
+ 105:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c **** 
+ 106:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****         }
+ 107:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c **** }
+ 258              		.loc 1 107 1 is_stmt 0 view .LVU79
+ 259 00be 0CE0     		b	.L1
+ 260              	.LVL32:
+ 261              	.L4:
+  83:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 tempShort.bytes[0] = command[currPos++];
+ 262              		.loc 1 83 17 is_stmt 1 view .LVU80
+  83:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 tempShort.bytes[0] = command[currPos++];
+ 263              		.loc 1 83 45 is_stmt 0 view .LVU81
+ 264 00c0 0B79     		ldrb	r3, [r1, #4]	@ zero_extendqisi2
+  83:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 tempShort.bytes[0] = command[currPos++];
+ 265              		.loc 1 83 36 view .LVU82
+ 266 00c2 4FF00001 		mov	r1, #0	@ movhi
+ 267              	.LVL33:
+  83:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 tempShort.bytes[0] = command[currPos++];
+ 268              		.loc 1 83 36 view .LVU83
+ 269 00c6 63F30F21 		bfi	r1, r3, #8, #8
+ 270              	.LVL34:
+  84:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 tempInt1 = tempShort.data;
+ 271              		.loc 1 84 17 is_stmt 1 view .LVU84
+  84:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 tempInt1 = tempShort.data;
+ 272              		.loc 1 84 45 is_stmt 0 view .LVU85
+ 273 00ca 6B79     		ldrb	r3, [r5, #5]	@ zero_extendqisi2
+  84:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 tempInt1 = tempShort.data;
+ 274              		.loc 1 84 36 view .LVU86
+ 275 00cc 63F30701 		bfi	r1, r3, #0, #8
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccOHxlbG.s 			page 8
+
+
+  85:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c **** 
+ 276              		.loc 1 85 17 is_stmt 1 view .LVU87
+  85:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c **** 
+ 277              		.loc 1 85 37 is_stmt 0 view .LVU88
+ 278 00d0 8EB2     		uxth	r6, r1
+ 279              	.LVL35:
+  87:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 {
+ 280              		.loc 1 87 17 is_stmt 1 view .LVU89
+  87:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 {
+ 281              		.loc 1 87 37 is_stmt 0 view .LVU90
+ 282 00d2 8368     		ldr	r3, [r0, #8]
+  87:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 {
+ 283              		.loc 1 87 19 view .LVU91
+ 284 00d4 B342     		cmp	r3, r6
+ 285 00d6 13DA     		bge	.L18
+ 286              	.LVL36:
+ 287              	.L3:
+ 101:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 break;
+ 288              		.loc 1 101 17 is_stmt 1 view .LVU92
+ 101:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 break;
+ 289              		.loc 1 101 24 is_stmt 0 view .LVU93
+ 290 00d8 0020     		movs	r0, #0
+ 291              	.LVL37:
+ 292              	.L1:
+ 293              		.loc 1 107 1 view .LVU94
+ 294 00da 03B0     		add	sp, sp, #12
+ 295              		.cfi_remember_state
+ 296              		.cfi_def_cfa_offset 28
+ 297              		@ sp needed
+ 298 00dc BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 299              	.LVL38:
+ 300              	.L16:
+ 301              		.cfi_restore_state
+ 302              	.LBB4:
+  91:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                         g = command[currPos++];
+ 303              		.loc 1 91 25 is_stmt 1 discriminator 3 view .LVU95
+  91:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                         g = command[currPos++];
+ 304              		.loc 1 91 44 is_stmt 0 discriminator 3 view .LVU96
+ 305 00e0 7B1C     		adds	r3, r7, #1
+ 306              	.LVL39:
+  91:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                         g = command[currPos++];
+ 307              		.loc 1 91 27 discriminator 3 view .LVU97
+ 308 00e2 EA5D     		ldrb	r2, [r5, r7]	@ zero_extendqisi2
+ 309              	.LVL40:
+  92:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                         b = command[currPos++];
+ 310              		.loc 1 92 25 is_stmt 1 discriminator 3 view .LVU98
+  92:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                         b = command[currPos++];
+ 311              		.loc 1 92 44 is_stmt 0 discriminator 3 view .LVU99
+ 312 00e4 B91C     		adds	r1, r7, #2
+ 313              	.LVL41:
+  93:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c **** 
+ 314              		.loc 1 93 25 is_stmt 1 discriminator 3 view .LVU100
+  93:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c **** 
+ 315              		.loc 1 93 27 is_stmt 0 discriminator 3 view .LVU101
+ 316 00e6 695C     		ldrb	r1, [r5, r1]	@ zero_extendqisi2
+ 317              	.LVL42:
+  95:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                     }
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccOHxlbG.s 			page 9
+
+
+ 318              		.loc 1 95 25 is_stmt 1 discriminator 3 view .LVU102
+ 319 00e8 0091     		str	r1, [sp]
+ 320              	.LVL43:
+  95:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                     }
+ 321              		.loc 1 95 25 is_stmt 0 discriminator 3 view .LVU103
+ 322 00ea EB5C     		ldrb	r3, [r5, r3]	@ zero_extendqisi2
+ 323 00ec 0337     		adds	r7, r7, #3
+ 324              	.LVL44:
+  95:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                     }
+ 325              		.loc 1 95 25 discriminator 3 view .LVU104
+ 326 00ee 4146     		mov	r1, r8
+ 327              	.LVL45:
+  95:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                     }
+ 328              		.loc 1 95 25 discriminator 3 view .LVU105
+ 329 00f0 2046     		mov	r0, r4
+ 330 00f2 FFF7FEFF 		bl	NOS_WS2812B_Strip_SetPixel
+ 331              	.LVL46:
+  89:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                     {
+ 332              		.loc 1 89 51 is_stmt 1 discriminator 3 view .LVU106
+ 333 00f6 08F10108 		add	r8, r8, #1
+ 334              	.LVL47:
+ 335              	.L15:
+  89:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                     {
+ 336              		.loc 1 89 38 discriminator 1 view .LVU107
+ 337 00fa B045     		cmp	r8, r6
+ 338 00fc F0DB     		blt	.L16
+ 339 00fe EBE7     		b	.L3
+ 340              	.LVL48:
+ 341              	.L18:
+  89:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                     {
+ 342              		.loc 1 89 29 is_stmt 0 view .LVU108
+ 343 0100 4FF00008 		mov	r8, #0
+ 344              	.LBE4:
+  84:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 tempInt1 = tempShort.data;
+ 345              		.loc 1 84 53 view .LVU109
+ 346 0104 0627     		movs	r7, #6
+ 347 0106 F8E7     		b	.L15
+ 348              	.LVL49:
+ 349              	.L17:
+  14:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****             {
+ 350              		.loc 1 14 13 view .LVU110
+ 351 0108 0148     		ldr	r0, .L24
+ 352              	.LVL50:
+  14:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****             {
+ 353              		.loc 1 14 13 view .LVU111
+ 354 010a E6E7     		b	.L1
+ 355              	.LVL51:
+ 356              	.L21:
+ 357              		.cfi_def_cfa_offset 0
+ 358              		.cfi_restore 4
+ 359              		.cfi_restore 5
+ 360              		.cfi_restore 6
+ 361              		.cfi_restore 7
+ 362              		.cfi_restore 8
+ 363              		.cfi_restore 9
+ 364              		.cfi_restore 14
+ 102:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****             }
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccOHxlbG.s 			page 10
+
+
+ 365              		.loc 1 102 17 is_stmt 1 view .LVU112
+ 366              	.LVL52:
+ 367              		.loc 1 107 1 is_stmt 0 view .LVU113
+ 368 010c 7047     		bx	lr
+ 369              	.L25:
+ 370 010e 00BF     		.align	2
+ 371              	.L24:
+ 372 0110 00000000 		.word	.LC0
+ 373              		.cfi_endproc
+ 374              	.LFE130:
+ 376              		.text
+ 377              	.Letext0:
+ 378              		.file 2 "c:\\users\\igorn\\appdata\\roaming\\code\\user\\globalstorage\\bmd.stm32-for-vscode\\@xpa
+ 379              		.file 3 "c:\\users\\igorn\\appdata\\roaming\\code\\user\\globalstorage\\bmd.stm32-for-vscode\\@xpa
+ 380              		.file 4 "Core/Src/NOS_LIB_Driver/Inc/NOS_Typedefs.h"
+ 381              		.file 5 "Core/Src/NOS_LIB_Driver/Inc/NOS_WS2812B_Strip.h"
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccOHxlbG.s 			page 11
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 NOS_Strip_UART.c
+C:\Users\igorn\AppData\Local\Temp\ccOHxlbG.s:21     .rodata.NOS_Strip_Uart_ParseCommand.str1.4:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\ccOHxlbG.s:25     .text.NOS_Strip_Uart_ParseCommand:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\ccOHxlbG.s:31     .text.NOS_Strip_Uart_ParseCommand:00000000 NOS_Strip_Uart_ParseCommand
+C:\Users\igorn\AppData\Local\Temp\ccOHxlbG.s:69     .text.NOS_Strip_Uart_ParseCommand:0000001c $d
+C:\Users\igorn\AppData\Local\Temp\ccOHxlbG.s:91     .text.NOS_Strip_Uart_ParseCommand:00000032 $t
+C:\Users\igorn\AppData\Local\Temp\ccOHxlbG.s:372    .text.NOS_Strip_Uart_ParseCommand:00000110 $d
+
+UNDEFINED SYMBOLS
+NOS_WS2812B_Strip_SetPixel
+NOS_WS2812B_Strip_SetBright

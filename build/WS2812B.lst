@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
   42 0004 7047     		bx	lr
   43              		.cfi_endproc
   44              	.LFE130:
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 2
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 2
 
 
   46              		.section	.text.NOS_WS2812B_Matrix_FullInit,"ax",%progbits
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
   92              		.align	1
   93              		.global	NOS_WS2812B_Matrix_SetPixel
   94              		.syntax unified
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 3
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 3
 
 
   95              		.thumb
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  143              		.cfi_endproc
  144              	.LFE132:
  146              		.section	.text.GetPixelPos,"ax",%progbits
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 4
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 4
 
 
  147              		.align	1
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  192              	NOS_WS2812B_SetPixelColor:
  193              	.LVL11:
  194              	.LFB142:
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 5
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 5
 
 
   44:Core/Src/NOS_LIB_Driver/Src/WS2812B.c **** 
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
   98:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****     currColumn++;
   99:Core/Src/NOS_LIB_Driver/Src/WS2812B.c **** }
  100:Core/Src/NOS_LIB_Driver/Src/WS2812B.c **** 
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 6
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 6
 
 
  101:Core/Src/NOS_LIB_Driver/Src/WS2812B.c **** void NOS_WS2812B_Matrix_SetSymvol(WS2812B_Matrix *matrix, char sym, uint8_t pos)
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  155:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****     {
  156:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****         int before = num;
  157:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****         float after = num - (float)before;
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 7
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 7
 
 
  158:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****         int af = after * 100;
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  212:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****         NOS_WS2812B_Matrix_SetSymvol(matrix, ' ', startpos + 5);
  213:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****     }
  214:Core/Src/NOS_LIB_Driver/Src/WS2812B.c **** }
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 8
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 8
 
 
  215:Core/Src/NOS_LIB_Driver/Src/WS2812B.c **** 
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  240              		.loc 1 225 41 discriminator 1 view .LVU61
  241 0008 0379     		ldrb	r3, [r0, #4]	@ zero_extendqisi2
  242              		.loc 1 225 21 discriminator 1 view .LVU62
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 9
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 9
 
 
  243 000a 8B42     		cmp	r3, r1
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  280 0036 B4EB810F 		cmp	r4, r1, lsl #2
  281 003a 3BD9     		bls	.L22
  282              	.L13:
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 10
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 10
 
 
  243:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****     {
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  319 006e 03D9     		bls	.L16
  320              		.loc 1 260 67 discriminator 1 view .LVU94
  321 0070 C2EBC203 		rsb	r3, r2, r2, lsl #3
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 11
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 11
 
 
  322              		.loc 1 260 38 discriminator 1 view .LVU95
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  359              		.loc 1 233 9 is_stmt 1 view .LVU107
  360 0098 131B     		subs	r3, r2, r4
  361 009a DBB2     		uxtb	r3, r3
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 12
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 12
 
 
  362 009c 0021     		movs	r1, #0
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  256:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****         NOS_WS2812B_SetPixelColor(matrix->textColor, matrix->bright - counter, matrix->bright, 0);
  406              		.loc 1 256 17 is_stmt 0 view .LVU118
  407 00d2 E41A     		subs	r4, r4, r3
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 13
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 13
 
 
  408              	.LVL27:
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  456              	.LVL34:
  457              	.LFB135:
   60:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****     uint8_t currByte = 0;
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 14
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 14
 
 
  458              		.loc 1 60 1 is_stmt 1 view -0
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  501              		.loc 1 88 17 view .LVU139
  502 0020 2146     		mov	r1, r4
  503 0022 C0B2     		uxtb	r0, r0
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 15
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 15
 
 
  504 0024 FFF7FEFF 		bl	GetPixelPos
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  546              	.LVL45:
  547 005a 0246     		mov	r2, r0
  548 005c 5146     		mov	r1, r10
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 16
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 16
 
 
  549 005e 3046     		mov	r0, r6
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  589              		.loc 1 76 19 view .LVU165
  590 0090 0124     		movs	r4, #1
  591              	.L30:
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 17
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 17
 
 
   76:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****         }
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  636              		.cfi_endproc
  637              	.LFE135:
  639              		.section	.text.NOS_WS2812B_Matrix_Update,"ax",%progbits
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 18
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 18
 
 
  640              		.align	1
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  684              		.loc 1 51 14 is_stmt 0 view .LVU186
  685 001c 0025     		movs	r5, #0
   51:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****     {
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 19
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 19
 
 
  686              		.loc 1 51 5 view .LVU187
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  728              		.align	2
  729              	.L45:
  730 0044 ABAAAAAA 		.word	-1431655765
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 20
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 20
 
 
  731              		.cfi_endproc
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  315:Core/Src/NOS_LIB_Driver/Src/WS2812B.c **** 
  316:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****     switch (language)
  317:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****     {
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 21
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 21
 
 
  318:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****     case English:
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  767              	.L48:
  345:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****     for (int i = 0; i < matrix->size->col * matrix->size->row * 3; i++)
  768              		.loc 1 345 23 discriminator 1 view .LVU209
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 22
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 22
 
 
  345:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****     for (int i = 0; i < matrix->size->col * matrix->size->row * 3; i++)
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  364:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****     engine->counter++;
  803              		.loc 1 364 5 view .LVU218
  804              		.loc 1 364 11 is_stmt 0 view .LVU219
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 23
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 23
 
 
  805 0000 8368     		ldr	r3, [r0, #8]
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  848 000c 02D1     		bne	.L52
  378:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****         {
  379:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****             result = (x * 8) + y;
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 24
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 24
 
 
  849              		.loc 1 379 13 is_stmt 1 view .LVU233
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  894 0002 0446     		mov	r4, r0
  391:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****     setlocale(LC_ALL, "Rus");
  895              		.loc 1 391 5 is_stmt 1 view .LVU243
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 25
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 25
 
 
  896 0004 5449     		ldr	r1, .L114
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  949 0043 3C       		.byte	(.L85-.L57)/2
  950 0044 3E       		.byte	(.L84-.L57)/2
  951 0045 40       		.byte	(.L83-.L57)/2
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 26
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 26
 
 
  952 0046 42       		.byte	(.L82-.L57)/2
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  394:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****     /* English upper case */
  395:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****     case 'A':
  396:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****         return Eng_A;
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 27
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 27
 
 
  397:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****         break;
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  446:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****     case 'R':
  447:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****         return Eng_R;
  448:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****         break;
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 28
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 28
 
 
  449:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****     case 'S':
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  503:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****         return Eng_o;
  504:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****         break;
  505:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****     case 'g':
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 29
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 29
 
 
  506:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****         return Ukr_g;
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  560:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****         return Num_5;
  561:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****         break;
  562:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****     case '6':
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 30
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 30
 
 
  563:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****         return Num_6;
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  1034 008a 3948     		ldr	r0, .L114+24
  1035 008c F6E7     		b	.L54
  1036              	.L86:
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 31
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 31
 
 
  415:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****     case 'H':
@@ -1858,7 +1858,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  433:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****     case 'N':
  1073              		.loc 1 433 9 is_stmt 1 view .LVU280
  435:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****         break;
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 32
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 32
 
 
  1074              		.loc 1 435 9 view .LVU281
@@ -1918,7 +1918,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  1110              		.loc 1 453 9 view .LVU299
  453:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****         break;
  1111              		.loc 1 453 16 is_stmt 0 view .LVU300
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 33
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 33
 
 
  1112 00be 3948     		ldr	r0, .L114+76
@@ -1978,7 +1978,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  1148 00d6 3948     		ldr	r0, .L114+100
  1149 00d8 D0E7     		b	.L54
  1150              	.L60:
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 34
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 34
 
 
  472:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****     /* English upper case */
@@ -2038,7 +2038,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  498:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****     case 'd':
  1187              		.loc 1 498 9 is_stmt 1 view .LVU337
  500:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****         break;
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 35
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 35
 
 
  1188              		.loc 1 500 9 view .LVU338
@@ -2098,7 +2098,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  1224              		.loc 1 520 9 view .LVU356
  520:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****         break;
  1225              		.loc 1 520 16 is_stmt 0 view .LVU357
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 36
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 36
 
 
  1226 010a 3948     		ldr	r0, .L114+152
@@ -2158,7 +2158,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  1262 0122 3948     		ldr	r0, .L114+176
  1263 0124 AAE7     		b	.L54
  1264              	.L104:
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 37
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 37
 
 
  539:Core/Src/NOS_LIB_Driver/Src/WS2812B.c **** 
@@ -2218,7 +2218,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  561:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****     case '6':
  1301              		.loc 1 561 9 is_stmt 1 view .LVU394
  563:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****         break;
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 38
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 38
 
 
  1302              		.loc 1 563 9 view .LVU395
@@ -2278,7 +2278,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  1341 0164 00000000 		.word	Eng_D
  1342 0168 00000000 		.word	Eng_E
  1343 016c 00000000 		.word	Eng_F
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 39
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 39
 
 
  1344 0170 00000000 		.word	Eng_G
@@ -2338,7 +2338,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  1399              		.global	NOS_WS2812B_Matrix_SetSymvol
  1400              		.syntax unified
  1401              		.thumb
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 40
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 40
 
 
  1402              		.thumb_func
@@ -2398,7 +2398,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  106:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****     }
  1444              		.loc 1 106 38 discriminator 3 view .LVU424
  1445 001a CA54     		strb	r2, [r1, r3]
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 41
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 41
 
 
  104:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****     {
@@ -2458,7 +2458,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  112:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****     {
  1493              		.loc 1 112 5 view .LVU434
  1494 000e 08E0     		b	.L121
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 42
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 42
 
 
  1495              	.LVL90:
@@ -2518,7 +2518,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  1539 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
  1540              		.cfi_def_cfa_offset 24
  1541              		.cfi_offset 4, -24
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 43
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 43
 
 
  1542              		.cfi_offset 5, -20
@@ -2578,7 +2578,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  1586              		.global	__aeabi_ddiv
  1587              		.global	__aeabi_d2uiz
  1588              		.global	__aeabi_dmul
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 44
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 44
 
 
  1589              		.global	__aeabi_dsub
@@ -2638,7 +2638,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  136:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****     {
  1637              		.loc 1 136 5 view .LVU465
  1638              	.LBB10:
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 45
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 45
 
 
  136:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****     {
@@ -2698,7 +2698,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  1682              	.LVL109:
  1683 005a C6B2     		uxtb	r6, r0
  1684 005c 0AF11803 		add	r3, r10, #24
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 46
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 46
 
 
  1685 0060 6B44     		add	r3, sp, r3
@@ -2758,7 +2758,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  136:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****     {
  1729              		.loc 1 136 31 is_stmt 0 discriminator 1 view .LVU487
  1730              	.LBE12:
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 47
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 47
 
 
  143:Core/Src/NOS_LIB_Driver/Src/WS2812B.c **** 
@@ -2818,7 +2818,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  1772              		.loc 1 145 23 discriminator 1 view .LVU500
  1773 00e6 A245     		cmp	r10, r4
  1774 00e8 EDDA     		bge	.L132
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 48
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 48
 
 
  1775              	.LBE13:
@@ -2878,7 +2878,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  1825              		.cfi_def_cfa_offset 16
  1826              		.cfi_offset 4, -16
  1827              		.cfi_offset 5, -12
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 49
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 49
 
 
  1828              		.cfi_offset 6, -8
@@ -2938,7 +2938,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  1869              		.loc 1 160 9 is_stmt 0 view .LVU519
  1870 0042 FFF7FEFF 		bl	NOS_WS2812B_Matrix_PrintIntNumber
  1871              	.LVL132:
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 50
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 50
 
 
  161:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****         NOS_WS2812B_Matrix_PrintIntNumber(matrix, af, startpos + pow + 1, 2);
@@ -2998,7 +2998,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  167:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****     int startpos = 0;
  1922              		.loc 1 167 1 is_stmt 0 view .LVU526
  1923 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 51
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 51
 
 
  1924              		.cfi_def_cfa_offset 28
@@ -3058,7 +3058,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  1965 002e A6FB0436 		umull	r3, r6, r6, r4
  1966 0032 F608     		lsrs	r6, r6, #3
  1967 0034 3A46     		mov	r2, r7
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 52
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 52
 
 
  1968 0036 06F13001 		add	r1, r6, #48
@@ -3118,7 +3118,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  186:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****             NOS_WS2812B_Matrix_SetSymvol(matrix, 'A', startpos + 8);
  2015              		.loc 1 186 13 is_stmt 1 view .LVU547
  2016 008e 06EB8606 		add	r6, r6, r6, lsl #2
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 53
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 53
 
 
  2017 0092 A4EB4601 		sub	r1, r4, r6, lsl #1
@@ -3178,7 +3178,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  2063              		.loc 1 195 9 view .LVU555
  2064 00ec 07F10802 		add	r2, r7, #8
  2065 00f0 2021     		movs	r1, #32
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 54
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 54
 
 
  2066 00f2 2846     		mov	r0, r5
@@ -3238,7 +3238,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  204:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****     {
  2112              		.loc 1 204 5 view .LVU564
  204:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****     {
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 55
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 55
 
 
  2113              		.loc 1 204 8 is_stmt 0 view .LVU565
@@ -3298,7 +3298,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  2162              		.syntax unified
  2163              		.thumb
  2164              		.thumb_func
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 56
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 56
 
 
  2166              	NOS_WS2812B_Matrix_PrintTemperature:
@@ -3358,7 +3358,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  2209 0026 12DB     		blt	.L168
  298:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****     }
  2210              		.loc 1 298 9 is_stmt 1 view .LVU583
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 57
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 57
 
 
  298:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****     }
@@ -3418,7 +3418,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  2252 0048 002C     		cmp	r4, #0
  2253 004a F9DB     		blt	.L163
  2254 004c EDE7     		b	.L164
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 58
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 58
 
 
  2255              	.LVL181:
@@ -3478,7 +3478,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  2301 000e F2EE047A 		vmov.f32	s15, #1.0e+1
  2302 0012 B4EEE70A 		vcmpe.f32	s0, s15
  2303 0016 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 59
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 59
 
 
  2304 001a 1FD5     		bpl	.L186
@@ -3538,7 +3538,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  2345 005a 19E0     		b	.L169
  2346              	.LVL187:
  2347              	.L186:
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 60
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 60
 
 
  313:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****     }
@@ -3598,7 +3598,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  2389 0090 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
  2390              	.LVL192:
  2391              	.L187:
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 61
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 61
 
 
  339:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****     }
@@ -3658,7 +3658,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  2439 0010 AD08     		lsrs	r5, r5, #2
  2440              	.LVL194:
  354:Core/Src/NOS_LIB_Driver/Src/WS2812B.c ****     {
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 62
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 62
 
 
  2441              		.loc 1 354 5 is_stmt 1 view .LVU638
@@ -3718,7 +3718,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  2487              		.align	2
  2490              	Num_8:
  2491 0000 6C929292 		.ascii	"l\222\222\222l"
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 63
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 63
 
 
  2491      6C
@@ -3778,7 +3778,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  2554      00
  2555              		.global	FullSym
  2556              		.section	.data.FullSym,"aw"
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 64
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 64
 
 
  2557              		.align	2
@@ -3838,7 +3838,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  2620              		.align	2
  2623              	Ukr_ch:
  2624 0000 18202020 		.ascii	"\030   \370"
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 65
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 65
 
 
  2624      F8
@@ -3898,7 +3898,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  2687      00
  2688              		.global	Eng_a
  2689              		.section	.data.Eng_a,"aw"
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 66
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 66
 
 
  2690              		.align	2
@@ -3958,7 +3958,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  2753              		.align	2
  2756              	Eng_R:
  2757 0000 FE123252 		.ascii	"\376\0222R\214"
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 67
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 67
 
 
  2757      8C
@@ -4018,7 +4018,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  2820      00
  2821              		.global	Eng_H
  2822              		.section	.data.Eng_H,"aw"
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 68
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 68
 
 
  2823              		.align	2
@@ -4076,187 +4076,187 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 1
  2883              		.file 6 "c:\\users\\igorn\\appdata\\roaming\\code\\user\\globalstorage\\bmd.stm32-for-vscode\\@xpa
  2884              		.file 7 "Core/Src/NOS_LIB_Driver/Inc/NOS_Math.h"
  2885              		.file 8 "<built-in>"
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 69
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 69
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 WS2812B.c
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:21     .text.NOS_WS2812B_Matrix_BaseInit:00000000 $t
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:27     .text.NOS_WS2812B_Matrix_BaseInit:00000000 NOS_WS2812B_Matrix_BaseInit
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:47     .text.NOS_WS2812B_Matrix_FullInit:00000000 $t
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:53     .text.NOS_WS2812B_Matrix_FullInit:00000000 NOS_WS2812B_Matrix_FullInit
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:92     .text.NOS_WS2812B_Matrix_SetPixel:00000000 $t
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:98     .text.NOS_WS2812B_Matrix_SetPixel:00000000 NOS_WS2812B_Matrix_SetPixel
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:147    .text.GetPixelPos:00000000 $t
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:153    .text.GetPixelPos:00000000 GetPixelPos
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:186    .text.NOS_WS2812B_SetPixelColor:00000000 $t
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:192    .text.NOS_WS2812B_SetPixelColor:00000000 NOS_WS2812B_SetPixelColor
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:215    .text.NOS_WS2812B_EffectRainbow:00000000 $t
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:221    .text.NOS_WS2812B_EffectRainbow:00000000 NOS_WS2812B_EffectRainbow
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:449    .text.NOS_WS2812B_Matrix_PrintSymvol:00000000 $t
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:455    .text.NOS_WS2812B_Matrix_PrintSymvol:00000000 NOS_WS2812B_Matrix_PrintSymvol
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:640    .text.NOS_WS2812B_Matrix_Update:00000000 $t
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:646    .text.NOS_WS2812B_Matrix_Update:00000000 NOS_WS2812B_Matrix_Update
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:730    .text.NOS_WS2812B_Matrix_Update:00000044 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:735    .text.NOS_WS2812B_Matrix_Clear:00000000 $t
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:741    .text.NOS_WS2812B_Matrix_Clear:00000000 NOS_WS2812B_Matrix_Clear
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:789    .text.NOS_WS2812B_EffectEngineHandler:00000000 $t
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:795    .text.NOS_WS2812B_EffectEngineHandler:00000000 NOS_WS2812B_EffectEngineHandler
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:815    .text.Test_GetPixelPos:00000000 $t
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:821    .text.Test_GetPixelPos:00000000 Test_GetPixelPos
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:872    .rodata.Symvol_GetBitMap.str1.4:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:876    .text.Symvol_GetBitMap:00000000 $t
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:882    .text.Symvol_GetBitMap:00000000 Symvol_GetBitMap
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:908    .text.Symvol_GetBitMap:0000001a $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:1000   .text.Symvol_GetBitMap:00000076 $t
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:1338   .text.Symvol_GetBitMap:00000158 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2875   .data.Eng_A:00000000 Eng_A
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2861   .data.Eng_C:00000000 Eng_C
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2854   .data.Eng_D:00000000 Eng_D
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2847   .data.Eng_E:00000000 Eng_E
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2840   .data.Eng_F:00000000 Eng_F
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2833   .data.Eng_G:00000000 Eng_G
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2826   .data.Eng_H:00000000 Eng_H
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2819   .data.Eng_I:00000000 Eng_I
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2812   .data.Eng_J:00000000 Eng_J
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2805   .data.Eng_K:00000000 Eng_K
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2798   .data.Eng_L:00000000 Eng_L
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2791   .data.Eng_M:00000000 Eng_M
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2784   .data.Eng_N:00000000 Eng_N
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2777   .data.Eng_O:00000000 Eng_O
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2770   .data.Eng_P:00000000 Eng_P
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2763   .data.Eng_Q:00000000 Eng_Q
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2756   .data.Eng_R:00000000 Eng_R
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2749   .data.Eng_S:00000000 Eng_S
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2742   .data.Eng_T:00000000 Eng_T
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2735   .data.Eng_U:00000000 Eng_U
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2728   .data.Eng_V:00000000 Eng_V
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2721   .data.Eng_W:00000000 Eng_W
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2714   .data.Eng_X:00000000 Eng_X
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2707   .data.Eng_Y:00000000 Eng_Y
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2700   .data.Eng_Z:00000000 Eng_Z
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2672   .data.Eng_u:00000000 Eng_u
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 70
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:21     .text.NOS_WS2812B_Matrix_BaseInit:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:27     .text.NOS_WS2812B_Matrix_BaseInit:00000000 NOS_WS2812B_Matrix_BaseInit
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:47     .text.NOS_WS2812B_Matrix_FullInit:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:53     .text.NOS_WS2812B_Matrix_FullInit:00000000 NOS_WS2812B_Matrix_FullInit
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:92     .text.NOS_WS2812B_Matrix_SetPixel:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:98     .text.NOS_WS2812B_Matrix_SetPixel:00000000 NOS_WS2812B_Matrix_SetPixel
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:147    .text.GetPixelPos:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:153    .text.GetPixelPos:00000000 GetPixelPos
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:186    .text.NOS_WS2812B_SetPixelColor:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:192    .text.NOS_WS2812B_SetPixelColor:00000000 NOS_WS2812B_SetPixelColor
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:215    .text.NOS_WS2812B_EffectRainbow:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:221    .text.NOS_WS2812B_EffectRainbow:00000000 NOS_WS2812B_EffectRainbow
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:449    .text.NOS_WS2812B_Matrix_PrintSymvol:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:455    .text.NOS_WS2812B_Matrix_PrintSymvol:00000000 NOS_WS2812B_Matrix_PrintSymvol
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:640    .text.NOS_WS2812B_Matrix_Update:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:646    .text.NOS_WS2812B_Matrix_Update:00000000 NOS_WS2812B_Matrix_Update
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:730    .text.NOS_WS2812B_Matrix_Update:00000044 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:735    .text.NOS_WS2812B_Matrix_Clear:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:741    .text.NOS_WS2812B_Matrix_Clear:00000000 NOS_WS2812B_Matrix_Clear
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:789    .text.NOS_WS2812B_EffectEngineHandler:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:795    .text.NOS_WS2812B_EffectEngineHandler:00000000 NOS_WS2812B_EffectEngineHandler
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:815    .text.Test_GetPixelPos:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:821    .text.Test_GetPixelPos:00000000 Test_GetPixelPos
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:872    .rodata.Symvol_GetBitMap.str1.4:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:876    .text.Symvol_GetBitMap:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:882    .text.Symvol_GetBitMap:00000000 Symvol_GetBitMap
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:908    .text.Symvol_GetBitMap:0000001a $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:1000   .text.Symvol_GetBitMap:00000076 $t
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:1338   .text.Symvol_GetBitMap:00000158 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2875   .data.Eng_A:00000000 Eng_A
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2861   .data.Eng_C:00000000 Eng_C
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2854   .data.Eng_D:00000000 Eng_D
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2847   .data.Eng_E:00000000 Eng_E
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2840   .data.Eng_F:00000000 Eng_F
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2833   .data.Eng_G:00000000 Eng_G
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2826   .data.Eng_H:00000000 Eng_H
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2819   .data.Eng_I:00000000 Eng_I
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2812   .data.Eng_J:00000000 Eng_J
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2805   .data.Eng_K:00000000 Eng_K
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2798   .data.Eng_L:00000000 Eng_L
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2791   .data.Eng_M:00000000 Eng_M
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2784   .data.Eng_N:00000000 Eng_N
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2777   .data.Eng_O:00000000 Eng_O
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2770   .data.Eng_P:00000000 Eng_P
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2763   .data.Eng_Q:00000000 Eng_Q
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2756   .data.Eng_R:00000000 Eng_R
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2749   .data.Eng_S:00000000 Eng_S
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2742   .data.Eng_T:00000000 Eng_T
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2735   .data.Eng_U:00000000 Eng_U
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2728   .data.Eng_V:00000000 Eng_V
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2721   .data.Eng_W:00000000 Eng_W
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2714   .data.Eng_X:00000000 Eng_X
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2707   .data.Eng_Y:00000000 Eng_Y
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2700   .data.Eng_Z:00000000 Eng_Z
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2672   .data.Eng_u:00000000 Eng_u
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 70
 
 
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2679   .data.Eng_v:00000000 Eng_v
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2693   .data.Eng_a:00000000 Eng_a
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2686   .data.Eng_c:00000000 Eng_c
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2658   .data.Eng_r:00000000 Eng_r
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2644   .data.Ukr_k:00000000 Ukr_k
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2630   .data.Ukr_d:00000000 Ukr_d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2665   .data.Eng_o:00000000 Eng_o
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2637   .data.Ukr_g:00000000 Ukr_g
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2623   .data.Ukr_ch:00000000 Ukr_ch
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2616   .bss.Space:00000000 Space
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2588   .data.Plus:00000000 Plus
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2581   .data.Minus:00000000 Minus
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2595   .data.Slash:00000000 Slash
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2567   .data.Celcium:00000000 Celcium
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2609   .data.Dot:00000000 Dot
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2602   .data.DoubleDot:00000000 DoubleDot
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2560   .data.FullSym:00000000 FullSym
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2553   .data.Attemption:00000000 Attemption
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2546   .data.Num_0:00000000 Num_0
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2539   .data.Num_1:00000000 Num_1
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2532   .data.Num_2:00000000 Num_2
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2525   .data.Num_3:00000000 Num_3
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2518   .data.Num_4:00000000 Num_4
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2511   .data.Num_5:00000000 Num_5
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2504   .data.Num_6:00000000 Num_6
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2497   .data.Num_7:00000000 Num_7
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2490   .data.Num_8:00000000 Num_8
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2483   .data.Num_9:00000000 Num_9
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2868   .data.Eng_B:00000000 Eng_B
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:1398   .text.NOS_WS2812B_Matrix_SetSymvol:00000000 $t
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:1404   .text.NOS_WS2812B_Matrix_SetSymvol:00000000 NOS_WS2812B_Matrix_SetSymvol
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:1461   .text.NOS_WS2812B_Matrix_PrintStaticString:00000000 $t
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:1467   .text.NOS_WS2812B_Matrix_PrintStaticString:00000000 NOS_WS2812B_Matrix_PrintStaticString
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:1525   .text.NOS_WS2812B_Matrix_PrintDynamicString:00000000 $t
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:1531   .text.NOS_WS2812B_Matrix_PrintDynamicString:00000000 NOS_WS2812B_Matrix_PrintDynamicString
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:1591   .text.NOS_WS2812B_Matrix_PrintIntNumber:00000000 $t
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:1597   .text.NOS_WS2812B_Matrix_PrintIntNumber:00000000 NOS_WS2812B_Matrix_PrintIntNumber
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:1792   .text.NOS_WS2812B_Matrix_PrintIntNumber:000000f8 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:1799   .rodata.NOS_WS2812B_Matrix_PrintFloatNumber.str1.4:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:1803   .text.NOS_WS2812B_Matrix_PrintFloatNumber:00000000 $t
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:1809   .text.NOS_WS2812B_Matrix_PrintFloatNumber:00000000 NOS_WS2812B_Matrix_PrintFloatNumber
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:1903   .text.NOS_WS2812B_Matrix_PrintFloatNumber:0000006c $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:1909   .text.NOS_WS2812B_Matrix_PrintRealTime:00000000 $t
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:1915   .text.NOS_WS2812B_Matrix_PrintRealTime:00000000 NOS_WS2812B_Matrix_PrintRealTime
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2155   .text.NOS_WS2812B_Matrix_PrintRealTime:0000018c $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2160   .text.NOS_WS2812B_Matrix_PrintTemperature:00000000 $t
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2166   .text.NOS_WS2812B_Matrix_PrintTemperature:00000000 NOS_WS2812B_Matrix_PrintTemperature
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2264   .rodata.NOS_WS2812B_Matrix_PrintDetectorValue.str1.4:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2271   .text.NOS_WS2812B_Matrix_PrintDetectorValue:00000000 $t
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2277   .text.NOS_WS2812B_Matrix_PrintDetectorValue:00000000 NOS_WS2812B_Matrix_PrintDetectorValue
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2401   .text.NOS_WS2812B_Matrix_PrintDetectorValue:00000098 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2407   .text.NOS_WS2812B_Matrix_FillColor:00000000 $t
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2413   .text.NOS_WS2812B_Matrix_FillColor:00000000 NOS_WS2812B_Matrix_FillColor
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2474   .text.NOS_WS2812B_Matrix_FillColor:0000002c $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2480   .data.Num_9:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2487   .data.Num_8:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2494   .data.Num_7:00000000 $d
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 71
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2679   .data.Eng_v:00000000 Eng_v
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2693   .data.Eng_a:00000000 Eng_a
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2686   .data.Eng_c:00000000 Eng_c
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2658   .data.Eng_r:00000000 Eng_r
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2644   .data.Ukr_k:00000000 Ukr_k
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2630   .data.Ukr_d:00000000 Ukr_d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2665   .data.Eng_o:00000000 Eng_o
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2637   .data.Ukr_g:00000000 Ukr_g
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2623   .data.Ukr_ch:00000000 Ukr_ch
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2616   .bss.Space:00000000 Space
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2588   .data.Plus:00000000 Plus
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2581   .data.Minus:00000000 Minus
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2595   .data.Slash:00000000 Slash
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2567   .data.Celcium:00000000 Celcium
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2609   .data.Dot:00000000 Dot
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2602   .data.DoubleDot:00000000 DoubleDot
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2560   .data.FullSym:00000000 FullSym
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2553   .data.Attemption:00000000 Attemption
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2546   .data.Num_0:00000000 Num_0
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2539   .data.Num_1:00000000 Num_1
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2532   .data.Num_2:00000000 Num_2
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2525   .data.Num_3:00000000 Num_3
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2518   .data.Num_4:00000000 Num_4
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2511   .data.Num_5:00000000 Num_5
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2504   .data.Num_6:00000000 Num_6
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2497   .data.Num_7:00000000 Num_7
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2490   .data.Num_8:00000000 Num_8
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2483   .data.Num_9:00000000 Num_9
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2868   .data.Eng_B:00000000 Eng_B
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:1398   .text.NOS_WS2812B_Matrix_SetSymvol:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:1404   .text.NOS_WS2812B_Matrix_SetSymvol:00000000 NOS_WS2812B_Matrix_SetSymvol
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:1461   .text.NOS_WS2812B_Matrix_PrintStaticString:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:1467   .text.NOS_WS2812B_Matrix_PrintStaticString:00000000 NOS_WS2812B_Matrix_PrintStaticString
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:1525   .text.NOS_WS2812B_Matrix_PrintDynamicString:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:1531   .text.NOS_WS2812B_Matrix_PrintDynamicString:00000000 NOS_WS2812B_Matrix_PrintDynamicString
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:1591   .text.NOS_WS2812B_Matrix_PrintIntNumber:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:1597   .text.NOS_WS2812B_Matrix_PrintIntNumber:00000000 NOS_WS2812B_Matrix_PrintIntNumber
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:1792   .text.NOS_WS2812B_Matrix_PrintIntNumber:000000f8 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:1799   .rodata.NOS_WS2812B_Matrix_PrintFloatNumber.str1.4:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:1803   .text.NOS_WS2812B_Matrix_PrintFloatNumber:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:1809   .text.NOS_WS2812B_Matrix_PrintFloatNumber:00000000 NOS_WS2812B_Matrix_PrintFloatNumber
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:1903   .text.NOS_WS2812B_Matrix_PrintFloatNumber:0000006c $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:1909   .text.NOS_WS2812B_Matrix_PrintRealTime:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:1915   .text.NOS_WS2812B_Matrix_PrintRealTime:00000000 NOS_WS2812B_Matrix_PrintRealTime
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2155   .text.NOS_WS2812B_Matrix_PrintRealTime:0000018c $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2160   .text.NOS_WS2812B_Matrix_PrintTemperature:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2166   .text.NOS_WS2812B_Matrix_PrintTemperature:00000000 NOS_WS2812B_Matrix_PrintTemperature
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2264   .rodata.NOS_WS2812B_Matrix_PrintDetectorValue.str1.4:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2271   .text.NOS_WS2812B_Matrix_PrintDetectorValue:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2277   .text.NOS_WS2812B_Matrix_PrintDetectorValue:00000000 NOS_WS2812B_Matrix_PrintDetectorValue
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2401   .text.NOS_WS2812B_Matrix_PrintDetectorValue:00000098 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2407   .text.NOS_WS2812B_Matrix_FillColor:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2413   .text.NOS_WS2812B_Matrix_FillColor:00000000 NOS_WS2812B_Matrix_FillColor
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2474   .text.NOS_WS2812B_Matrix_FillColor:0000002c $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2480   .data.Num_9:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2487   .data.Num_8:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2494   .data.Num_7:00000000 $d
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 71
 
 
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2501   .data.Num_6:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2508   .data.Num_5:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2515   .data.Num_4:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2522   .data.Num_3:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2529   .data.Num_2:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2536   .data.Num_1:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2543   .data.Num_0:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2550   .data.Attemption:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2557   .data.FullSym:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2564   .data.Celcium:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2574   .data.Multiply:00000000 Multiply
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2571   .data.Multiply:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2578   .data.Minus:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2585   .data.Plus:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2592   .data.Slash:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2599   .data.DoubleDot:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2606   .data.Dot:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2613   .bss.Space:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2620   .data.Ukr_ch:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2627   .data.Ukr_d:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2634   .data.Ukr_g:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2641   .data.Ukr_k:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2651   .data.Ukr_m:00000000 Ukr_m
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2648   .data.Ukr_m:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2655   .data.Eng_r:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2662   .data.Eng_o:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2669   .data.Eng_u:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2676   .data.Eng_v:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2683   .data.Eng_c:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2690   .data.Eng_a:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2697   .data.Eng_Z:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2704   .data.Eng_Y:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2711   .data.Eng_X:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2718   .data.Eng_W:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2725   .data.Eng_V:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2732   .data.Eng_U:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2739   .data.Eng_T:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2746   .data.Eng_S:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2753   .data.Eng_R:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2760   .data.Eng_Q:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2767   .data.Eng_P:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2774   .data.Eng_O:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2781   .data.Eng_N:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2788   .data.Eng_M:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2795   .data.Eng_L:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2802   .data.Eng_K:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2809   .data.Eng_J:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2816   .data.Eng_I:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2823   .data.Eng_H:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2830   .data.Eng_G:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2837   .data.Eng_F:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2844   .data.Eng_E:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2851   .data.Eng_D:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2858   .data.Eng_C:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2865   .data.Eng_B:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s:2872   .data.Eng_A:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2501   .data.Num_6:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2508   .data.Num_5:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2515   .data.Num_4:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2522   .data.Num_3:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2529   .data.Num_2:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2536   .data.Num_1:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2543   .data.Num_0:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2550   .data.Attemption:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2557   .data.FullSym:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2564   .data.Celcium:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2574   .data.Multiply:00000000 Multiply
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2571   .data.Multiply:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2578   .data.Minus:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2585   .data.Plus:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2592   .data.Slash:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2599   .data.DoubleDot:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2606   .data.Dot:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2613   .bss.Space:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2620   .data.Ukr_ch:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2627   .data.Ukr_d:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2634   .data.Ukr_g:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2641   .data.Ukr_k:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2651   .data.Ukr_m:00000000 Ukr_m
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2648   .data.Ukr_m:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2655   .data.Eng_r:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2662   .data.Eng_o:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2669   .data.Eng_u:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2676   .data.Eng_v:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2683   .data.Eng_c:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2690   .data.Eng_a:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2697   .data.Eng_Z:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2704   .data.Eng_Y:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2711   .data.Eng_X:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2718   .data.Eng_W:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2725   .data.Eng_V:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2732   .data.Eng_U:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2739   .data.Eng_T:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2746   .data.Eng_S:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2753   .data.Eng_R:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2760   .data.Eng_Q:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2767   .data.Eng_P:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2774   .data.Eng_O:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2781   .data.Eng_N:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2788   .data.Eng_M:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2795   .data.Eng_L:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2802   .data.Eng_K:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2809   .data.Eng_J:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2816   .data.Eng_I:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2823   .data.Eng_H:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2830   .data.Eng_G:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2837   .data.Eng_F:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2844   .data.Eng_E:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2851   .data.Eng_D:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2858   .data.Eng_C:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2865   .data.Eng_B:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s:2872   .data.Eng_A:00000000 $d
 
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccN00aI7.s 			page 72
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cc4MsuBe.s 			page 72
 
 
 UNDEFINED SYMBOLS

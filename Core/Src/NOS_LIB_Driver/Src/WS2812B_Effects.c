@@ -18,13 +18,13 @@ uint8_t frameBuffer3[3*8*32];
 void visInit()
 {
 		// Set output channel/pin, GPIO_PIN_0 = 0, for GPIO_PIN_5 = 5 - this has to correspond to WS2812B_PINS
-		ws2812b.item[0].channel = 2;
+		ws2812b.item[0].channel = 0;
 		ws2812b.item[0].frameBufferPointer = frameBuffer1;
 	    ws2812b.item[0].frameBufferSize = sizeof(frameBuffer1);
-		ws2812b.item[1].channel = 3;
+		ws2812b.item[1].channel = 1;
 		ws2812b.item[1].frameBufferPointer = frameBuffer2;
 	    ws2812b.item[1].frameBufferSize = sizeof(frameBuffer2);
-		ws2812b.item[2].channel = 0;
+		ws2812b.item[2].channel = 2;
 		ws2812b.item[2].frameBufferPointer = frameBuffer3;
 	    ws2812b.item[2].frameBufferSize = sizeof(frameBuffer3);
 	ws2812b_init();
