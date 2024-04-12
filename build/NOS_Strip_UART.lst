@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccOHxlbG.s 			page 1
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccdtejmb.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccOHxlbG.s 			page 1
   43              		.loc 1 12 7 is_stmt 0 view .LVU6
   44 0000 0029     		cmp	r1, #0
   45 0002 00F08380 		beq	.L21
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccOHxlbG.s 			page 2
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccdtejmb.s 			page 2
 
 
    6:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****     NOS_Short tempShort;
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccOHxlbG.s 			page 1
   19:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****             case SET_ONE_PIXEL_COLOR_COMMAND:
   20:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c **** 
   21:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 //pixelPos 
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccOHxlbG.s 			page 3
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccdtejmb.s 			page 3
 
 
   22:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 tempShort.bytes[1] = command[4];
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccOHxlbG.s 			page 1
  131              		.loc 1 37 45 is_stmt 0 view .LVU27
  132 0052 0B79     		ldrb	r3, [r1, #4]	@ zero_extendqisi2
  133              		.loc 1 37 36 view .LVU28
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccOHxlbG.s 			page 4
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccdtejmb.s 			page 4
 
 
  134 0054 4FF00001 		mov	r1, #0	@ movhi
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccOHxlbG.s 			page 1
   51:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 //fill in row
   52:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 for(int i = tempInt1; i < tempInt2; i++)
  175              		.loc 1 52 17 is_stmt 1 view .LVU49
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccOHxlbG.s 			page 5
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccdtejmb.s 			page 5
 
 
  176              	.LBB2:
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccOHxlbG.s 			page 1
  214              		.loc 1 64 19 is_stmt 0 view .LVU63
  215 009a 8E79     		ldrb	r6, [r1, #6]	@ zero_extendqisi2
  216              	.LVL25:
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccOHxlbG.s 			page 6
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccdtejmb.s 			page 6
 
 
   65:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c **** 
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccOHxlbG.s 			page 1
  254 00ba FFF7FEFF 		bl	NOS_WS2812B_Strip_SetBright
  255              	.LVL31:
   77:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c **** 
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccOHxlbG.s 			page 7
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccdtejmb.s 			page 7
 
 
   78:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 break;
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccOHxlbG.s 			page 1
   84:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                 tempInt1 = tempShort.data;
  274              		.loc 1 84 36 view .LVU86
  275 00cc 63F30701 		bfi	r1, r3, #0, #8
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccOHxlbG.s 			page 8
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccdtejmb.s 			page 8
 
 
   85:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c **** 
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccOHxlbG.s 			page 1
  316 00e6 695C     		ldrb	r1, [r5, r1]	@ zero_extendqisi2
  317              	.LVL42:
   95:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****                     }
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccOHxlbG.s 			page 9
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccdtejmb.s 			page 9
 
 
  318              		.loc 1 95 25 is_stmt 1 discriminator 3 view .LVU102
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccOHxlbG.s 			page 1
  363              		.cfi_restore 9
  364              		.cfi_restore 14
  102:Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c ****             }
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccOHxlbG.s 			page 10
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccdtejmb.s 			page 10
 
 
  365              		.loc 1 102 17 is_stmt 1 view .LVU112
@@ -557,17 +557,17 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccOHxlbG.s 			page 1
  379              		.file 3 "c:\\users\\igorn\\appdata\\roaming\\code\\user\\globalstorage\\bmd.stm32-for-vscode\\@xpa
  380              		.file 4 "Core/Src/NOS_LIB_Driver/Inc/NOS_Typedefs.h"
  381              		.file 5 "Core/Src/NOS_LIB_Driver/Inc/NOS_WS2812B_Strip.h"
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccOHxlbG.s 			page 11
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccdtejmb.s 			page 11
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 NOS_Strip_UART.c
-C:\Users\igorn\AppData\Local\Temp\ccOHxlbG.s:21     .rodata.NOS_Strip_Uart_ParseCommand.str1.4:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccOHxlbG.s:25     .text.NOS_Strip_Uart_ParseCommand:00000000 $t
-C:\Users\igorn\AppData\Local\Temp\ccOHxlbG.s:31     .text.NOS_Strip_Uart_ParseCommand:00000000 NOS_Strip_Uart_ParseCommand
-C:\Users\igorn\AppData\Local\Temp\ccOHxlbG.s:69     .text.NOS_Strip_Uart_ParseCommand:0000001c $d
-C:\Users\igorn\AppData\Local\Temp\ccOHxlbG.s:91     .text.NOS_Strip_Uart_ParseCommand:00000032 $t
-C:\Users\igorn\AppData\Local\Temp\ccOHxlbG.s:372    .text.NOS_Strip_Uart_ParseCommand:00000110 $d
+C:\Users\igorn\AppData\Local\Temp\ccdtejmb.s:21     .rodata.NOS_Strip_Uart_ParseCommand.str1.4:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\ccdtejmb.s:25     .text.NOS_Strip_Uart_ParseCommand:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\ccdtejmb.s:31     .text.NOS_Strip_Uart_ParseCommand:00000000 NOS_Strip_Uart_ParseCommand
+C:\Users\igorn\AppData\Local\Temp\ccdtejmb.s:69     .text.NOS_Strip_Uart_ParseCommand:0000001c $d
+C:\Users\igorn\AppData\Local\Temp\ccdtejmb.s:91     .text.NOS_Strip_Uart_ParseCommand:00000032 $t
+C:\Users\igorn\AppData\Local\Temp\ccdtejmb.s:372    .text.NOS_Strip_Uart_ParseCommand:00000110 $d
 
 UNDEFINED SYMBOLS
 NOS_WS2812B_Strip_SetPixel

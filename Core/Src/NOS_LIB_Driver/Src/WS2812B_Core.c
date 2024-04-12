@@ -375,34 +375,6 @@ void DMA_TransferCompleteHandler(DMA_HandleTypeDef *DmaHandle)
 
 }
 
-void DMA2_Stream2_IRQHandler(void)
-{
-
-	#if defined(LED_BLUE_PORT)
-		LED_BLUE_PORT->BSRR = LED_BLUE_PIN;
-	#endif
-
-	// Check the interrupt and clear flag
-	  HAL_DMA_IRQHandler(&dmaCC2);
-
-	#if defined(LED_BLUE_PORT)
-		LED_BLUE_PORT->BSRR = LED_BLUE_PIN << 16;
-	#endif
-}
-
-void TIM1_UP_TIM10_IRQHandler(void)
-{
-	#if defined(LED_ORANGE_PORT)
-		LED_ORANGE_PORT->BSRR = LED_ORANGE_PIN;
-	#endif
-
-	HAL_TIM_IRQHandler(&TIM1_handle);
-
-	#if defined(LED_ORANGE_PORT)
-		LED_ORANGE_PORT->BSRR = LED_ORANGE_PIN << 16;
-	#endif
-}
-
 // TIM2 Interrupt Handler gets executed on every TIM2 Update if enabled
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {

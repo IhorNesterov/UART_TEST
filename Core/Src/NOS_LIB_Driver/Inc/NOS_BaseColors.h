@@ -3,10 +3,10 @@
 
 #include "NOS_Includes.h"
 
-PixelColor nbaseRed = {255,0,0};
-//PixelColor nbaseGreen;
-//PixelColor nbaseBlue;
+typedef enum NOS_BaseColors_e {RED,ORANGE,YELLOW,SGREEN,GREEN,TURQUOISE,CYAN,OCEAN,BLUE,VIOLET,MAGENTA,RASPBERRY} NOS_BaseColors;
 
-//PixelColor nbaseYellow;
+void NOS_PixelColor_SetColor(PixelColor* color,uint8_t R,uint8_t G,uint8_t B);
+PixelColor NOS_GetBaseColor(NOS_BaseColors color);
+
 
 #endif

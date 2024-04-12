@@ -60,17 +60,6 @@ NOS_TimeEvent uartTestEvent = {0};
 WS2812B_Strip stripA = {0};
 PixelColor pixelsA[128];
 
-const PixelColor red = {255,0,0};
-const PixelColor green = {0,255,0};
-const PixelColor blue = {0,0,255};
-const PixelColor white = {255,255,255};
-const PixelColor yellow = {255,255,0};
-const PixelColor purple = {255,0,255};
-const PixelColor cyan = {0,255,255};
-
-PixelColor colors[7] = {red,green,blue,white,yellow,purple,cyan};
-
-
 uint8_t rx_buff[256];
 uint8_t fuckBuff[1024];
 uint16_t fuckIndex = 0;
@@ -211,13 +200,13 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_USART2_UART_Init();
-  MX_TIM6_Init();
+  //MX_USART2_UART_Init();
+  //MX_TIM6_Init();
   //MX_SPI1_Init();
   //MX_USB_OTG_FS_PCD_Init();
   /* USER CODE BEGIN 2 */
-  HAL_UART_Receive_IT(&huart2,rx_buff,1);
-  HAL_UART_Transmit(&huart2,"HELLO",sizeof("HELLO"),1000);
+ // HAL_UART_Receive_IT(&huart2,rx_buff,1);
+ // HAL_UART_Transmit(&huart2,"HELLO",sizeof("HELLO"),1000);
   visInit();
 
   NOS_WS2812B_Strip_FullInit(&stripA,&frameBuffer1,&pixelsA,128);
@@ -230,9 +219,6 @@ int main(void)
   NOS_Math_SinValue_Init(&bright,65,75,1);
 
   NOS_Button_Init(&button);
-
-  NOS_GPIO_PinInit(&PA6,GPIOA,GPIO_PIN_6,0);
-  NOS_GPIO_PinInit(&PA7,GPIOA,GPIO_PIN_7,0);
 
 
 
@@ -264,6 +250,7 @@ int main(void)
     
     if (NOS_TimeEvent_Check(&screenUpdateEvent))
     {
+      NOS_WS2812B_Strip_ColorFill(&stripA,NOS_GetBaseColor(BLUE));
       //stripA.bright = NOS_Math_GetSinValue(&bright);
       NOS_WS2812B_Strip_Update(&stripA);
       visHandle();
@@ -273,7 +260,7 @@ int main(void)
 
     if(NOS_Button_CheckPressDone(&button))
     {
-      if(currColor < 6)
+      if(currColor < 12)
       {
         currColor++;
       }
@@ -282,19 +269,11 @@ int main(void)
         currColor = 0;
       }
 
-      NOS_WS2812B_Strip_ColorFill(&stripA,colors[currColor]);
+      NOS_WS2812B_Strip_ColorFill(&stripA,NOS_GetBaseColor(currColor));
       NOS_Button_PressDoneHandler(&button);
-      HAL_GPIO_TogglePin(PA6.Port,PA6.Pin);
     }
 
-    if(NOS_Button_isPressed(&button))
-    {
-      HAL_GPIO_WritePin(PA7.Port,PA7.Pin,0);
-    }
-    else
-    {
-      HAL_GPIO_WritePin(PA7.Port,PA7.Pin,1);
-    }
+
 
 
 
@@ -303,6 +282,8 @@ int main(void)
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
+
+  
 }
 
 /**
@@ -533,7 +514,6 @@ void SysTick_Handler(void)
 
   NOS_TimeEvent_TickHandler(&tetrisUpdateEvent);
   NOS_TimeEvent_TickHandler(&screenUpdateEvent);
-  NOS_TimeEvent_TickHandler(&uartTestEvent);
   buttonDelay++;
   if(buttonDelay > 200)
   {
