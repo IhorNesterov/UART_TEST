@@ -50,8 +50,6 @@ PCD_HandleTypeDef hpcd_USB_OTG_FS;
 
 /* USER CODE BEGIN PV */
 extern uint8_t frameBuffer1[3 * 256];
-extern uint8_t frameBuffer2[3 * 8 * 64];
-extern uint8_t frameBuffer3[3 * 8 * 32];
 
 NOS_TimeEvent tetrisUpdateEvent = {0};
 NOS_TimeEvent screenUpdateEvent = {0};
@@ -170,8 +168,10 @@ else
 
     HAL_UART_Receive_IT (&huart2, rx_buff_ptr, 1); 
 }
-/* USER CODE END 0 */
 
+  bool tick = false;
+/* USER CODE END 0 */
+      PixelColor red = {0xFF,0x00,0x00};
 /**
   * @brief  The application entry point.
   * @retval int
@@ -220,7 +220,8 @@ int main(void)
 
   NOS_Button_Init(&button);
 
-
+  NOS_GPIO_PinInit(&PA6,GPIOA,GPIO_PIN_6,0);
+  //NOS_GPIO_PinInit(&PA7,GPIOA,GPIO_PIN_7,0);
 
   /* USER CODE END 2 */
 
@@ -228,6 +229,21 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    if(tick)
+    {
+          NOS_TimeEvent_TickHandler(&tetrisUpdateEvent);
+          NOS_TimeEvent_TickHandler(&screenUpdateEvent);
+          buttonDelay++;
+          if(buttonDelay > 200)
+          {
+              NOS_Button_TimerHandler(&button);
+              buttonDelay = 0;
+          }
+
+          receiveTime++;
+
+          tick = false;
+    }
 
     if(rx_flag)
     {
@@ -250,7 +266,7 @@ int main(void)
     
     if (NOS_TimeEvent_Check(&screenUpdateEvent))
     {
-      NOS_WS2812B_Strip_ColorFill(&stripA,NOS_GetBaseColor(BLUE));
+      //NOS_WS2812B_Strip_ColorFill(&stripA,red);
       //stripA.bright = NOS_Math_GetSinValue(&bright);
       NOS_WS2812B_Strip_Update(&stripA);
       visHandle();
@@ -260,7 +276,7 @@ int main(void)
 
     if(NOS_Button_CheckPressDone(&button))
     {
-      if(currColor < 12)
+      if(currColor < 11)
       {
         currColor++;
       }
@@ -268,7 +284,6 @@ int main(void)
       {
         currColor = 0;
       }
-
       NOS_WS2812B_Strip_ColorFill(&stripA,NOS_GetBaseColor(currColor));
       NOS_Button_PressDoneHandler(&button);
     }
@@ -296,16 +311,15 @@ void SystemClock_Config(void)
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
 
   /** Configure the main internal regulator output voltage
-   */
+  */
   __HAL_RCC_PWR_CLK_ENABLE();
   __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
   /** Initializes the RCC Oscillators according to the specified parameters
-   * in the RCC_OscInitTypeDef structure.
-   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI | RCC_OSCILLATORTYPE_LSI;
+  * in the RCC_OscInitTypeDef structure.
+  */
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
-  RCC_OscInitStruct.LSIState = RCC_LSI_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
   RCC_OscInitStruct.PLL.PLLM = 8;
@@ -317,8 +331,9 @@ void SystemClock_Config(void)
     Error_Handler();
   }
   /** Initializes the CPU, AHB and APB buses clocks
-   */
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
+  */
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
+                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
@@ -511,17 +526,7 @@ void SysTick_Handler(void)
   /* USER CODE END SysTick_IRQn 0 */
   HAL_IncTick();
   /* USER CODE BEGIN SysTick_IRQn 1 */
-
-  NOS_TimeEvent_TickHandler(&tetrisUpdateEvent);
-  NOS_TimeEvent_TickHandler(&screenUpdateEvent);
-  buttonDelay++;
-  if(buttonDelay > 200)
-  {
-      NOS_Button_TimerHandler(&button);
-      buttonDelay = 0;
-  }
-
-  receiveTime++;
+tick = true;
   /* USER CODE END SysTick_IRQn 1 */
 }
 

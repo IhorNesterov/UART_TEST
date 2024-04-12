@@ -5,7 +5,7 @@
 #include <stdlib.h>
 extern WS2812_Struct ws2812b;
 // RGB Framebuffers
-uint8_t frameBuffer1[3*8*96];
+uint8_t frameBuffer1[3*256];
 uint8_t frameBuffer2[3*8*64];
 uint8_t frameBuffer3[3*8*32];
 
