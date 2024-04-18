@@ -11,5 +11,6 @@
 #include "NOS_Strip_UART.h"
 #include "NOS_Button.h"
 #include "NOS_BaseColors.h"
+#include "NOS_UART.h"
 //#include "NOS_BitOperations.h"
 #endif 

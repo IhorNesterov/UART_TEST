@@ -58,6 +58,8 @@ NOS_TimeEvent uartTestEvent = {0};
 WS2812B_Strip stripA = {0};
 PixelColor pixelsA[128];
 
+NOS_UART_Struct UART2;
+
 uint8_t rx_buff[256];
 uint8_t fuckBuff[1024];
 uint16_t fuckIndex = 0;
@@ -65,6 +67,7 @@ bool rx_flag = false;
 bool tx_flag = false;
 int currMessageLenght = 0;
 int expectedMessageLenght = 0;
+
 bool startReceive = false;
 bool endReceive = false;
 int receiveTime = 0;
@@ -103,70 +106,8 @@ static void MX_USB_OTG_FS_PCD_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-void ReceiveReset(uint8_t* rx_buff_ptr)
-{
-  rx_buff_ptr = rx_buff;
-  currMessageLenght = 0;
-  rx_flag = true;
-}
-
-void ContinueReceive(uint8_t* rx_buff_ptr)
-{
-  rx_buff[currMessageLenght] = *rx_buff_ptr;
-  ++rx_buff_ptr;
-}
-
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart) {
-
-static uint8_t* rx_buff_ptr = rx_buff;
-
-fuckBuff[fuckIndex] = *rx_buff_ptr;
-fuckIndex++;
-
-if(*rx_buff_ptr == UART_ADDRESS && !startReceive)
-{
-  startReceive = true;
-  currMessageLenght = 0;
-
-  fuckIndex = 1;
-  for(int i = 0; i < 1024; i++)
-  {
-    fuckBuff[i] = 0;
-  }
-  fuckBuff[0] = *rx_buff_ptr; 
-}
-
-if(startReceive && currMessageLenght == 1 && !bufferCommand)
-{
-  value.bytes[1] = *rx_buff_ptr;
-}
-
-if(startReceive && currMessageLenght == 2 && !bufferCommand)
-{
-  value.bytes[0] = *rx_buff_ptr;
-  expectedMessageLenght = value.data;
-  bufferCommand = true;
-}
-
-if(fuckIndex > 1023)
-{
-  fuckIndex = 0;
-}
-
-currMessageLenght++;
-
-if(startReceive && (currMessageLenght == expectedMessageLenght) && bufferCommand)
-{
-  ReceiveReset(rx_buff_ptr);
-  bufferCommand = false;
-  startReceive = false;
-}
-else
-{
-  ContinueReceive(rx_buff_ptr);
-}
-
-    HAL_UART_Receive_IT (&huart2, rx_buff_ptr, 1); 
+    NOS_UART_ReceiveHandler(&UART2,huart);
 }
 
   bool tick = false;
