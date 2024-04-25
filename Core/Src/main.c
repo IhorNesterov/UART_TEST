@@ -60,16 +60,6 @@ PixelColor pixelsA[128];
 
 NOS_UART_Struct UART2;
 
-uint8_t rx_buff[256];
-uint8_t fuckBuff[1024];
-uint16_t fuckIndex = 0;
-bool rx_flag = false;
-bool tx_flag = false;
-int currMessageLenght = 0;
-int expectedMessageLenght = 0;
-
-bool startReceive = false;
-bool endReceive = false;
 int receiveTime = 0;
 
 SinValue bright = {0};
@@ -81,12 +71,11 @@ GPIO_PIN PA7 = {0};
 
 
 int uartPixelCount = 0;
-bool bufferCommand = false;
 
 int currColor = 0;
 int buttonDelay = 0;
 
-int receiveTimeAbort = 100;
+int receiveTimeAbort = 1000;
 bool receiveAbort = false;
 bool receiveCheck = false;
 
@@ -141,13 +130,13 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  //MX_USART2_UART_Init();
+  MX_USART2_UART_Init();
   //MX_TIM6_Init();
   //MX_SPI1_Init();
   //MX_USB_OTG_FS_PCD_Init();
   /* USER CODE BEGIN 2 */
- // HAL_UART_Receive_IT(&huart2,rx_buff,1);
- // HAL_UART_Transmit(&huart2,"HELLO",sizeof("HELLO"),1000);
+  HAL_UART_Receive_IT(&huart2,UART2.rx_buff,1);
+  HAL_UART_Transmit(&huart2,"HELLO",sizeof("HELLO"),1000);
   visInit();
 
   NOS_WS2812B_Strip_FullInit(&stripA,&frameBuffer1,&pixelsA,128);
@@ -162,7 +151,7 @@ int main(void)
   NOS_Button_Init(&button);
 
   NOS_GPIO_PinInit(&PA6,GPIOA,GPIO_PIN_6,0);
-  //NOS_GPIO_PinInit(&PA7,GPIOA,GPIO_PIN_7,0);
+  NOS_GPIO_PinInit(&PA7,GPIOA,GPIO_PIN_7,0);
 
   /* USER CODE END 2 */
 
@@ -181,22 +170,36 @@ int main(void)
               buttonDelay = 0;
           }
 
+          if(UART2.startReceive && !receiveCheck)
+          {
+            receiveTime = 0;
+            receiveCheck = true;
+          }
+
+          if(receiveCheck && receiveTime > receiveTimeAbort)
+          {
+            receiveTime = 0;
+            receiveCheck = false;
+            NOS_UART_ReceiveAbort(&UART2);
+          }
+          
           receiveTime++;
+          
 
           tick = false;
     }
 
-    if(rx_flag)
+    if(NOS_UART_CheckReceive(&UART2))
     {
       char mess[] = "Recieved!";
       uint32_t buff = 0; 
 
-      if(NOS_Strip_Uart_ParseCommand(&stripA,fuckBuff) == "ready!")
+      if(NOS_Strip_Uart_ParseCommand(&stripA,NOS_UART_GetReceivedData(&UART2)) == "ready!")
       {
         HAL_UART_Transmit(&huart2,"ready!",7,1000);
       }
       
-      rx_flag = false;
+      NOS_UART_EndReceive(&UART2);
     }
 
     if (NOS_TimeEvent_Check(&tetrisUpdateEvent))
