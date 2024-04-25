@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccrBQT1M.s 			page 1
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccJNVkPr.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccrBQT1M.s 			page 1
   20:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** 		// Set output channel/pin, GPIO_PIN_0 = 0, for GPIO_PIN_5 = 5 - this has to correspond to WS2812B
   21:Core/Src/NOS_LIB_Driver/Src/WS2812B_Effects.c **** 		ws2812b.item[0].channel = 0;
   37              		.loc 1 21 3 view .LVU1
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccrBQT1M.s 			page 2
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccJNVkPr.s 			page 2
 
 
   38              		.loc 1 21 27 is_stmt 0 view .LVU2
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccrBQT1M.s 			page 1
   82 0038 00000000 		.word	frameBuffer1
   83 003c 00000000 		.word	frameBuffer2
   84 0040 00000000 		.word	frameBuffer3
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccrBQT1M.s 			page 3
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccJNVkPr.s 			page 3
 
 
   85              		.cfi_endproc
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccrBQT1M.s 			page 1
  123              		.loc 1 46 1 is_stmt 0 view .LVU29
  124 0018 F7E7     		b	.L5
  125              	.L10:
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccrBQT1M.s 			page 4
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccJNVkPr.s 			page 4
 
 
  126 001a 00BF     		.align	2
@@ -218,23 +218,23 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccrBQT1M.s 			page 1
  155              		.file 2 "c:\\users\\igorn\\appdata\\roaming\\code\\user\\globalstorage\\bmd.stm32-for-vscode\\@xpa
  156              		.file 3 "c:\\users\\igorn\\appdata\\roaming\\code\\user\\globalstorage\\bmd.stm32-for-vscode\\@xpa
  157              		.file 4 "Core/Src/NOS_LIB_Driver/Inc/WS2812B_Core.h"
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccrBQT1M.s 			page 5
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccJNVkPr.s 			page 5
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 WS2812B_Effects.c
-C:\Users\igorn\AppData\Local\Temp\ccrBQT1M.s:21     .text.visInit:00000000 $t
-C:\Users\igorn\AppData\Local\Temp\ccrBQT1M.s:27     .text.visInit:00000000 visInit
-C:\Users\igorn\AppData\Local\Temp\ccrBQT1M.s:81     .text.visInit:00000034 $d
-C:\Users\igorn\AppData\Local\Temp\ccrBQT1M.s:151    .bss.frameBuffer1:00000000 frameBuffer1
-C:\Users\igorn\AppData\Local\Temp\ccrBQT1M.s:144    .bss.frameBuffer2:00000000 frameBuffer2
-C:\Users\igorn\AppData\Local\Temp\ccrBQT1M.s:137    .bss.frameBuffer3:00000000 frameBuffer3
-C:\Users\igorn\AppData\Local\Temp\ccrBQT1M.s:89     .text.visHandle:00000000 $t
-C:\Users\igorn\AppData\Local\Temp\ccrBQT1M.s:95     .text.visHandle:00000000 visHandle
-C:\Users\igorn\AppData\Local\Temp\ccrBQT1M.s:128    .text.visHandle:0000001c $d
-C:\Users\igorn\AppData\Local\Temp\ccrBQT1M.s:134    .bss.frameBuffer3:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccrBQT1M.s:141    .bss.frameBuffer2:00000000 $d
-C:\Users\igorn\AppData\Local\Temp\ccrBQT1M.s:148    .bss.frameBuffer1:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\ccJNVkPr.s:21     .text.visInit:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\ccJNVkPr.s:27     .text.visInit:00000000 visInit
+C:\Users\igorn\AppData\Local\Temp\ccJNVkPr.s:81     .text.visInit:00000034 $d
+C:\Users\igorn\AppData\Local\Temp\ccJNVkPr.s:151    .bss.frameBuffer1:00000000 frameBuffer1
+C:\Users\igorn\AppData\Local\Temp\ccJNVkPr.s:144    .bss.frameBuffer2:00000000 frameBuffer2
+C:\Users\igorn\AppData\Local\Temp\ccJNVkPr.s:137    .bss.frameBuffer3:00000000 frameBuffer3
+C:\Users\igorn\AppData\Local\Temp\ccJNVkPr.s:89     .text.visHandle:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\ccJNVkPr.s:95     .text.visHandle:00000000 visHandle
+C:\Users\igorn\AppData\Local\Temp\ccJNVkPr.s:128    .text.visHandle:0000001c $d
+C:\Users\igorn\AppData\Local\Temp\ccJNVkPr.s:134    .bss.frameBuffer3:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\ccJNVkPr.s:141    .bss.frameBuffer2:00000000 $d
+C:\Users\igorn\AppData\Local\Temp\ccJNVkPr.s:148    .bss.frameBuffer1:00000000 $d
 
 UNDEFINED SYMBOLS
 ws2812b_init

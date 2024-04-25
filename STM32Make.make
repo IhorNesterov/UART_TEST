@@ -45,6 +45,7 @@ Core/Src/NOS_LIB_Driver/Src/NOS_Math.c \
 Core/Src/NOS_LIB_Driver/Src/NOS_ModBus.c \
 Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.c \
 Core/Src/NOS_LIB_Driver/Src/NOS_Time.c \
+Core/Src/NOS_LIB_Driver/Src/NOS_UART.c \
 Core/Src/NOS_LIB_Driver/Src/NOS_WS2812B_Strip.c \
 Core/Src/NOS_LIB_Driver/Src/WS2812B.c \
 Core/Src/NOS_LIB_Driver/Src/WS2812B_Core.c \

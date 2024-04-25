@@ -75,9 +75,7 @@ int uartPixelCount = 0;
 int currColor = 0;
 int buttonDelay = 0;
 
-int receiveTimeAbort = 1000;
-bool receiveAbort = false;
-bool receiveCheck = false;
+
 
 NOS_Short value;
 /* USER CODE END PV */
@@ -153,6 +151,8 @@ int main(void)
   NOS_GPIO_PinInit(&PA6,GPIOA,GPIO_PIN_6,0);
   NOS_GPIO_PinInit(&PA7,GPIOA,GPIO_PIN_7,0);
 
+  NOS_UART_ReceiveAbort(&UART2);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -161,6 +161,7 @@ int main(void)
   {
     if(tick)
     {
+          NOS_UART_Timer_Handler(&UART2);
           NOS_TimeEvent_TickHandler(&tetrisUpdateEvent);
           NOS_TimeEvent_TickHandler(&screenUpdateEvent);
           buttonDelay++;
@@ -169,22 +170,6 @@ int main(void)
               NOS_Button_TimerHandler(&button);
               buttonDelay = 0;
           }
-
-          if(UART2.startReceive && !receiveCheck)
-          {
-            receiveTime = 0;
-            receiveCheck = true;
-          }
-
-          if(receiveCheck && receiveTime > receiveTimeAbort)
-          {
-            receiveTime = 0;
-            receiveCheck = false;
-            NOS_UART_ReceiveAbort(&UART2);
-          }
-          
-          receiveTime++;
-          
 
           tick = false;
     }
