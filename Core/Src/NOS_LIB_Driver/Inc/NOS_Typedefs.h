@@ -205,11 +205,15 @@ typedef enum Button_State_e
 
 typedef struct NOS_Button_t
 {
+
     bool pressed;
     bool released;
     bool pressDone;
 
+    GPIO_PIN* pin;
     uint32_t timer;
+    uint32_t watchdog;
+    uint32_t buttonDelay;
     uint32_t pressedTime;
     uint32_t releasedTime;
     uint32_t lastDoneTime;

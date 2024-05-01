@@ -68,7 +68,8 @@ NOS_Button button = {0};
 
 GPIO_PIN PA6 = {0};
 GPIO_PIN PA7 = {0};
-
+GPIO_PIN PE3 = {0};
+GPIO_PIN PE4 = {0};
 
 int uartPixelCount = 0;
 
@@ -146,10 +147,13 @@ int main(void)
 
   NOS_Math_SinValue_Init(&bright,65,75,1);
 
-  NOS_Button_Init(&button);
+  NOS_GPIO_PinInit(&PE3,GPIOE,GPIO_PIN_3,Input);
+  NOS_GPIO_PinInit(&PE4,GPIOE,GPIO_PIN_4,Input);
 
-  NOS_GPIO_PinInit(&PA6,GPIOA,GPIO_PIN_6,0);
-  NOS_GPIO_PinInit(&PA7,GPIOA,GPIO_PIN_7,0);
+  NOS_Button_Init(&button,&PE3);
+
+  NOS_GPIO_PinInit(&PA6,GPIOA,GPIO_PIN_6,Output);
+  NOS_GPIO_PinInit(&PA7,GPIOA,GPIO_PIN_7,Output);
 
   NOS_UART_ReceiveAbort(&UART2);
 
@@ -164,12 +168,7 @@ int main(void)
           NOS_UART_Timer_Handler(&UART2);
           NOS_TimeEvent_TickHandler(&tetrisUpdateEvent);
           NOS_TimeEvent_TickHandler(&screenUpdateEvent);
-          buttonDelay++;
-          if(buttonDelay > 200)
-          {
-              NOS_Button_TimerHandler(&button);
-              buttonDelay = 0;
-          }
+          NOS_Button_TimerHandler(&button);
 
           tick = false;
     }
@@ -438,10 +437,6 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pins : PE3 PE4 */
-  GPIO_InitStruct.Pin = GPIO_PIN_3|GPIO_PIN_4;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */

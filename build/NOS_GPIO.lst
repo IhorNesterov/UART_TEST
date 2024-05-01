@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccYJT1ZS.s 			page 1
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccdvLVwh.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -38,86 +38,141 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccYJT1ZS.s 			page 1
   32              		@ args = 0, pretend = 0, frame = 24
   33              		@ frame_needed = 0, uses_anonymous_args = 0
   34              		.loc 1 4 1 is_stmt 0 view .LVU1
-  35 0000 00B5     		push	{lr}
-  36              		.cfi_def_cfa_offset 4
-  37              		.cfi_offset 14, -4
-  38 0002 87B0     		sub	sp, sp, #28
-  39              		.cfi_def_cfa_offset 32
-  40 0004 8446     		mov	ip, r0
-  41 0006 0846     		mov	r0, r1
-  42              	.LVL1:
+  35 0000 10B5     		push	{r4, lr}
+  36              		.cfi_def_cfa_offset 8
+  37              		.cfi_offset 4, -8
+  38              		.cfi_offset 14, -4
+  39 0002 86B0     		sub	sp, sp, #24
+  40              		.cfi_def_cfa_offset 32
+  41 0004 8446     		mov	ip, r0
+  42 0006 0846     		mov	r0, r1
+  43              	.LVL1:
    5:Core/Src/NOS_LIB_Driver/Src/NOS_GPIO.c ****     GPIO_InitTypeDef GPIO_InitStruct = {0};
-  43              		.loc 1 5 5 is_stmt 1 view .LVU2
-  44              		.loc 1 5 22 is_stmt 0 view .LVU3
-  45 0008 0023     		movs	r3, #0
-  46              	.LVL2:
-  47              		.loc 1 5 22 view .LVU4
-  48 000a 0193     		str	r3, [sp, #4]
-  49 000c 0293     		str	r3, [sp, #8]
-  50 000e 0393     		str	r3, [sp, #12]
-  51 0010 0493     		str	r3, [sp, #16]
-  52 0012 0593     		str	r3, [sp, #20]
+  44              		.loc 1 5 5 is_stmt 1 view .LVU2
+  45              		.loc 1 5 22 is_stmt 0 view .LVU3
+  46 0008 0024     		movs	r4, #0
+  47 000a 0194     		str	r4, [sp, #4]
+  48 000c 0294     		str	r4, [sp, #8]
+  49 000e 0394     		str	r4, [sp, #12]
+  50 0010 0494     		str	r4, [sp, #16]
+  51 0012 0594     		str	r4, [sp, #20]
    6:Core/Src/NOS_LIB_Driver/Src/NOS_GPIO.c ****     gpin->Port = port;
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccYJT1ZS.s 			page 2
+  52              		.loc 1 6 5 is_stmt 1 view .LVU4
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccdvLVwh.s 			page 2
 
 
-  53              		.loc 1 6 5 is_stmt 1 view .LVU5
-  54              		.loc 1 6 16 is_stmt 0 view .LVU6
-  55 0014 CCF80010 		str	r1, [ip]
+  53              		.loc 1 6 16 is_stmt 0 view .LVU5
+  54 0014 CCF80010 		str	r1, [ip]
    7:Core/Src/NOS_LIB_Driver/Src/NOS_GPIO.c ****     gpin->Pin = pin;
-  56              		.loc 1 7 5 is_stmt 1 view .LVU7
-  57              		.loc 1 7 15 is_stmt 0 view .LVU8
-  58 0018 ACF80420 		strh	r2, [ip, #4]	@ movhi
+  55              		.loc 1 7 5 is_stmt 1 view .LVU6
+  56              		.loc 1 7 15 is_stmt 0 view .LVU7
+  57 0018 ACF80420 		strh	r2, [ip, #4]	@ movhi
    8:Core/Src/NOS_LIB_Driver/Src/NOS_GPIO.c ****     GPIO_InitStruct.Pin = pin;
-  59              		.loc 1 8 5 is_stmt 1 view .LVU9
-  60              		.loc 1 8 25 is_stmt 0 view .LVU10
-  61 001c 0192     		str	r2, [sp, #4]
-   9:Core/Src/NOS_LIB_Driver/Src/NOS_GPIO.c ****     GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  62              		.loc 1 9 5 is_stmt 1 view .LVU11
-  63              		.loc 1 9 26 is_stmt 0 view .LVU12
-  64 001e 0122     		movs	r2, #1
-  65              	.LVL3:
-  66              		.loc 1 9 26 view .LVU13
-  67 0020 0292     		str	r2, [sp, #8]
-  68              	.LVL4:
-  10:Core/Src/NOS_LIB_Driver/Src/NOS_GPIO.c ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
-  69              		.loc 1 10 5 is_stmt 1 view .LVU14
-  70              		.loc 1 10 26 is_stmt 0 view .LVU15
-  71 0022 0393     		str	r3, [sp, #12]
-  11:Core/Src/NOS_LIB_Driver/Src/NOS_GPIO.c ****     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  72              		.loc 1 11 5 is_stmt 1 view .LVU16
-  73              		.loc 1 11 27 is_stmt 0 view .LVU17
-  74 0024 0493     		str	r3, [sp, #16]
-  12:Core/Src/NOS_LIB_Driver/Src/NOS_GPIO.c ****     HAL_GPIO_Init(port, &GPIO_InitStruct);
-  75              		.loc 1 12 5 is_stmt 1 view .LVU18
-  76 0026 01A9     		add	r1, sp, #4
-  77              	.LVL5:
-  78              		.loc 1 12 5 is_stmt 0 view .LVU19
-  79 0028 FFF7FEFF 		bl	HAL_GPIO_Init
-  80              	.LVL6:
-  13:Core/Src/NOS_LIB_Driver/Src/NOS_GPIO.c **** }...
-  81              		.loc 1 13 1 view .LVU20
-  82 002c 07B0     		add	sp, sp, #28
-  83              		.cfi_def_cfa_offset 4
-  84              		@ sp needed
-  85 002e 5DF804FB 		ldr	pc, [sp], #4
-  86              		.cfi_endproc
-  87              	.LFE130:
-  89              		.text
-  90              	.Letext0:
-  91              		.file 2 "c:\\users\\igorn\\appdata\\roaming\\code\\user\\globalstorage\\bmd.stm32-for-vscode\\@xpa
-  92              		.file 3 "c:\\users\\igorn\\appdata\\roaming\\code\\user\\globalstorage\\bmd.stm32-for-vscode\\@xpa
-  93              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h"
-  94              		.file 5 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h"
-  95              		.file 6 "Core/Src/NOS_LIB_Driver/Inc/NOS_Typedefs.h"
-  96              		.file 7 "Core/Src/NOS_LIB_Driver/Inc/NOS_GPIO.h"
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccYJT1ZS.s 			page 3
+  58              		.loc 1 8 5 is_stmt 1 view .LVU8
+  59              		.loc 1 8 25 is_stmt 0 view .LVU9
+  60 001c 0192     		str	r2, [sp, #4]
+   9:Core/Src/NOS_LIB_Driver/Src/NOS_GPIO.c ****     
+  10:Core/Src/NOS_LIB_Driver/Src/NOS_GPIO.c ****     switch(mode)
+  61              		.loc 1 10 5 is_stmt 1 view .LVU10
+  62 001e 012B     		cmp	r3, #1
+  63 0020 06D0     		beq	.L2
+  64 0022 022B     		cmp	r3, #2
+  65 0024 0AD0     		beq	.L3
+  66              	.LVL2:
+  67              	.L4:
+  11:Core/Src/NOS_LIB_Driver/Src/NOS_GPIO.c ****     {
+  12:Core/Src/NOS_LIB_Driver/Src/NOS_GPIO.c ****         case Input:
+  13:Core/Src/NOS_LIB_Driver/Src/NOS_GPIO.c ****             GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  14:Core/Src/NOS_LIB_Driver/Src/NOS_GPIO.c ****             GPIO_InitStruct.Pull = GPIO_NOPULL;
+  15:Core/Src/NOS_LIB_Driver/Src/NOS_GPIO.c ****         break;
+  16:Core/Src/NOS_LIB_Driver/Src/NOS_GPIO.c **** 
+  17:Core/Src/NOS_LIB_Driver/Src/NOS_GPIO.c ****         case Output:
+  18:Core/Src/NOS_LIB_Driver/Src/NOS_GPIO.c ****             GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  19:Core/Src/NOS_LIB_Driver/Src/NOS_GPIO.c ****             GPIO_InitStruct.Pull = GPIO_NOPULL;
+  20:Core/Src/NOS_LIB_Driver/Src/NOS_GPIO.c ****             GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  21:Core/Src/NOS_LIB_Driver/Src/NOS_GPIO.c ****         break;
+  22:Core/Src/NOS_LIB_Driver/Src/NOS_GPIO.c **** 
+  23:Core/Src/NOS_LIB_Driver/Src/NOS_GPIO.c ****     }
+  24:Core/Src/NOS_LIB_Driver/Src/NOS_GPIO.c ****     HAL_GPIO_Init(port, &GPIO_InitStruct);
+  68              		.loc 1 24 5 view .LVU11
+  69 0026 01A9     		add	r1, sp, #4
+  70              	.LVL3:
+  71              		.loc 1 24 5 is_stmt 0 view .LVU12
+  72 0028 FFF7FEFF 		bl	HAL_GPIO_Init
+  73              	.LVL4:
+  25:Core/Src/NOS_LIB_Driver/Src/NOS_GPIO.c **** }...
+  74              		.loc 1 25 1 view .LVU13
+  75 002c 06B0     		add	sp, sp, #24
+  76              		.cfi_remember_state
+  77              		.cfi_def_cfa_offset 8
+  78              		@ sp needed
+  79 002e 10BD     		pop	{r4, pc}
+  80              	.LVL5:
+  81              	.L2:
+  82              		.cfi_restore_state
+  13:Core/Src/NOS_LIB_Driver/Src/NOS_GPIO.c ****             GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  83              		.loc 1 13 13 is_stmt 1 view .LVU14
+  13:Core/Src/NOS_LIB_Driver/Src/NOS_GPIO.c ****             GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  84              		.loc 1 13 34 is_stmt 0 view .LVU15
+  85 0030 4FF48813 		mov	r3, #1114112
+  86              	.LVL6:
+  13:Core/Src/NOS_LIB_Driver/Src/NOS_GPIO.c ****             GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  87              		.loc 1 13 34 view .LVU16
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccdvLVwh.s 			page 3
+
+
+  88 0034 0293     		str	r3, [sp, #8]
+  14:Core/Src/NOS_LIB_Driver/Src/NOS_GPIO.c ****             GPIO_InitStruct.Pull = GPIO_NOPULL;
+  89              		.loc 1 14 13 is_stmt 1 view .LVU17
+  14:Core/Src/NOS_LIB_Driver/Src/NOS_GPIO.c ****             GPIO_InitStruct.Pull = GPIO_NOPULL;
+  90              		.loc 1 14 34 is_stmt 0 view .LVU18
+  91 0036 0023     		movs	r3, #0
+  92 0038 0393     		str	r3, [sp, #12]
+  15:Core/Src/NOS_LIB_Driver/Src/NOS_GPIO.c ****         break;
+  93              		.loc 1 15 9 is_stmt 1 view .LVU19
+  94 003a F4E7     		b	.L4
+  95              	.LVL7:
+  96              	.L3:
+  18:Core/Src/NOS_LIB_Driver/Src/NOS_GPIO.c ****             GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  97              		.loc 1 18 13 view .LVU20
+  18:Core/Src/NOS_LIB_Driver/Src/NOS_GPIO.c ****             GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  98              		.loc 1 18 34 is_stmt 0 view .LVU21
+  99 003c 0123     		movs	r3, #1
+ 100              	.LVL8:
+  18:Core/Src/NOS_LIB_Driver/Src/NOS_GPIO.c ****             GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+ 101              		.loc 1 18 34 view .LVU22
+ 102 003e 0293     		str	r3, [sp, #8]
+  19:Core/Src/NOS_LIB_Driver/Src/NOS_GPIO.c ****             GPIO_InitStruct.Pull = GPIO_NOPULL;
+ 103              		.loc 1 19 13 is_stmt 1 view .LVU23
+  19:Core/Src/NOS_LIB_Driver/Src/NOS_GPIO.c ****             GPIO_InitStruct.Pull = GPIO_NOPULL;
+ 104              		.loc 1 19 34 is_stmt 0 view .LVU24
+ 105 0040 0023     		movs	r3, #0
+ 106 0042 0393     		str	r3, [sp, #12]
+  20:Core/Src/NOS_LIB_Driver/Src/NOS_GPIO.c ****             GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+ 107              		.loc 1 20 13 is_stmt 1 view .LVU25
+  20:Core/Src/NOS_LIB_Driver/Src/NOS_GPIO.c ****             GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+ 108              		.loc 1 20 35 is_stmt 0 view .LVU26
+ 109 0044 0493     		str	r3, [sp, #16]
+  21:Core/Src/NOS_LIB_Driver/Src/NOS_GPIO.c ****         break;
+ 110              		.loc 1 21 9 is_stmt 1 view .LVU27
+ 111 0046 EEE7     		b	.L4
+ 112              		.cfi_endproc
+ 113              	.LFE130:
+ 115              		.text
+ 116              	.Letext0:
+ 117              		.file 2 "c:\\users\\igorn\\appdata\\roaming\\code\\user\\globalstorage\\bmd.stm32-for-vscode\\@xpa
+ 118              		.file 3 "c:\\users\\igorn\\appdata\\roaming\\code\\user\\globalstorage\\bmd.stm32-for-vscode\\@xpa
+ 119              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h"
+ 120              		.file 5 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h"
+ 121              		.file 6 "Core/Src/NOS_LIB_Driver/Inc/NOS_Typedefs.h"
+ 122              		.file 7 "Core/Src/NOS_LIB_Driver/Inc/NOS_GPIO.h"
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccdvLVwh.s 			page 4
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 NOS_GPIO.c
-C:\Users\igorn\AppData\Local\Temp\ccYJT1ZS.s:21     .text.NOS_GPIO_PinInit:00000000 $t
-C:\Users\igorn\AppData\Local\Temp\ccYJT1ZS.s:27     .text.NOS_GPIO_PinInit:00000000 NOS_GPIO_PinInit
+C:\Users\igorn\AppData\Local\Temp\ccdvLVwh.s:21     .text.NOS_GPIO_PinInit:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\ccdvLVwh.s:27     .text.NOS_GPIO_PinInit:00000000 NOS_GPIO_PinInit
 
 UNDEFINED SYMBOLS
 HAL_GPIO_Init

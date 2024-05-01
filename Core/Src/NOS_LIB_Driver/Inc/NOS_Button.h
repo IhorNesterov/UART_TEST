@@ -3,7 +3,7 @@
 
 #include "NOS_Includes.h"
 
-void NOS_Button_Init(NOS_Button* button);
+void NOS_Button_Init(NOS_Button* button,GPIO_PIN* pin);
 
 void NOS_Button_TimerHandler(NOS_Button* button);
 void NOS_Button_TimerReset(NOS_Button* button);
