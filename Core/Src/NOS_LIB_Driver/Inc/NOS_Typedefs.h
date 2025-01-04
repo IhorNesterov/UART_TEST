@@ -1,8 +1,8 @@
 #ifndef NOS_TYPEDEFS
 #define NOS_TYPEDEFS
-#include "NOS_Includes.h"
 #include "stdint.h"
 #include "stm32f4xx.h"
+//#include "stm32f1xx.h"
 #include "stdbool.h"
 /* Unions begin */
 
@@ -178,7 +178,7 @@ typedef struct NOS_ModBus_Struct_t
   Modbus_Device devices[10];
   ModBus_Master_Command master;
   ModBus_Slave_Command slave;
-  UART_HandleTypeDef* huart;
+  //UART_HandleTypeDef* huart;
   uint8_t* rx_buff;
   GPIO_PIN RW;
   ModBus_State state;
@@ -197,7 +197,7 @@ typedef struct NOS_ModBus_Struct_t
 typedef enum Language_e{English,Ukrainian} Language;
 typedef enum MoveDirection_e {UP,DOWN,RIGHT,LEFT} MoveDirection;
 
-
+typedef enum Signal_Level_e {LOW,HIGH} Signal_Level;
 typedef enum Button_State_e
 {
     Idle,pressed,released,pressDone
@@ -205,18 +205,19 @@ typedef enum Button_State_e
 
 typedef struct NOS_Button_t
 {
-
     bool pressed;
     bool released;
     bool pressDone;
+    bool stopped;
+    GPIO_PinState openLevel;
 
-    GPIO_PIN* pin;
     uint32_t timer;
-    uint32_t watchdog;
-    uint32_t buttonDelay;
     uint32_t pressedTime;
     uint32_t releasedTime;
     uint32_t lastDoneTime;
+    uint32_t stopTime;
+
+    GPIO_PIN* pin;
 
 }NOS_Button;
 

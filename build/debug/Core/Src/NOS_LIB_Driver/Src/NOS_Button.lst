@@ -1,0 +1,519 @@
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccAkgnfe.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"NOS_Button.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "Core/Src/NOS_LIB_Driver/Src/NOS_Button.c"
+  20              		.section	.text.NOS_Button_Init,"ax",%progbits
+  21              		.align	1
+  22              		.global	NOS_Button_Init
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	NOS_Button_Init:
+  28              	.LVL0:
+  29              	.LFB130:
+   1:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c **** #include "NOS_Button.h"
+   2:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c **** 
+   3:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c **** 
+   4:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c **** void NOS_Button_Init(NOS_Button* button,GPIO_PinState openLvl)
+   5:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c **** {
+  30              		.loc 1 5 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		@ link register save eliminated.
+   6:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****     button->pressed = false;
+  35              		.loc 1 6 5 view .LVU1
+  36              		.loc 1 6 21 is_stmt 0 view .LVU2
+  37 0000 0023     		movs	r3, #0
+  38 0002 0370     		strb	r3, [r0]
+   7:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****     button->released = false;
+  39              		.loc 1 7 5 is_stmt 1 view .LVU3
+  40              		.loc 1 7 22 is_stmt 0 view .LVU4
+  41 0004 4370     		strb	r3, [r0, #1]
+   8:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****     button->pressDone = false;
+  42              		.loc 1 8 5 is_stmt 1 view .LVU5
+  43              		.loc 1 8 23 is_stmt 0 view .LVU6
+  44 0006 8370     		strb	r3, [r0, #2]
+   9:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****     button->openLevel = openLvl;
+  45              		.loc 1 9 5 is_stmt 1 view .LVU7
+  46              		.loc 1 9 23 is_stmt 0 view .LVU8
+  47 0008 0171     		strb	r1, [r0, #4]
+  10:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c **** 
+  11:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****     button->timer = 0;
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccAkgnfe.s 			page 2
+
+
+  48              		.loc 1 11 5 is_stmt 1 view .LVU9
+  49              		.loc 1 11 19 is_stmt 0 view .LVU10
+  50 000a 8360     		str	r3, [r0, #8]
+  12:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****     button->pressedTime = 0;
+  51              		.loc 1 12 5 is_stmt 1 view .LVU11
+  52              		.loc 1 12 25 is_stmt 0 view .LVU12
+  53 000c C360     		str	r3, [r0, #12]
+  13:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****     button->releasedTime = 0;
+  54              		.loc 1 13 5 is_stmt 1 view .LVU13
+  55              		.loc 1 13 26 is_stmt 0 view .LVU14
+  56 000e 0361     		str	r3, [r0, #16]
+  14:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****     button->lastDoneTime = 0;
+  57              		.loc 1 14 5 is_stmt 1 view .LVU15
+  58              		.loc 1 14 26 is_stmt 0 view .LVU16
+  59 0010 4361     		str	r3, [r0, #20]
+  15:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c **** }
+  60              		.loc 1 15 1 view .LVU17
+  61 0012 7047     		bx	lr
+  62              		.cfi_endproc
+  63              	.LFE130:
+  65              		.section	.text.NOS_Button_TimerReset,"ax",%progbits
+  66              		.align	1
+  67              		.global	NOS_Button_TimerReset
+  68              		.syntax unified
+  69              		.thumb
+  70              		.thumb_func
+  72              	NOS_Button_TimerReset:
+  73              	.LVL1:
+  74              	.LFB132:
+  16:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c **** 
+  17:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c **** void NOS_Button_TimerHandler(NOS_Button* button)
+  18:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c **** {
+  19:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****     button->timer++;
+  20:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****     
+  21:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****     if(button->stopped)
+  22:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****     {
+  23:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****         if(button->timer > button->stopTime)
+  24:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****         {
+  25:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****             button->stopped = false;
+  26:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****             button->timer = 0;
+  27:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****         }
+  28:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****     }
+  29:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****     else
+  30:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****     {
+  31:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****         if(HAL_GPIO_ReadPin(button->pin->Port,button->pin->Pin) == GPIO_PIN_RESET && !button->press
+  32:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****         {
+  33:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****             NOS_Button_PressedHandler(button);
+  34:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****         }
+  35:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c **** 
+  36:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****         if(HAL_GPIO_ReadPin(button->pin->Port,button->pin->Pin) == GPIO_PIN_SET && button->pressed)
+  37:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****         {
+  38:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****             NOS_Button_ReleaseHandler(button);
+  39:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****         }
+  40:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****     }
+  41:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c **** }
+  42:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c **** 
+  43:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c **** void NOS_Button_TimerReset(NOS_Button* button)
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccAkgnfe.s 			page 3
+
+
+  44:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c **** {
+  75              		.loc 1 44 1 is_stmt 1 view -0
+  76              		.cfi_startproc
+  77              		@ args = 0, pretend = 0, frame = 0
+  78              		@ frame_needed = 0, uses_anonymous_args = 0
+  79              		@ link register save eliminated.
+  45:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****     button->timer = 0;
+  80              		.loc 1 45 5 view .LVU19
+  81              		.loc 1 45 19 is_stmt 0 view .LVU20
+  82 0000 0023     		movs	r3, #0
+  83 0002 8360     		str	r3, [r0, #8]
+  46:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c **** }
+  84              		.loc 1 46 1 view .LVU21
+  85 0004 7047     		bx	lr
+  86              		.cfi_endproc
+  87              	.LFE132:
+  89              		.section	.text.NOS_Button_PressedHandler,"ax",%progbits
+  90              		.align	1
+  91              		.global	NOS_Button_PressedHandler
+  92              		.syntax unified
+  93              		.thumb
+  94              		.thumb_func
+  96              	NOS_Button_PressedHandler:
+  97              	.LVL2:
+  98              	.LFB133:
+  47:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c **** 
+  48:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c **** void NOS_Button_PressedHandler(NOS_Button* button)
+  49:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c **** {
+  99              		.loc 1 49 1 is_stmt 1 view -0
+ 100              		.cfi_startproc
+ 101              		@ args = 0, pretend = 0, frame = 0
+ 102              		@ frame_needed = 0, uses_anonymous_args = 0
+ 103              		@ link register save eliminated.
+  50:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****     button->pressed = true;
+ 104              		.loc 1 50 5 view .LVU23
+ 105              		.loc 1 50 21 is_stmt 0 view .LVU24
+ 106 0000 0123     		movs	r3, #1
+ 107 0002 0370     		strb	r3, [r0]
+  51:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****     button->pressedTime = button->timer;
+ 108              		.loc 1 51 5 is_stmt 1 view .LVU25
+ 109              		.loc 1 51 33 is_stmt 0 view .LVU26
+ 110 0004 8368     		ldr	r3, [r0, #8]
+ 111              		.loc 1 51 25 view .LVU27
+ 112 0006 C360     		str	r3, [r0, #12]
+  52:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c **** }
+ 113              		.loc 1 52 1 view .LVU28
+ 114 0008 7047     		bx	lr
+ 115              		.cfi_endproc
+ 116              	.LFE133:
+ 118              		.section	.text.NOS_Button_ReleaseHandler,"ax",%progbits
+ 119              		.align	1
+ 120              		.global	NOS_Button_ReleaseHandler
+ 121              		.syntax unified
+ 122              		.thumb
+ 123              		.thumb_func
+ 125              	NOS_Button_ReleaseHandler:
+ 126              	.LVL3:
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccAkgnfe.s 			page 4
+
+
+ 127              	.LFB134:
+  53:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c **** 
+  54:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c **** void NOS_Button_ReleaseHandler(NOS_Button* button)
+  55:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c **** {
+ 128              		.loc 1 55 1 is_stmt 1 view -0
+ 129              		.cfi_startproc
+ 130              		@ args = 0, pretend = 0, frame = 0
+ 131              		@ frame_needed = 0, uses_anonymous_args = 0
+ 132              		@ link register save eliminated.
+  56:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****     if(button->pressed)
+ 133              		.loc 1 56 5 view .LVU30
+ 134              		.loc 1 56 14 is_stmt 0 view .LVU31
+ 135 0000 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
+ 136              		.loc 1 56 7 view .LVU32
+ 137 0002 4BB1     		cbz	r3, .L4
+  57:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****     {
+  58:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****         button->releasedTime = button->timer;
+ 138              		.loc 1 58 9 is_stmt 1 view .LVU33
+ 139              		.loc 1 58 38 is_stmt 0 view .LVU34
+ 140 0004 8368     		ldr	r3, [r0, #8]
+ 141              		.loc 1 58 30 view .LVU35
+ 142 0006 0361     		str	r3, [r0, #16]
+  59:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****         button->lastDoneTime = button->releasedTime - button->pressedTime;
+ 143              		.loc 1 59 9 is_stmt 1 view .LVU36
+ 144              		.loc 1 59 61 is_stmt 0 view .LVU37
+ 145 0008 C268     		ldr	r2, [r0, #12]
+ 146              		.loc 1 59 53 view .LVU38
+ 147 000a 9B1A     		subs	r3, r3, r2
+ 148              		.loc 1 59 30 view .LVU39
+ 149 000c 4361     		str	r3, [r0, #20]
+  60:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****         button->pressDone = true;
+ 150              		.loc 1 60 9 is_stmt 1 view .LVU40
+ 151              		.loc 1 60 27 is_stmt 0 view .LVU41
+ 152 000e 0123     		movs	r3, #1
+ 153 0010 8370     		strb	r3, [r0, #2]
+  61:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****         button->pressed = false;
+ 154              		.loc 1 61 9 is_stmt 1 view .LVU42
+ 155              		.loc 1 61 25 is_stmt 0 view .LVU43
+ 156 0012 0022     		movs	r2, #0
+ 157 0014 0270     		strb	r2, [r0]
+  62:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****         button->released = true;
+ 158              		.loc 1 62 9 is_stmt 1 view .LVU44
+ 159              		.loc 1 62 26 is_stmt 0 view .LVU45
+ 160 0016 4370     		strb	r3, [r0, #1]
+ 161              	.L4:
+  63:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****     }
+  64:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c **** }
+ 162              		.loc 1 64 1 view .LVU46
+ 163 0018 7047     		bx	lr
+ 164              		.cfi_endproc
+ 165              	.LFE134:
+ 167              		.section	.text.NOS_Button_TimerHandler,"ax",%progbits
+ 168              		.align	1
+ 169              		.global	NOS_Button_TimerHandler
+ 170              		.syntax unified
+ 171              		.thumb
+ 172              		.thumb_func
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccAkgnfe.s 			page 5
+
+
+ 174              	NOS_Button_TimerHandler:
+ 175              	.LVL4:
+ 176              	.LFB131:
+  18:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****     button->timer++;
+ 177              		.loc 1 18 1 is_stmt 1 view -0
+ 178              		.cfi_startproc
+ 179              		@ args = 0, pretend = 0, frame = 0
+ 180              		@ frame_needed = 0, uses_anonymous_args = 0
+  18:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****     button->timer++;
+ 181              		.loc 1 18 1 is_stmt 0 view .LVU48
+ 182 0000 10B5     		push	{r4, lr}
+ 183              		.cfi_def_cfa_offset 8
+ 184              		.cfi_offset 4, -8
+ 185              		.cfi_offset 14, -4
+ 186 0002 0446     		mov	r4, r0
+  19:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****     
+ 187              		.loc 1 19 5 is_stmt 1 view .LVU49
+  19:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****     
+ 188              		.loc 1 19 11 is_stmt 0 view .LVU50
+ 189 0004 8368     		ldr	r3, [r0, #8]
+  19:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****     
+ 190              		.loc 1 19 18 view .LVU51
+ 191 0006 0133     		adds	r3, r3, #1
+ 192 0008 8360     		str	r3, [r0, #8]
+  21:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****     {
+ 193              		.loc 1 21 5 is_stmt 1 view .LVU52
+  21:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****     {
+ 194              		.loc 1 21 14 is_stmt 0 view .LVU53
+ 195 000a C278     		ldrb	r2, [r0, #3]	@ zero_extendqisi2
+  21:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****     {
+ 196              		.loc 1 21 7 view .LVU54
+ 197 000c 32B1     		cbz	r2, .L7
+  23:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****         {
+ 198              		.loc 1 23 9 is_stmt 1 view .LVU55
+  23:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****         {
+ 199              		.loc 1 23 34 is_stmt 0 view .LVU56
+ 200 000e 8269     		ldr	r2, [r0, #24]
+  23:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****         {
+ 201              		.loc 1 23 11 view .LVU57
+ 202 0010 9342     		cmp	r3, r2
+ 203 0012 02D9     		bls	.L6
+  25:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****             button->timer = 0;
+ 204              		.loc 1 25 13 is_stmt 1 view .LVU58
+  25:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****             button->timer = 0;
+ 205              		.loc 1 25 29 is_stmt 0 view .LVU59
+ 206 0014 0023     		movs	r3, #0
+ 207 0016 C370     		strb	r3, [r0, #3]
+  26:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****         }
+ 208              		.loc 1 26 13 is_stmt 1 view .LVU60
+  26:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****         }
+ 209              		.loc 1 26 27 is_stmt 0 view .LVU61
+ 210 0018 8360     		str	r3, [r0, #8]
+ 211              	.LVL5:
+ 212              	.L6:
+  41:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c **** 
+ 213              		.loc 1 41 1 view .LVU62
+ 214 001a 10BD     		pop	{r4, pc}
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccAkgnfe.s 			page 6
+
+
+ 215              	.LVL6:
+ 216              	.L7:
+  31:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****         {
+ 217              		.loc 1 31 9 is_stmt 1 view .LVU63
+  31:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****         {
+ 218              		.loc 1 31 35 is_stmt 0 view .LVU64
+ 219 001c C369     		ldr	r3, [r0, #28]
+  31:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****         {
+ 220              		.loc 1 31 12 view .LVU65
+ 221 001e 9988     		ldrh	r1, [r3, #4]
+ 222 0020 1868     		ldr	r0, [r3]
+ 223              	.LVL7:
+  31:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****         {
+ 224              		.loc 1 31 12 view .LVU66
+ 225 0022 FFF7FEFF 		bl	HAL_GPIO_ReadPin
+ 226              	.LVL8:
+  31:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****         {
+ 227              		.loc 1 31 11 view .LVU67
+ 228 0026 08B9     		cbnz	r0, .L9
+  31:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****         {
+ 229              		.loc 1 31 93 discriminator 1 view .LVU68
+ 230 0028 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+  31:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****         {
+ 231              		.loc 1 31 83 discriminator 1 view .LVU69
+ 232 002a 6BB1     		cbz	r3, .L11
+ 233              	.L9:
+  36:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****         {
+ 234              		.loc 1 36 9 is_stmt 1 view .LVU70
+  36:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****         {
+ 235              		.loc 1 36 35 is_stmt 0 view .LVU71
+ 236 002c E369     		ldr	r3, [r4, #28]
+  36:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****         {
+ 237              		.loc 1 36 12 view .LVU72
+ 238 002e 9988     		ldrh	r1, [r3, #4]
+ 239 0030 1868     		ldr	r0, [r3]
+ 240 0032 FFF7FEFF 		bl	HAL_GPIO_ReadPin
+ 241              	.LVL9:
+  36:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****         {
+ 242              		.loc 1 36 11 view .LVU73
+ 243 0036 0128     		cmp	r0, #1
+ 244 0038 EFD1     		bne	.L6
+  36:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****         {
+ 245              		.loc 1 36 90 discriminator 1 view .LVU74
+ 246 003a 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+  36:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****         {
+ 247              		.loc 1 36 81 discriminator 1 view .LVU75
+ 248 003c 002B     		cmp	r3, #0
+ 249 003e ECD0     		beq	.L6
+  38:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****         }
+ 250              		.loc 1 38 13 is_stmt 1 view .LVU76
+ 251 0040 2046     		mov	r0, r4
+ 252 0042 FFF7FEFF 		bl	NOS_Button_ReleaseHandler
+ 253              	.LVL10:
+  41:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c **** 
+ 254              		.loc 1 41 1 is_stmt 0 view .LVU77
+ 255 0046 E8E7     		b	.L6
+ 256              	.L11:
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccAkgnfe.s 			page 7
+
+
+  33:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****         }
+ 257              		.loc 1 33 13 is_stmt 1 view .LVU78
+ 258 0048 2046     		mov	r0, r4
+ 259 004a FFF7FEFF 		bl	NOS_Button_PressedHandler
+ 260              	.LVL11:
+ 261 004e EDE7     		b	.L9
+ 262              		.cfi_endproc
+ 263              	.LFE131:
+ 265              		.section	.text.NOS_Button_CheckPressDone,"ax",%progbits
+ 266              		.align	1
+ 267              		.global	NOS_Button_CheckPressDone
+ 268              		.syntax unified
+ 269              		.thumb
+ 270              		.thumb_func
+ 272              	NOS_Button_CheckPressDone:
+ 273              	.LVL12:
+ 274              	.LFB135:
+  65:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c **** 
+  66:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c **** bool NOS_Button_CheckPressDone(NOS_Button* button)
+  67:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c **** {
+ 275              		.loc 1 67 1 view -0
+ 276              		.cfi_startproc
+ 277              		@ args = 0, pretend = 0, frame = 0
+ 278              		@ frame_needed = 0, uses_anonymous_args = 0
+ 279              		@ link register save eliminated.
+  68:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****     return button->pressDone;
+ 280              		.loc 1 68 5 view .LVU80
+  69:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c **** }
+ 281              		.loc 1 69 1 is_stmt 0 view .LVU81
+ 282 0000 8078     		ldrb	r0, [r0, #2]	@ zero_extendqisi2
+ 283              	.LVL13:
+ 284              		.loc 1 69 1 view .LVU82
+ 285 0002 7047     		bx	lr
+ 286              		.cfi_endproc
+ 287              	.LFE135:
+ 289              		.section	.text.NOS_Button_isPressed,"ax",%progbits
+ 290              		.align	1
+ 291              		.global	NOS_Button_isPressed
+ 292              		.syntax unified
+ 293              		.thumb
+ 294              		.thumb_func
+ 296              	NOS_Button_isPressed:
+ 297              	.LVL14:
+ 298              	.LFB136:
+  70:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c **** 
+  71:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c **** bool NOS_Button_isPressed(NOS_Button* button)
+  72:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c **** {
+ 299              		.loc 1 72 1 is_stmt 1 view -0
+ 300              		.cfi_startproc
+ 301              		@ args = 0, pretend = 0, frame = 0
+ 302              		@ frame_needed = 0, uses_anonymous_args = 0
+ 303              		@ link register save eliminated.
+  73:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****     return button->pressed;
+ 304              		.loc 1 73 5 view .LVU84
+  74:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c **** }
+ 305              		.loc 1 74 1 is_stmt 0 view .LVU85
+ 306 0000 0078     		ldrb	r0, [r0]	@ zero_extendqisi2
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccAkgnfe.s 			page 8
+
+
+ 307              	.LVL15:
+ 308              		.loc 1 74 1 view .LVU86
+ 309 0002 7047     		bx	lr
+ 310              		.cfi_endproc
+ 311              	.LFE136:
+ 313              		.section	.text.NOS_Button_PressDoneHandler,"ax",%progbits
+ 314              		.align	1
+ 315              		.global	NOS_Button_PressDoneHandler
+ 316              		.syntax unified
+ 317              		.thumb
+ 318              		.thumb_func
+ 320              	NOS_Button_PressDoneHandler:
+ 321              	.LVL16:
+ 322              	.LFB137:
+  75:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c **** 
+  76:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c **** void NOS_Button_PressDoneHandler(NOS_Button* button)
+  77:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c **** {
+ 323              		.loc 1 77 1 is_stmt 1 view -0
+ 324              		.cfi_startproc
+ 325              		@ args = 0, pretend = 0, frame = 0
+ 326              		@ frame_needed = 0, uses_anonymous_args = 0
+ 327              		@ link register save eliminated.
+  78:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****     button->pressed = false;
+ 328              		.loc 1 78 5 view .LVU88
+ 329              		.loc 1 78 21 is_stmt 0 view .LVU89
+ 330 0000 0023     		movs	r3, #0
+ 331 0002 0370     		strb	r3, [r0]
+  79:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****     button->released = false;
+ 332              		.loc 1 79 5 is_stmt 1 view .LVU90
+ 333              		.loc 1 79 22 is_stmt 0 view .LVU91
+ 334 0004 4370     		strb	r3, [r0, #1]
+  80:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****     button->pressDone = false;
+ 335              		.loc 1 80 5 is_stmt 1 view .LVU92
+ 336              		.loc 1 80 23 is_stmt 0 view .LVU93
+ 337 0006 8370     		strb	r3, [r0, #2]
+  81:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****     button->stopped = true;
+ 338              		.loc 1 81 5 is_stmt 1 view .LVU94
+ 339              		.loc 1 81 21 is_stmt 0 view .LVU95
+ 340 0008 0122     		movs	r2, #1
+ 341 000a C270     		strb	r2, [r0, #3]
+  82:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c **** 
+  83:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****     button->timer = 0;
+ 342              		.loc 1 83 5 is_stmt 1 view .LVU96
+ 343              		.loc 1 83 19 is_stmt 0 view .LVU97
+ 344 000c 8360     		str	r3, [r0, #8]
+  84:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****     button->pressedTime = 0;
+ 345              		.loc 1 84 5 is_stmt 1 view .LVU98
+ 346              		.loc 1 84 25 is_stmt 0 view .LVU99
+ 347 000e C360     		str	r3, [r0, #12]
+  85:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****     button->releasedTime = 0;
+ 348              		.loc 1 85 5 is_stmt 1 view .LVU100
+ 349              		.loc 1 85 26 is_stmt 0 view .LVU101
+ 350 0010 0361     		str	r3, [r0, #16]
+  86:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c ****     button->lastDoneTime = 0;
+ 351              		.loc 1 86 5 is_stmt 1 view .LVU102
+ 352              		.loc 1 86 26 is_stmt 0 view .LVU103
+ 353 0012 4361     		str	r3, [r0, #20]
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccAkgnfe.s 			page 9
+
+
+  87:Core/Src/NOS_LIB_Driver/Src/NOS_Button.c **** }
+ 354              		.loc 1 87 1 view .LVU104
+ 355 0014 7047     		bx	lr
+ 356              		.cfi_endproc
+ 357              	.LFE137:
+ 359              		.text
+ 360              	.Letext0:
+ 361              		.file 2 "c:\\users\\igorn\\appdata\\roaming\\code\\user\\globalstorage\\bmd.stm32-for-vscode\\@xpa
+ 362              		.file 3 "c:\\users\\igorn\\appdata\\roaming\\code\\user\\globalstorage\\bmd.stm32-for-vscode\\@xpa
+ 363              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h"
+ 364              		.file 5 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h"
+ 365              		.file 6 "Core/Src/NOS_LIB_Driver/Inc/NOS_Typedefs.h"
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccAkgnfe.s 			page 10
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 NOS_Button.c
+C:\Users\igorn\AppData\Local\Temp\ccAkgnfe.s:21     .text.NOS_Button_Init:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\ccAkgnfe.s:27     .text.NOS_Button_Init:00000000 NOS_Button_Init
+C:\Users\igorn\AppData\Local\Temp\ccAkgnfe.s:66     .text.NOS_Button_TimerReset:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\ccAkgnfe.s:72     .text.NOS_Button_TimerReset:00000000 NOS_Button_TimerReset
+C:\Users\igorn\AppData\Local\Temp\ccAkgnfe.s:90     .text.NOS_Button_PressedHandler:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\ccAkgnfe.s:96     .text.NOS_Button_PressedHandler:00000000 NOS_Button_PressedHandler
+C:\Users\igorn\AppData\Local\Temp\ccAkgnfe.s:119    .text.NOS_Button_ReleaseHandler:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\ccAkgnfe.s:125    .text.NOS_Button_ReleaseHandler:00000000 NOS_Button_ReleaseHandler
+C:\Users\igorn\AppData\Local\Temp\ccAkgnfe.s:168    .text.NOS_Button_TimerHandler:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\ccAkgnfe.s:174    .text.NOS_Button_TimerHandler:00000000 NOS_Button_TimerHandler
+C:\Users\igorn\AppData\Local\Temp\ccAkgnfe.s:266    .text.NOS_Button_CheckPressDone:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\ccAkgnfe.s:272    .text.NOS_Button_CheckPressDone:00000000 NOS_Button_CheckPressDone
+C:\Users\igorn\AppData\Local\Temp\ccAkgnfe.s:290    .text.NOS_Button_isPressed:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\ccAkgnfe.s:296    .text.NOS_Button_isPressed:00000000 NOS_Button_isPressed
+C:\Users\igorn\AppData\Local\Temp\ccAkgnfe.s:314    .text.NOS_Button_PressDoneHandler:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\ccAkgnfe.s:320    .text.NOS_Button_PressDoneHandler:00000000 NOS_Button_PressDoneHandler
+
+UNDEFINED SYMBOLS
+HAL_GPIO_ReadPin

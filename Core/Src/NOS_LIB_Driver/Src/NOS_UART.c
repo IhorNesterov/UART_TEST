@@ -2,10 +2,11 @@
 
 NOS_UART_Struct* NOS_UART_ReceiveReset(NOS_UART_Struct* data)
 {
-  data->rx_buff_ptr = data->rx_buff;
-  data->currMessageLenght = 0;
-  data->rx_flag = true;
-  return data;
+    data->lastMessageSize = data->currMessageLenght;
+    data->rx_buff_ptr = data->rx_buff;
+    data->currMessageLenght = 0;
+    data->rx_flag = true;
+    return data;
 }
 
 NOS_UART_Struct* NOS_UART_ContinueReceive(NOS_UART_Struct* data)
@@ -29,7 +30,7 @@ void NOS_UART_ReceiveAbort(NOS_UART_Struct* data)
     data->endReceive = false;
     data->bufferCommand = false;
     data->rx_flag = false;
-    data->receiveTimeAbort = 1000;
+    data->receiveTimeAbort = 50;
 }
 
 void NOS_UART_Timer_Handler(NOS_UART_Struct* uart)

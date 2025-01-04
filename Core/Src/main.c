@@ -150,7 +150,7 @@ int main(void)
   NOS_GPIO_PinInit(&PE3,GPIOE,GPIO_PIN_3,Input);
   NOS_GPIO_PinInit(&PE4,GPIOE,GPIO_PIN_4,Input);
 
-  NOS_Button_Init(&button,&PE3);
+  NOS_Button_Init(&button,GPIO_PIN_SET);
 
   NOS_GPIO_PinInit(&PA6,GPIOA,GPIO_PIN_6,Output);
   NOS_GPIO_PinInit(&PA7,GPIOA,GPIO_PIN_7,Output);
@@ -175,8 +175,6 @@ int main(void)
 
     if(NOS_UART_CheckReceive(&UART2))
     {
-      char mess[] = "Recieved!";
-      uint32_t buff = 0; 
 
       if(NOS_Strip_Uart_ParseCommand(&stripA,NOS_UART_GetReceivedData(&UART2)) == "ready!")
       {
@@ -184,6 +182,10 @@ int main(void)
       }
       
       NOS_UART_EndReceive(&UART2);
+      HAL_GPIO_TogglePin(GPIOA,GPIO_PIN_7);
+      //HAL_UART_Transmit(&huart2,"ready!",7,1000);
+      NOS_WS2812B_Strip_Update(&stripA);
+      visHandle();
     }
 
     if (NOS_TimeEvent_Check(&tetrisUpdateEvent))
@@ -196,8 +198,7 @@ int main(void)
     {
       //NOS_WS2812B_Strip_ColorFill(&stripA,red);
       //stripA.bright = NOS_Math_GetSinValue(&bright);
-      NOS_WS2812B_Strip_Update(&stripA);
-      visHandle();
+
 
       NOS_TimeEvent_FinishEvent(&screenUpdateEvent);
     }

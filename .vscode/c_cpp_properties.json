@@ -6,6 +6,7 @@
         "Core/Inc",
         "Core/Src/NOS_16_Games/Snake",
         "Core/Src/NOS_16_Games/Tetris",
+        "Core/Src/NOS_Core",
         "Core/Src/NOS_LIB_Driver/Inc",
         "Drivers/CMSIS/Device/ST/STM32F4xx/Include",
         "Drivers/CMSIS/Include",

@@ -1,15 +1,14 @@
 #include "NOS_Button.h"
 
-void NOS_Button_Init(NOS_Button* button,GPIO_PIN* pin)
+
+void NOS_Button_Init(NOS_Button* button,GPIO_PinState openLvl)
 {
-    button->pin = pin;
     button->pressed = false;
     button->released = false;
     button->pressDone = false;
-    button->buttonDelay = 50;
+    button->openLevel = openLvl;
 
     button->timer = 0;
-    button->watchdog = 0;
     button->pressedTime = 0;
     button->releasedTime = 0;
     button->lastDoneTime = 0;
@@ -18,8 +17,16 @@ void NOS_Button_Init(NOS_Button* button,GPIO_PIN* pin)
 void NOS_Button_TimerHandler(NOS_Button* button)
 {
     button->timer++;
-    button->watchdog++;
-    if(button->watchdog > button->buttonDelay)
+    
+    if(button->stopped)
+    {
+        if(button->timer > button->stopTime)
+        {
+            button->stopped = false;
+            button->timer = 0;
+        }
+    }
+    else
     {
         if(HAL_GPIO_ReadPin(button->pin->Port,button->pin->Pin) == GPIO_PIN_RESET && !button->pressed)
         {
@@ -30,15 +37,12 @@ void NOS_Button_TimerHandler(NOS_Button* button)
         {
             NOS_Button_ReleaseHandler(button);
         }
-
-        button->watchdog = 0;
     }
 }
 
 void NOS_Button_TimerReset(NOS_Button* button)
 {
     button->timer = 0;
-    button->watchdog = 0;
 }
 
 void NOS_Button_PressedHandler(NOS_Button* button)
@@ -74,6 +78,7 @@ void NOS_Button_PressDoneHandler(NOS_Button* button)
     button->pressed = false;
     button->released = false;
     button->pressDone = false;
+    button->stopped = true;
 
     button->timer = 0;
     button->pressedTime = 0;

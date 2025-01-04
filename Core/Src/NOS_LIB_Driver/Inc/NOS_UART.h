@@ -1,10 +1,10 @@
 #ifndef NOS_UART
 #define NOS_UART
 
-#include "NOS_Includes.h"
+#include "NOS_Typedefs.h"
 
 #define UART_ADDRESS 0x65
-#define BUFFER_SIZE 1024
+#define BUFFER_SIZE 2048
 
 typedef struct NOS_UART_Struct_t
 {
@@ -25,6 +25,7 @@ typedef struct NOS_UART_Struct_t
     int receiveTimeAbort;
     bool receiveAbort;
     bool receiveCheck;
+    uint16_t lastMessageSize;
 
 }NOS_UART_Struct;
 

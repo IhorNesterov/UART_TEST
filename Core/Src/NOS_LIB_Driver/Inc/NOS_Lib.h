@@ -5,7 +5,7 @@
 #include "WS2812B.h"
 #include "NOS_WS2812B_Strip.h"
 #include "NOS_Time.h"
-#include "NOS_ModBus.h"
+//#include "NOS_ModBus.h"
 #include "NOS_GPIO.h"
 #include "NOS_Math.h"
 #include "NOS_Strip_UART.h"

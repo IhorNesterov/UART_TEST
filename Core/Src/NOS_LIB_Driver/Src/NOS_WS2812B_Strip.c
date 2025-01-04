@@ -50,7 +50,9 @@ void NOS_WS2812B_Strip_Update(WS2812B_Strip* strip)
 
 void NOS_WS2812B_Strip_TestFill(WS2812B_Strip* strip)
 {
-    int repeats = strip->pixelCount/7;
+    int repeats = strip->pixelCount / 7;
+    int lastPixelsCount = strip->pixelCount % 7;
+    int lastPixelsStart = repeats * 7;
 
     for(int i = 0; i < repeats; i++)
     {
@@ -62,6 +64,13 @@ void NOS_WS2812B_Strip_TestFill(WS2812B_Strip* strip)
         NOS_WS2812B_Strip_SetPixel(strip,i * 7 + 5,75,0,130); //violet
         NOS_WS2812B_Strip_SetPixel(strip,i * 7 + 6,148,0,211); //violet2
     }
+    
+    NOS_WS2812B_Strip_SetPixel(strip,lastPixelsStart,255,0,0); if(++lastPixelsStart < strip->pixelCount) return; 
+    NOS_WS2812B_Strip_SetPixel(strip,lastPixelsStart,255,127,0); if(++lastPixelsStart < strip->pixelCount) return;
+    NOS_WS2812B_Strip_SetPixel(strip,lastPixelsStart,255,255,0); if(++lastPixelsStart < strip->pixelCount) return;
+    NOS_WS2812B_Strip_SetPixel(strip,lastPixelsStart,0,255,0); if(++lastPixelsStart < strip->pixelCount) return;
+    NOS_WS2812B_Strip_SetPixel(strip,lastPixelsStart,0,0,255); if(++lastPixelsStart < strip->pixelCount) return;
+    NOS_WS2812B_Strip_SetPixel(strip,lastPixelsStart,75,0,130); 
 }
 
 void NOS_WS2812B_Strip_ColorFill(WS2812B_Strip* strip,PixelColor color)
