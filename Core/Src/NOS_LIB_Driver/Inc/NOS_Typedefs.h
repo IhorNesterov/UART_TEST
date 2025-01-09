@@ -232,6 +232,22 @@ typedef struct SinValue_t
     bool fall;
 }SinValue;
 
+typedef struct Effect_Struct_t
+{
+  SinValue value;
+  NOS_Short speed;
+  NOS_Short step;
+  uint16_t timer;
+
+  uint8_t minValue;
+  uint8_t maxValue;
+
+  bool enabled;
+  uint8_t effectId;
+}Effect_Struct;
+
+#define EFFECTS_MAX_COUNT 10
+#define EFFECT_BREATHE_ID 0x20
 
 /**
   * @brief  Strip structure.
@@ -248,6 +264,9 @@ typedef struct NOS_WS2812B_STRIP_t
     PixelColor* pixels;
     int pixelCount;
     int bright;
+
+    Effect_Struct effects[EFFECTS_MAX_COUNT];
+    uint8_t effectsCounter;
 }WS2812B_Strip;
 
 /* STM32 Core structures begin*/

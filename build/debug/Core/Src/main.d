@@ -36,9 +36,9 @@ build/debug/Core/Src/main.o: Core/Src/main.c Core/Inc/main.h \
  Core/Inc/../Src/NOS_LIB_Driver/Inc/WS2812B.h \
  Core/Inc/../Src/NOS_LIB_Driver/Inc/NOS_WS2812B_Strip.h \
  Core/Inc/../Src/NOS_LIB_Driver/Inc/WS2812B_Core.h \
+ Core/Inc/../Src/NOS_LIB_Driver/Inc/NOS_Math.h \
  Core/Inc/../Src/NOS_LIB_Driver/Inc/NOS_Time.h \
  Core/Inc/../Src/NOS_LIB_Driver/Inc/NOS_GPIO.h \
- Core/Inc/../Src/NOS_LIB_Driver/Inc/NOS_Math.h \
  Core/Inc/../Src/NOS_LIB_Driver/Inc/NOS_Strip_UART.h \
  Core/Inc/../Src/NOS_LIB_Driver/Inc/NOS_Button.h \
  Core/Inc/../Src/NOS_LIB_Driver/Inc/NOS_BaseColors.h \
@@ -83,9 +83,9 @@ Core/Inc/../Src/NOS_LIB_Driver/Inc/WS2812B_Effects.h:
 Core/Inc/../Src/NOS_LIB_Driver/Inc/WS2812B.h:
 Core/Inc/../Src/NOS_LIB_Driver/Inc/NOS_WS2812B_Strip.h:
 Core/Inc/../Src/NOS_LIB_Driver/Inc/WS2812B_Core.h:
+Core/Inc/../Src/NOS_LIB_Driver/Inc/NOS_Math.h:
 Core/Inc/../Src/NOS_LIB_Driver/Inc/NOS_Time.h:
 Core/Inc/../Src/NOS_LIB_Driver/Inc/NOS_GPIO.h:
-Core/Inc/../Src/NOS_LIB_Driver/Inc/NOS_Math.h:
 Core/Inc/../Src/NOS_LIB_Driver/Inc/NOS_Strip_UART.h:
 Core/Inc/../Src/NOS_LIB_Driver/Inc/NOS_Button.h:
 Core/Inc/../Src/NOS_LIB_Driver/Inc/NOS_BaseColors.h:

@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccZ8BBjv.s 			page 1
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cclbszJR.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccZ8BBjv.s 			page 1
   48              		.loc 1 8 5 is_stmt 1 view .LVU8
   49              		.loc 1 8 19 is_stmt 0 view .LVU9
   50 000e 0122     		movs	r2, #1
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccZ8BBjv.s 			page 2
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cclbszJR.s 			page 2
 
 
   51 0010 9A71     		strb	r2, [r3, #6]
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccZ8BBjv.s 			page 1
   99              		.global	NOS_UART_ReceiveAbort
  100              		.syntax unified
  101              		.thumb
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccZ8BBjv.s 			page 3
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cclbszJR.s 			page 3
 
 
  102              		.thumb_func
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccZ8BBjv.s 			page 1
   28:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     data->expectedMessageLenght = 0;
  145              		.loc 1 28 5 is_stmt 1 view .LVU36
  146              		.loc 1 28 33 is_stmt 0 view .LVU37
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccZ8BBjv.s 			page 4
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cclbszJR.s 			page 4
 
 
  147 001a C360     		str	r3, [r0, #12]
@@ -198,10 +198,10 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccZ8BBjv.s 			page 1
  157              		.loc 1 32 5 is_stmt 1 view .LVU44
  158              		.loc 1 32 19 is_stmt 0 view .LVU45
  159 0022 8371     		strb	r3, [r0, #6]
-  33:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     data->receiveTimeAbort = 50;
+  33:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     data->receiveTimeAbort = 40;
  160              		.loc 1 33 5 is_stmt 1 view .LVU46
  161              		.loc 1 33 28 is_stmt 0 view .LVU47
- 162 0024 3223     		movs	r3, #50
+ 162 0024 2823     		movs	r3, #40
  163 0026 0362     		str	r3, [r0, #32]
   34:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** }
  164              		.loc 1 34 1 view .LVU48
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccZ8BBjv.s 			page 1
  193              		.loc 1 38 11 view .LVU53
  194 000a 5BB1     		cbz	r3, .L8
  195              		.loc 1 38 39 discriminator 1 view .LVU54
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccZ8BBjv.s 			page 5
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cclbszJR.s 			page 5
 
 
  196 000c 00F58053 		add	r3, r0, #4096
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccZ8BBjv.s 			page 1
  236 0044 10BD     		pop	{r4, pc}
  237              	.LVL10:
  238              	.L11:
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccZ8BBjv.s 			page 6
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cclbszJR.s 			page 6
 
 
   46:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****             uart->receiveCheck = false;
@@ -346,309 +346,311 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccZ8BBjv.s 			page 1
  274              		.cfi_offset 4, -8
  275              		.cfi_offset 14, -4
  276 0002 0C46     		mov	r4, r1
-  56:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     data->rx_buff_ptr = &data->rx_buff[data->currMessageLenght];
- 277              		.loc 1 56 5 is_stmt 1 view .LVU79
- 278              		.loc 1 56 44 is_stmt 0 view .LVU80
+  56:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** 
+  57:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     data->rx_buff_ptr = &data->rx_buff[data->currMessageLenght];
+ 277              		.loc 1 57 5 is_stmt 1 view .LVU79
+ 278              		.loc 1 57 44 is_stmt 0 view .LVU80
  279 0004 00F58053 		add	r3, r0, #4096
  280 0008 9968     		ldr	r1, [r3, #8]
  281              	.LVL14:
- 282              		.loc 1 56 25 view .LVU81
+ 282              		.loc 1 57 25 view .LVU81
  283 000a 4218     		adds	r2, r0, r1
- 284              		.loc 1 56 23 view .LVU82
+ 284              		.loc 1 57 23 view .LVU82
  285 000c 9A61     		str	r2, [r3, #24]
-  57:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     data->fuckBuff[data->fuckIndex] = *data->rx_buff_ptr;
- 286              		.loc 1 57 5 is_stmt 1 view .LVU83
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccZ8BBjv.s 			page 7
+  58:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     data->fuckBuff[data->fuckIndex] = *data->rx_buff_ptr;
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cclbszJR.s 			page 7
 
 
- 287              		.loc 1 57 24 is_stmt 0 view .LVU84
+ 286              		.loc 1 58 5 is_stmt 1 view .LVU83
+ 287              		.loc 1 58 24 is_stmt 0 view .LVU84
  288 000e 9A88     		ldrh	r2, [r3, #4]
- 289              		.loc 1 57 39 view .LVU85
+ 289              		.loc 1 58 39 view .LVU85
  290 0010 10F801E0 		ldrb	lr, [r0, r1]	@ zero_extendqisi2
- 291              		.loc 1 57 37 view .LVU86
+ 291              		.loc 1 58 37 view .LVU86
  292 0014 00EB020C 		add	ip, r0, r2
  293 0018 8CF800E8 		strb	lr, [ip, #2048]
-  58:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     data->fuckIndex++;
- 294              		.loc 1 58 5 is_stmt 1 view .LVU87
- 295              		.loc 1 58 20 is_stmt 0 view .LVU88
+  59:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     data->fuckIndex++;
+ 294              		.loc 1 59 5 is_stmt 1 view .LVU87
+ 295              		.loc 1 59 20 is_stmt 0 view .LVU88
  296 001c 0132     		adds	r2, r2, #1
  297 001e 9A80     		strh	r2, [r3, #4]	@ movhi
-  59:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** 
-  60:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     if(*data->rx_buff_ptr == UART_ADDRESS && !data->startReceive)
- 298              		.loc 1 60 5 is_stmt 1 view .LVU89
- 299              		.loc 1 60 8 is_stmt 0 view .LVU90
+  60:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** 
+  61:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     if(*data->rx_buff_ptr == UART_ADDRESS && !data->startReceive)
+ 298              		.loc 1 61 5 is_stmt 1 view .LVU89
+ 299              		.loc 1 61 8 is_stmt 0 view .LVU90
  300 0020 435C     		ldrb	r3, [r0, r1]	@ zero_extendqisi2
- 301              		.loc 1 60 7 view .LVU91
+ 301              		.loc 1 61 7 view .LVU91
  302 0022 652B     		cmp	r3, #101
  303 0024 29D0     		beq	.L22
  304              	.L13:
-  61:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     {
-  62:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->startReceive = true;
-  63:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->currMessageLenght = 0;
-  64:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** 
-  65:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->fuckIndex = 1;
-  66:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         for(int i = 0; i < BUFFER_SIZE; i++)
-  67:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         {
-  68:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****             data->fuckBuff[i] = 0;
-  69:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         }
-  70:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->fuckBuff[0] = *data->rx_buff_ptr; 
-  71:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     }
-  72:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** 
-  73:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     if(data->startReceive && data->currMessageLenght == 1 && !data->bufferCommand)
- 305              		.loc 1 73 5 is_stmt 1 view .LVU92
- 306              		.loc 1 73 12 is_stmt 0 view .LVU93
+  62:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     {
+  63:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->startReceive = true;
+  64:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->currMessageLenght = 0;
+  65:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** 
+  66:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->fuckIndex = 1;
+  67:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         for(int i = 0; i < BUFFER_SIZE; i++)
+  68:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         {
+  69:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****             data->fuckBuff[i] = 0;
+  70:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         }
+  71:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->fuckBuff[0] = *data->rx_buff_ptr; 
+  72:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     }
+  73:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** 
+  74:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     if(data->startReceive && data->currMessageLenght == 1 && !data->bufferCommand)
+ 305              		.loc 1 74 5 is_stmt 1 view .LVU92
+ 306              		.loc 1 74 12 is_stmt 0 view .LVU93
  307 0026 00F58053 		add	r3, r0, #4096
  308 002a 1A7C     		ldrb	r2, [r3, #16]	@ zero_extendqisi2
- 309              		.loc 1 73 7 view .LVU94
+ 309              		.loc 1 74 7 view .LVU94
  310 002c 12B1     		cbz	r2, .L16
- 311              		.loc 1 73 34 discriminator 1 view .LVU95
+ 311              		.loc 1 74 34 discriminator 1 view .LVU95
  312 002e 9B68     		ldr	r3, [r3, #8]
- 313              		.loc 1 73 27 discriminator 1 view .LVU96
+ 313              		.loc 1 74 27 discriminator 1 view .LVU96
  314 0030 012B     		cmp	r3, #1
  315 0032 3ED0     		beq	.L23
  316              	.L16:
-  74:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     {
-  75:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->value.bytes[1] = *data->rx_buff_ptr;
-  76:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     }
-  77:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** 
-  78:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     if(data->startReceive && data->currMessageLenght == 2 && !data->bufferCommand)
- 317              		.loc 1 78 5 is_stmt 1 view .LVU97
- 318              		.loc 1 78 7 is_stmt 0 view .LVU98
+  75:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     {
+  76:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->value.bytes[1] = *data->rx_buff_ptr;
+  77:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     }
+  78:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** 
+  79:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     if(data->startReceive && data->currMessageLenght == 2 && !data->bufferCommand)
+ 317              		.loc 1 79 5 is_stmt 1 view .LVU97
+ 318              		.loc 1 79 7 is_stmt 0 view .LVU98
  319 0034 22B1     		cbz	r2, .L17
- 320              		.loc 1 78 34 discriminator 1 view .LVU99
+ 320              		.loc 1 79 34 discriminator 1 view .LVU99
  321 0036 00F58053 		add	r3, r0, #4096
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cclbszJR.s 			page 8
+
+
  322 003a 9B68     		ldr	r3, [r3, #8]
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccZ8BBjv.s 			page 8
-
-
- 323              		.loc 1 78 27 discriminator 1 view .LVU100
+ 323              		.loc 1 79 27 discriminator 1 view .LVU100
  324 003c 022B     		cmp	r3, #2
  325 003e 44D0     		beq	.L24
  326              	.L17:
-  79:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     {
-  80:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->value.bytes[0] = *data->rx_buff_ptr;
-  81:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->expectedMessageLenght = data->value.data;
-  82:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->bufferCommand = true;
-  83:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     }
-  84:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** 
-  85:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     if(data->fuckIndex > BUFFER_SIZE)
- 327              		.loc 1 85 5 is_stmt 1 view .LVU101
- 328              		.loc 1 85 12 is_stmt 0 view .LVU102
+  80:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     {
+  81:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->value.bytes[0] = *data->rx_buff_ptr;
+  82:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->expectedMessageLenght = data->value.data;
+  83:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->bufferCommand = true;
+  84:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     }
+  85:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** 
+  86:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     if(data->fuckIndex > BUFFER_SIZE)
+ 327              		.loc 1 86 5 is_stmt 1 view .LVU101
+ 328              		.loc 1 86 12 is_stmt 0 view .LVU102
  329 0040 00F58053 		add	r3, r0, #4096
  330 0044 9B88     		ldrh	r3, [r3, #4]
- 331              		.loc 1 85 7 view .LVU103
+ 331              		.loc 1 86 7 view .LVU103
  332 0046 B3F5006F 		cmp	r3, #2048
  333 004a 03D9     		bls	.L18
-  86:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     {
-  87:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->fuckIndex = 0;
- 334              		.loc 1 87 9 is_stmt 1 view .LVU104
- 335              		.loc 1 87 25 is_stmt 0 view .LVU105
+  87:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     {
+  88:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->fuckIndex = 0;
+ 334              		.loc 1 88 9 is_stmt 1 view .LVU104
+ 335              		.loc 1 88 25 is_stmt 0 view .LVU105
  336 004c 00F58053 		add	r3, r0, #4096
  337 0050 0021     		movs	r1, #0
  338 0052 9980     		strh	r1, [r3, #4]	@ movhi
  339              	.L18:
-  88:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     }
-  89:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** 
-  90:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     data->currMessageLenght++;
- 340              		.loc 1 90 5 is_stmt 1 view .LVU106
- 341              		.loc 1 90 9 is_stmt 0 view .LVU107
+  89:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     }
+  90:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** 
+  91:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     data->currMessageLenght++;
+ 340              		.loc 1 91 5 is_stmt 1 view .LVU106
+ 341              		.loc 1 91 9 is_stmt 0 view .LVU107
  342 0054 00F58051 		add	r1, r0, #4096
  343 0058 8B68     		ldr	r3, [r1, #8]
- 344              		.loc 1 90 28 view .LVU108
+ 344              		.loc 1 91 28 view .LVU108
  345 005a 0133     		adds	r3, r3, #1
  346 005c 8B60     		str	r3, [r1, #8]
-  91:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** 
-  92:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     if(data->startReceive && (data->currMessageLenght == data->expectedMessageLenght) && data->buff
- 347              		.loc 1 92 5 is_stmt 1 view .LVU109
- 348              		.loc 1 92 7 is_stmt 0 view .LVU110
+  92:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** 
+  93:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     if(data->startReceive && (data->currMessageLenght == data->expectedMessageLenght) && data->buff
+ 347              		.loc 1 93 5 is_stmt 1 view .LVU109
+ 348              		.loc 1 93 7 is_stmt 0 view .LVU110
  349 005e 12B1     		cbz	r2, .L19
- 350              		.loc 1 92 62 discriminator 1 view .LVU111
+ 350              		.loc 1 93 62 discriminator 1 view .LVU111
  351 0060 CA68     		ldr	r2, [r1, #12]
- 352              		.loc 1 92 27 discriminator 1 view .LVU112
+ 352              		.loc 1 93 27 discriminator 1 view .LVU112
  353 0062 9342     		cmp	r3, r2
  354 0064 3FD0     		beq	.L25
  355              	.L19:
-  93:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     {
-  94:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data = NOS_UART_ReceiveReset(data);
-  95:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->bufferCommand = false;
-  96:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->startReceive = false;
-  97:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     }
-  98:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     else
-  99:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     {
- 100:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data = NOS_UART_ContinueReceive(data);
- 356              		.loc 1 100 9 is_stmt 1 view .LVU113
- 357              		.loc 1 100 16 is_stmt 0 view .LVU114
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccZ8BBjv.s 			page 9
+  94:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     {
+  95:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data = NOS_UART_ReceiveReset(data);
+  96:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->bufferCommand = false;
+  97:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->startReceive = false;
+  98:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     }
+  99:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     else
+ 100:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     {
+ 101:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data = NOS_UART_ContinueReceive(data);
+ 356              		.loc 1 101 9 is_stmt 1 view .LVU113
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cclbszJR.s 			page 9
 
 
+ 357              		.loc 1 101 16 is_stmt 0 view .LVU114
  358 0066 FFF7FEFF 		bl	NOS_UART_ContinueReceive
  359              	.LVL15:
  360              	.L20:
- 101:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     }
- 102:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     HAL_UART_Receive_IT (uart, data->rx_buff_ptr, 1); 
- 361              		.loc 1 102 5 is_stmt 1 view .LVU115
+ 102:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     }
+ 103:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     HAL_UART_Receive_IT (uart, data->rx_buff_ptr, 1); 
+ 361              		.loc 1 103 5 is_stmt 1 view .LVU115
  362 006a 00F58050 		add	r0, r0, #4096
  363              	.LVL16:
- 364              		.loc 1 102 5 is_stmt 0 view .LVU116
+ 364              		.loc 1 103 5 is_stmt 0 view .LVU116
  365 006e 0122     		movs	r2, #1
  366 0070 8169     		ldr	r1, [r0, #24]
  367 0072 2046     		mov	r0, r4
  368              	.LVL17:
- 369              		.loc 1 102 5 view .LVU117
+ 369              		.loc 1 103 5 view .LVU117
  370 0074 FFF7FEFF 		bl	HAL_UART_Receive_IT
  371              	.LVL18:
- 103:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** }
- 372              		.loc 1 103 1 view .LVU118
+ 104:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     
+ 105:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** }
+ 372              		.loc 1 105 1 view .LVU118
  373 0078 10BD     		pop	{r4, pc}
  374              	.LVL19:
  375              	.L22:
-  60:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     {
- 376              		.loc 1 60 51 discriminator 1 view .LVU119
+  61:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     {
+ 376              		.loc 1 61 51 discriminator 1 view .LVU119
  377 007a 00F58053 		add	r3, r0, #4096
  378 007e 1B7C     		ldrb	r3, [r3, #16]	@ zero_extendqisi2
-  60:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     {
- 379              		.loc 1 60 43 discriminator 1 view .LVU120
+  61:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     {
+ 379              		.loc 1 61 43 discriminator 1 view .LVU120
  380 0080 002B     		cmp	r3, #0
  381 0082 D0D1     		bne	.L13
-  62:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->currMessageLenght = 0;
- 382              		.loc 1 62 9 is_stmt 1 view .LVU121
-  62:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->currMessageLenght = 0;
- 383              		.loc 1 62 28 is_stmt 0 view .LVU122
+  63:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->currMessageLenght = 0;
+ 382              		.loc 1 63 9 is_stmt 1 view .LVU121
+  63:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->currMessageLenght = 0;
+ 383              		.loc 1 63 28 is_stmt 0 view .LVU122
  384 0084 00F58052 		add	r2, r0, #4096
  385 0088 4FF0010C 		mov	ip, #1
  386 008c 82F810C0 		strb	ip, [r2, #16]
-  63:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** 
- 387              		.loc 1 63 9 is_stmt 1 view .LVU123
-  63:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** 
- 388              		.loc 1 63 33 is_stmt 0 view .LVU124
+  64:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** 
+ 387              		.loc 1 64 9 is_stmt 1 view .LVU123
+  64:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** 
+ 388              		.loc 1 64 33 is_stmt 0 view .LVU124
  389 0090 9360     		str	r3, [r2, #8]
-  65:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         for(int i = 0; i < BUFFER_SIZE; i++)
- 390              		.loc 1 65 9 is_stmt 1 view .LVU125
-  65:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         for(int i = 0; i < BUFFER_SIZE; i++)
- 391              		.loc 1 65 25 is_stmt 0 view .LVU126
+  66:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         for(int i = 0; i < BUFFER_SIZE; i++)
+ 390              		.loc 1 66 9 is_stmt 1 view .LVU125
+  66:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         for(int i = 0; i < BUFFER_SIZE; i++)
+ 391              		.loc 1 66 25 is_stmt 0 view .LVU126
  392 0092 A2F804C0 		strh	ip, [r2, #4]	@ movhi
-  66:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         {
- 393              		.loc 1 66 9 is_stmt 1 view .LVU127
+  67:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         {
+ 393              		.loc 1 67 9 is_stmt 1 view .LVU127
  394              	.LBB3:
-  66:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         {
- 395              		.loc 1 66 13 view .LVU128
+  67:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         {
+ 395              		.loc 1 67 13 view .LVU128
  396              	.LVL20:
-  66:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         {
- 397              		.loc 1 66 9 is_stmt 0 view .LVU129
+  67:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         {
+ 397              		.loc 1 67 9 is_stmt 0 view .LVU129
  398 0096 05E0     		b	.L14
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cclbszJR.s 			page 10
+
+
  399              	.LVL21:
  400              	.L15:
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccZ8BBjv.s 			page 10
-
-
-  68:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         }
- 401              		.loc 1 68 13 is_stmt 1 discriminator 3 view .LVU130
-  68:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         }
- 402              		.loc 1 68 31 is_stmt 0 discriminator 3 view .LVU131
+  69:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         }
+ 401              		.loc 1 69 13 is_stmt 1 discriminator 3 view .LVU130
+  69:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         }
+ 402              		.loc 1 69 31 is_stmt 0 discriminator 3 view .LVU131
  403 0098 C218     		adds	r2, r0, r3
  404 009a 4FF0000C 		mov	ip, #0
  405 009e 82F800C8 		strb	ip, [r2, #2048]
-  66:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         {
- 406              		.loc 1 66 42 is_stmt 1 discriminator 3 view .LVU132
+  67:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         {
+ 406              		.loc 1 67 42 is_stmt 1 discriminator 3 view .LVU132
  407 00a2 0133     		adds	r3, r3, #1
  408              	.LVL22:
  409              	.L14:
-  66:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         {
- 410              		.loc 1 66 26 discriminator 1 view .LVU133
+  67:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         {
+ 410              		.loc 1 67 26 discriminator 1 view .LVU133
  411 00a4 B3F5006F 		cmp	r3, #2048
  412 00a8 F6DB     		blt	.L15
  413              	.LBE3:
-  70:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     }
- 414              		.loc 1 70 9 view .LVU134
-  70:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     }
- 415              		.loc 1 70 29 is_stmt 0 view .LVU135
+  71:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     }
+ 414              		.loc 1 71 9 view .LVU134
+  71:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     }
+ 415              		.loc 1 71 29 is_stmt 0 view .LVU135
  416 00aa 435C     		ldrb	r3, [r0, r1]	@ zero_extendqisi2
  417              	.LVL23:
-  70:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     }
- 418              		.loc 1 70 27 view .LVU136
+  71:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     }
+ 418              		.loc 1 71 27 view .LVU136
  419 00ac 80F80038 		strb	r3, [r0, #2048]
  420 00b0 B9E7     		b	.L13
  421              	.LVL24:
  422              	.L23:
-  73:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     {
- 423              		.loc 1 73 67 discriminator 2 view .LVU137
+  74:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     {
+ 423              		.loc 1 74 67 discriminator 2 view .LVU137
  424 00b2 00F58053 		add	r3, r0, #4096
  425 00b6 9B7C     		ldrb	r3, [r3, #18]	@ zero_extendqisi2
-  73:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     {
- 426              		.loc 1 73 59 discriminator 2 view .LVU138
+  74:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     {
+ 426              		.loc 1 74 59 discriminator 2 view .LVU138
  427 00b8 002B     		cmp	r3, #0
  428 00ba BBD1     		bne	.L16
-  75:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     }
- 429              		.loc 1 75 9 is_stmt 1 view .LVU139
-  75:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     }
- 430              		.loc 1 75 32 is_stmt 0 view .LVU140
+  76:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     }
+ 429              		.loc 1 76 9 is_stmt 1 view .LVU139
+  76:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     }
+ 430              		.loc 1 76 32 is_stmt 0 view .LVU140
  431 00bc 10F801C0 		ldrb	ip, [r0, r1]	@ zero_extendqisi2
-  75:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     }
- 432              		.loc 1 75 30 view .LVU141
+  76:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     }
+ 432              		.loc 1 76 30 view .LVU141
  433 00c0 00F58053 		add	r3, r0, #4096
  434 00c4 83F815C0 		strb	ip, [r3, #21]
  435 00c8 B4E7     		b	.L16
  436              	.L24:
-  78:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     {
- 437              		.loc 1 78 67 discriminator 2 view .LVU142
+  79:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     {
+ 437              		.loc 1 79 67 discriminator 2 view .LVU142
  438 00ca 00F58053 		add	r3, r0, #4096
  439 00ce 9B7C     		ldrb	r3, [r3, #18]	@ zero_extendqisi2
-  78:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     {
- 440              		.loc 1 78 59 discriminator 2 view .LVU143
+  79:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     {
+ 440              		.loc 1 79 59 discriminator 2 view .LVU143
  441 00d0 002B     		cmp	r3, #0
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cclbszJR.s 			page 11
+
+
  442 00d2 B5D1     		bne	.L17
-  80:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->expectedMessageLenght = data->value.data;
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccZ8BBjv.s 			page 11
-
-
- 443              		.loc 1 80 9 is_stmt 1 view .LVU144
-  80:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->expectedMessageLenght = data->value.data;
- 444              		.loc 1 80 32 is_stmt 0 view .LVU145
+  81:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->expectedMessageLenght = data->value.data;
+ 443              		.loc 1 81 9 is_stmt 1 view .LVU144
+  81:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->expectedMessageLenght = data->value.data;
+ 444              		.loc 1 81 32 is_stmt 0 view .LVU145
  445 00d4 415C     		ldrb	r1, [r0, r1]	@ zero_extendqisi2
-  80:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->expectedMessageLenght = data->value.data;
- 446              		.loc 1 80 30 view .LVU146
+  81:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->expectedMessageLenght = data->value.data;
+ 446              		.loc 1 81 30 view .LVU146
  447 00d6 00F58053 		add	r3, r0, #4096
  448 00da 1975     		strb	r1, [r3, #20]
-  81:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->bufferCommand = true;
- 449              		.loc 1 81 9 is_stmt 1 view .LVU147
-  81:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->bufferCommand = true;
- 450              		.loc 1 81 50 is_stmt 0 view .LVU148
+  82:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->bufferCommand = true;
+ 449              		.loc 1 82 9 is_stmt 1 view .LVU147
+  82:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->bufferCommand = true;
+ 450              		.loc 1 82 50 is_stmt 0 view .LVU148
  451 00dc 998A     		ldrh	r1, [r3, #20]
-  81:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->bufferCommand = true;
- 452              		.loc 1 81 37 view .LVU149
+  82:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->bufferCommand = true;
+ 452              		.loc 1 82 37 view .LVU149
  453 00de D960     		str	r1, [r3, #12]
-  82:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     }
- 454              		.loc 1 82 9 is_stmt 1 view .LVU150
-  82:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     }
- 455              		.loc 1 82 29 is_stmt 0 view .LVU151
+  83:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     }
+ 454              		.loc 1 83 9 is_stmt 1 view .LVU150
+  83:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     }
+ 455              		.loc 1 83 29 is_stmt 0 view .LVU151
  456 00e0 0121     		movs	r1, #1
  457 00e2 9974     		strb	r1, [r3, #18]
  458 00e4 ACE7     		b	.L17
  459              	.L25:
-  92:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     {
- 460              		.loc 1 92 94 discriminator 2 view .LVU152
+  93:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     {
+ 460              		.loc 1 93 94 discriminator 2 view .LVU152
  461 00e6 8B7C     		ldrb	r3, [r1, #18]	@ zero_extendqisi2
-  92:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     {
- 462              		.loc 1 92 87 discriminator 2 view .LVU153
+  93:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     {
+ 462              		.loc 1 93 87 discriminator 2 view .LVU153
  463 00e8 002B     		cmp	r3, #0
  464 00ea BCD0     		beq	.L19
-  94:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->bufferCommand = false;
- 465              		.loc 1 94 9 is_stmt 1 view .LVU154
-  94:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->bufferCommand = false;
- 466              		.loc 1 94 16 is_stmt 0 view .LVU155
+  95:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->bufferCommand = false;
+ 465              		.loc 1 95 9 is_stmt 1 view .LVU154
+  95:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->bufferCommand = false;
+ 466              		.loc 1 95 16 is_stmt 0 view .LVU155
  467 00ec FFF7FEFF 		bl	NOS_UART_ReceiveReset
  468              	.LVL25:
-  95:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->startReceive = false;
- 469              		.loc 1 95 9 is_stmt 1 view .LVU156
-  95:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->startReceive = false;
- 470              		.loc 1 95 29 is_stmt 0 view .LVU157
+  96:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->startReceive = false;
+ 469              		.loc 1 96 9 is_stmt 1 view .LVU156
+  96:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****         data->startReceive = false;
+ 470              		.loc 1 96 29 is_stmt 0 view .LVU157
  471 00f0 00F58053 		add	r3, r0, #4096
  472 00f4 0022     		movs	r2, #0
  473 00f6 9A74     		strb	r2, [r3, #18]
-  96:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     }
- 474              		.loc 1 96 9 is_stmt 1 view .LVU158
-  96:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     }
- 475              		.loc 1 96 28 is_stmt 0 view .LVU159
+  97:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     }
+ 474              		.loc 1 97 9 is_stmt 1 view .LVU158
+  97:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     }
+ 475              		.loc 1 97 28 is_stmt 0 view .LVU159
  476 00f8 1A74     		strb	r2, [r3, #16]
  477 00fa B6E7     		b	.L20
  478              		.cfi_endproc
@@ -656,33 +658,33 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccZ8BBjv.s 			page 1
  481              		.section	.text.NOS_UART_CheckReceive,"ax",%progbits
  482              		.align	1
  483              		.global	NOS_UART_CheckReceive
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cclbszJR.s 			page 12
+
+
  484              		.syntax unified
  485              		.thumb
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccZ8BBjv.s 			page 12
-
-
  486              		.thumb_func
  488              	NOS_UART_CheckReceive:
  489              	.LVL26:
  490              	.LFB135:
- 104:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** 
- 105:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** bool NOS_UART_CheckReceive(NOS_UART_Struct* data)
- 106:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** {
- 491              		.loc 1 106 1 is_stmt 1 view -0
+ 106:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** 
+ 107:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** bool NOS_UART_CheckReceive(NOS_UART_Struct* data)
+ 108:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** {
+ 491              		.loc 1 108 1 is_stmt 1 view -0
  492              		.cfi_startproc
  493              		@ args = 0, pretend = 0, frame = 0
  494              		@ frame_needed = 0, uses_anonymous_args = 0
  495              		@ link register save eliminated.
- 107:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     return data->rx_flag;   
- 496              		.loc 1 107 5 view .LVU161
- 497              		.loc 1 107 16 is_stmt 0 view .LVU162
+ 109:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     return data->rx_flag;   
+ 496              		.loc 1 109 5 view .LVU161
+ 497              		.loc 1 109 16 is_stmt 0 view .LVU162
  498 0000 00F58050 		add	r0, r0, #4096
  499              	.LVL27:
- 108:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** }
- 500              		.loc 1 108 1 view .LVU163
+ 110:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** }
+ 500              		.loc 1 110 1 view .LVU163
  501 0004 8079     		ldrb	r0, [r0, #6]	@ zero_extendqisi2
  502              	.LVL28:
- 503              		.loc 1 108 1 view .LVU164
+ 503              		.loc 1 110 1 view .LVU164
  504 0006 7047     		bx	lr
  505              		.cfi_endproc
  506              	.LFE135:
@@ -695,54 +697,54 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccZ8BBjv.s 			page 1
  515              	NOS_UART_GetReceivedData:
  516              	.LVL29:
  517              	.LFB136:
- 109:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** 
- 110:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** uint8_t* NOS_UART_GetReceivedData(NOS_UART_Struct* data)
- 111:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** {
- 518              		.loc 1 111 1 is_stmt 1 view -0
+ 111:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** 
+ 112:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** uint8_t* NOS_UART_GetReceivedData(NOS_UART_Struct* data)
+ 113:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** {
+ 518              		.loc 1 113 1 is_stmt 1 view -0
  519              		.cfi_startproc
  520              		@ args = 0, pretend = 0, frame = 0
  521              		@ frame_needed = 0, uses_anonymous_args = 0
  522              		@ link register save eliminated.
- 112:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     return data->fuckBuff;
- 523              		.loc 1 112 5 view .LVU166
- 113:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** }
- 524              		.loc 1 113 1 is_stmt 0 view .LVU167
+ 114:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     return data->fuckBuff;
+ 523              		.loc 1 114 5 view .LVU166
+ 115:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** }
+ 524              		.loc 1 115 1 is_stmt 0 view .LVU167
  525 0000 00F50060 		add	r0, r0, #2048
  526              	.LVL30:
- 527              		.loc 1 113 1 view .LVU168
+ 527              		.loc 1 115 1 view .LVU168
  528 0004 7047     		bx	lr
  529              		.cfi_endproc
  530              	.LFE136:
  532              		.section	.text.NOS_UART_EndReceive,"ax",%progbits
  533              		.align	1
  534              		.global	NOS_UART_EndReceive
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cclbszJR.s 			page 13
+
+
  535              		.syntax unified
  536              		.thumb
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccZ8BBjv.s 			page 13
-
-
  537              		.thumb_func
  539              	NOS_UART_EndReceive:
  540              	.LVL31:
  541              	.LFB137:
- 114:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** 
- 115:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** void NOS_UART_EndReceive(NOS_UART_Struct* data)
- 116:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** {
- 542              		.loc 1 116 1 is_stmt 1 view -0
+ 116:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** 
+ 117:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** void NOS_UART_EndReceive(NOS_UART_Struct* data)
+ 118:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** {
+ 542              		.loc 1 118 1 is_stmt 1 view -0
  543              		.cfi_startproc
  544              		@ args = 0, pretend = 0, frame = 0
  545              		@ frame_needed = 0, uses_anonymous_args = 0
  546              		@ link register save eliminated.
- 117:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     data->rx_flag = false;
- 547              		.loc 1 117 5 view .LVU170
- 548              		.loc 1 117 19 is_stmt 0 view .LVU171
+ 119:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c ****     data->rx_flag = false;
+ 547              		.loc 1 119 5 view .LVU170
+ 548              		.loc 1 119 19 is_stmt 0 view .LVU171
  549 0000 00F58050 		add	r0, r0, #4096
  550              	.LVL32:
- 551              		.loc 1 117 19 view .LVU172
+ 551              		.loc 1 119 19 view .LVU172
  552 0004 0023     		movs	r3, #0
  553 0006 8371     		strb	r3, [r0, #6]
- 118:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** }
- 554              		.loc 1 118 1 view .LVU173
+ 120:Core/Src/NOS_LIB_Driver/Src/NOS_UART.c **** }
+ 554              		.loc 1 120 1 view .LVU173
  555 0008 7047     		bx	lr
  556              		.cfi_endproc
  557              	.LFE137:
@@ -756,27 +758,27 @@ ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccZ8BBjv.s 			page 1
  566              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h"
  567              		.file 8 "Core/Src/NOS_LIB_Driver/Inc/NOS_Typedefs.h"
  568              		.file 9 "Core/Src/NOS_LIB_Driver/Inc/NOS_UART.h"
-ARM GAS  C:\Users\igorn\AppData\Local\Temp\ccZ8BBjv.s 			page 14
+ARM GAS  C:\Users\igorn\AppData\Local\Temp\cclbszJR.s 			page 14
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 NOS_UART.c
-C:\Users\igorn\AppData\Local\Temp\ccZ8BBjv.s:21     .text.NOS_UART_ReceiveReset:00000000 $t
-C:\Users\igorn\AppData\Local\Temp\ccZ8BBjv.s:27     .text.NOS_UART_ReceiveReset:00000000 NOS_UART_ReceiveReset
-C:\Users\igorn\AppData\Local\Temp\ccZ8BBjv.s:59     .text.NOS_UART_ContinueReceive:00000000 $t
-C:\Users\igorn\AppData\Local\Temp\ccZ8BBjv.s:65     .text.NOS_UART_ContinueReceive:00000000 NOS_UART_ContinueReceive
-C:\Users\igorn\AppData\Local\Temp\ccZ8BBjv.s:98     .text.NOS_UART_ReceiveAbort:00000000 $t
-C:\Users\igorn\AppData\Local\Temp\ccZ8BBjv.s:104    .text.NOS_UART_ReceiveAbort:00000000 NOS_UART_ReceiveAbort
-C:\Users\igorn\AppData\Local\Temp\ccZ8BBjv.s:170    .text.NOS_UART_Timer_Handler:00000000 $t
-C:\Users\igorn\AppData\Local\Temp\ccZ8BBjv.s:176    .text.NOS_UART_Timer_Handler:00000000 NOS_UART_Timer_Handler
-C:\Users\igorn\AppData\Local\Temp\ccZ8BBjv.s:258    .text.NOS_UART_ReceiveHandler:00000000 $t
-C:\Users\igorn\AppData\Local\Temp\ccZ8BBjv.s:264    .text.NOS_UART_ReceiveHandler:00000000 NOS_UART_ReceiveHandler
-C:\Users\igorn\AppData\Local\Temp\ccZ8BBjv.s:482    .text.NOS_UART_CheckReceive:00000000 $t
-C:\Users\igorn\AppData\Local\Temp\ccZ8BBjv.s:488    .text.NOS_UART_CheckReceive:00000000 NOS_UART_CheckReceive
-C:\Users\igorn\AppData\Local\Temp\ccZ8BBjv.s:509    .text.NOS_UART_GetReceivedData:00000000 $t
-C:\Users\igorn\AppData\Local\Temp\ccZ8BBjv.s:515    .text.NOS_UART_GetReceivedData:00000000 NOS_UART_GetReceivedData
-C:\Users\igorn\AppData\Local\Temp\ccZ8BBjv.s:533    .text.NOS_UART_EndReceive:00000000 $t
-C:\Users\igorn\AppData\Local\Temp\ccZ8BBjv.s:539    .text.NOS_UART_EndReceive:00000000 NOS_UART_EndReceive
+C:\Users\igorn\AppData\Local\Temp\cclbszJR.s:21     .text.NOS_UART_ReceiveReset:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\cclbszJR.s:27     .text.NOS_UART_ReceiveReset:00000000 NOS_UART_ReceiveReset
+C:\Users\igorn\AppData\Local\Temp\cclbszJR.s:59     .text.NOS_UART_ContinueReceive:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\cclbszJR.s:65     .text.NOS_UART_ContinueReceive:00000000 NOS_UART_ContinueReceive
+C:\Users\igorn\AppData\Local\Temp\cclbszJR.s:98     .text.NOS_UART_ReceiveAbort:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\cclbszJR.s:104    .text.NOS_UART_ReceiveAbort:00000000 NOS_UART_ReceiveAbort
+C:\Users\igorn\AppData\Local\Temp\cclbszJR.s:170    .text.NOS_UART_Timer_Handler:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\cclbszJR.s:176    .text.NOS_UART_Timer_Handler:00000000 NOS_UART_Timer_Handler
+C:\Users\igorn\AppData\Local\Temp\cclbszJR.s:258    .text.NOS_UART_ReceiveHandler:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\cclbszJR.s:264    .text.NOS_UART_ReceiveHandler:00000000 NOS_UART_ReceiveHandler
+C:\Users\igorn\AppData\Local\Temp\cclbszJR.s:482    .text.NOS_UART_CheckReceive:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\cclbszJR.s:488    .text.NOS_UART_CheckReceive:00000000 NOS_UART_CheckReceive
+C:\Users\igorn\AppData\Local\Temp\cclbszJR.s:509    .text.NOS_UART_GetReceivedData:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\cclbszJR.s:515    .text.NOS_UART_GetReceivedData:00000000 NOS_UART_GetReceivedData
+C:\Users\igorn\AppData\Local\Temp\cclbszJR.s:533    .text.NOS_UART_EndReceive:00000000 $t
+C:\Users\igorn\AppData\Local\Temp\cclbszJR.s:539    .text.NOS_UART_EndReceive:00000000 NOS_UART_EndReceive
 
 UNDEFINED SYMBOLS
 HAL_UART_Receive_IT

@@ -14,6 +14,9 @@
 #define SET_BREATHE_EFFECT_COMMAND 0x34
 #define SET_ALL_PIXEL_COMMAND 0x35
 
+#define SET_BREATHE_EFFECT_COMMAND 0x50
+#define SET_EFFECT_ACTIVE 0x51
+
 const char* NOS_Strip_Uart_ParseCommand(WS2812B_Strip* strip,uint8_t* command);
 
 #endif

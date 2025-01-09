@@ -4,9 +4,11 @@
 
 #include "WS2812B_Core.h"
 #include "NOS_Includes.h"
+#include "NOS_Math.h"
 
 #ifndef NOS_WS2812B_STRIP
 #define NOS_WS2812B_STRIP
+
 
 /**
   * @brief  Initialization of strip struct.
@@ -41,6 +43,21 @@ void NOS_WS2812B_Strip_TestFill(WS2812B_Strip* strip);
 
 void NOS_WS2812B_Strip_SetPixelByRGB(WS2812B_Strip* strip,int pixelPos,uint32_t rgb);
 
+void NOS_WS2812B_Strip_SetPixelByPixelColor(WS2812B_Strip* strip,int pixelPos, PixelColor color);
+
 void NOS_WS2812B_Strip_SetBright(WS2812B_Strip* strip,uint8_t bright);
+
+
+
+/* Effects */
+void NOS_WS2812B_Strip_Effects_AddEffect(WS2812B_Strip* strip,Effect_Struct effect);
+
+void NOS_WS2812B_Strip_Effects_UpdateEffect(WS2812B_Strip* strip,Effect_Struct effect,uint8_t pos);
+
+void NOS_WS2812B_Strip_Effects_Handler(WS2812B_Strip* strip);
+
+void NOS_WS2812B_Strip_Effect_Breathe_Init(Effect_Struct* effect,uint16_t speed,uint16_t step,uint8_t minValue,uint8_t maxValue);
+
+void NOS_WS2812B_Strip_Effect_Breathe_Handler(WS2812B_Strip* strip,Effect_Struct* effect);
 
 #endif

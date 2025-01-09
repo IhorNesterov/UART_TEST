@@ -1,4 +1,6 @@
 #include "NOS_WS2812B_Strip.h"
+#include "NOS_BaseColors.h"
+#include "WS2812B_Effects.h"
 
 void NOS_WS2812B_Strip_FullInit(WS2812B_Strip* strip,uint8_t* buff,PixelColor* pixels,int lenght)
 {
@@ -6,6 +8,7 @@ void NOS_WS2812B_Strip_FullInit(WS2812B_Strip* strip,uint8_t* buff,PixelColor* p
     strip->frameBuffer = buff;
     strip->pixelCount = lenght;
     strip->bright = 100;
+    strip->effectsCounter = 0;
 }
 
 void NOS_WS2812B_Strip_CoreSetPixel(WS2812B_Strip* strip,int pixelPos,uint8_t r, uint8_t g, uint8_t b)
@@ -38,39 +41,34 @@ void NOS_WS2812B_Strip_Clear(WS2812B_Strip* strip)
 
 void NOS_WS2812B_Strip_Update(WS2812B_Strip* strip)
 {
+    float coef = (float)strip->bright / 100;
     for(int i = 0; i < strip->pixelCount; i++)
     {
-        float coef = (float)strip->bright / 100;
         uint8_t currR = (float)strip->pixels[i].R * coef;
         uint8_t currG = (float)strip->pixels[i].G * coef;
         uint8_t currB = (float)strip->pixels[i].B * coef;
         NOS_WS2812B_Strip_CoreSetPixel(strip,i,currR,currG,currB);
     }
+
 }
 
 void NOS_WS2812B_Strip_TestFill(WS2812B_Strip* strip)
 {
-    int repeats = strip->pixelCount / 7;
-    int lastPixelsCount = strip->pixelCount % 7;
-    int lastPixelsStart = repeats * 7;
-
-    for(int i = 0; i < repeats; i++)
-    {
-        NOS_WS2812B_Strip_SetPixel(strip,i * 7 + 0,255,0,0); //red
-        NOS_WS2812B_Strip_SetPixel(strip,i * 7 + 1,255,127,0); //orange
-        NOS_WS2812B_Strip_SetPixel(strip,i * 7 + 2,255,255,0); //yellow
-        NOS_WS2812B_Strip_SetPixel(strip,i * 7 + 3,0,255,0); //green
-        NOS_WS2812B_Strip_SetPixel(strip,i * 7 + 4,0,0,255); //blue
-        NOS_WS2812B_Strip_SetPixel(strip,i * 7 + 5,75,0,130); //violet
-        NOS_WS2812B_Strip_SetPixel(strip,i * 7 + 6,148,0,211); //violet2
-    }
+    int currPixel = 0;
+    int currColor = 0;
     
-    NOS_WS2812B_Strip_SetPixel(strip,lastPixelsStart,255,0,0); if(++lastPixelsStart < strip->pixelCount) return; 
-    NOS_WS2812B_Strip_SetPixel(strip,lastPixelsStart,255,127,0); if(++lastPixelsStart < strip->pixelCount) return;
-    NOS_WS2812B_Strip_SetPixel(strip,lastPixelsStart,255,255,0); if(++lastPixelsStart < strip->pixelCount) return;
-    NOS_WS2812B_Strip_SetPixel(strip,lastPixelsStart,0,255,0); if(++lastPixelsStart < strip->pixelCount) return;
-    NOS_WS2812B_Strip_SetPixel(strip,lastPixelsStart,0,0,255); if(++lastPixelsStart < strip->pixelCount) return;
-    NOS_WS2812B_Strip_SetPixel(strip,lastPixelsStart,75,0,130); 
+    while(currPixel < strip->pixelCount)
+    {
+        NOS_WS2812B_Strip_SetPixelByPixelColor(strip,currPixel,NOS_GetBaseColor(currColor));
+        
+        currColor++;
+        if(currColor > 11)
+        {
+            currColor = 0;
+        }
+
+        currPixel++;
+    }
 }
 
 void NOS_WS2812B_Strip_ColorFill(WS2812B_Strip* strip,PixelColor color)
@@ -90,7 +88,87 @@ void NOS_WS2812B_Strip_SetPixelByRGB(WS2812B_Strip* strip,int pixelPos,uint32_t 
     NOS_WS2812B_Strip_SetPixel(strip,pixelPos,R,G,B);
 }
 
+void NOS_WS2812B_Strip_SetPixelByPixelColor(WS2812B_Strip* strip,int pixelPos, PixelColor color)
+{
+    NOS_WS2812B_Strip_SetPixel(strip,pixelPos,color.R,color.G,color.B);
+}
+
 void NOS_WS2812B_Strip_SetBright(WS2812B_Strip* strip,uint8_t bright)
 {
     strip->bright = bright;
 }
+
+void NOS_WS2812B_Strip_Effect_Breathe_Init(Effect_Struct* effect,uint16_t speed,uint16_t step,uint8_t minValue,uint8_t maxValue)
+{
+        NOS_Math_SinValue_Init(&effect->value,minValue,maxValue,step);
+        effect->minValue = minValue;
+        effect->maxValue = maxValue;
+        effect->speed.data = speed;
+        effect->step.data = step;
+        effect->enabled = true;
+        effect->effectId = EFFECT_BREATHE_ID;   
+}
+
+void NOS_WS2812B_Strip_Effects_AddEffect(WS2812B_Strip* strip,Effect_Struct effect)
+{
+    if(strip->effectsCounter < EFFECTS_MAX_COUNT)
+    {
+        switch(effect.effectId)
+        {
+            case EFFECT_BREATHE_ID:
+                NOS_WS2812B_Strip_Effect_Breathe_Init(&strip->effects[strip->effectsCounter],effect.speed.data,effect.step.data,effect.minValue,effect.maxValue);
+                break;
+        }
+
+        strip->effectsCounter++;
+    }
+}
+
+void NOS_WS2812B_Strip_Effects_Handler(WS2812B_Strip* strip)
+{
+    for(int i = 0; i < strip->effectsCounter; i++)
+    {
+        switch(strip->effects[i].effectId)
+        {
+            case EFFECT_BREATHE_ID:
+                NOS_WS2812B_Strip_Effect_Breathe_Handler(strip,&strip->effects[i]);
+                break;
+        }
+    }
+}
+
+void NOS_WS2812B_Strip_Effect_Breathe_Handler(WS2812B_Strip* strip,Effect_Struct* effect)
+{
+    if(strip != NULL)
+    {
+        if(effect != NULL)
+        {
+            if(effect->enabled)
+            {
+                if(effect->timer > effect->speed.data)
+                {
+                    NOS_Math_SinValue_Handler(&effect->value);
+                    NOS_WS2812B_Strip_SetBright(strip,effect->value.value);
+                    NOS_WS2812B_Strip_Update(strip);
+                    effect->timer = 0;
+                }
+                effect->timer++;
+            }
+        }
+    }
+}
+
+void NOS_WS2812B_Strip_Effects_UpdateEffect(WS2812B_Strip* strip,Effect_Struct effect,uint8_t pos)
+{
+    if(pos < EFFECTS_MAX_COUNT)
+    {
+        switch(effect.effectId)
+        {
+            case EFFECT_BREATHE_ID:
+                NOS_WS2812B_Strip_Effect_Breathe_Init(&strip->effects[pos],effect.speed.data,effect.step.data,effect.minValue,effect.maxValue);
+                break;
+        }
+    }
+}
+
+

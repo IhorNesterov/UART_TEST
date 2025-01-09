@@ -30,7 +30,7 @@ void NOS_UART_ReceiveAbort(NOS_UART_Struct* data)
     data->endReceive = false;
     data->bufferCommand = false;
     data->rx_flag = false;
-    data->receiveTimeAbort = 50;
+    data->receiveTimeAbort = 40;
 }
 
 void NOS_UART_Timer_Handler(NOS_UART_Struct* uart)
@@ -53,6 +53,7 @@ void NOS_UART_Timer_Handler(NOS_UART_Struct* uart)
 
 void NOS_UART_ReceiveHandler(NOS_UART_Struct* data,UART_HandleTypeDef* uart)
 {
+
     data->rx_buff_ptr = &data->rx_buff[data->currMessageLenght];
     data->fuckBuff[data->fuckIndex] = *data->rx_buff_ptr;
     data->fuckIndex++;
@@ -100,6 +101,7 @@ void NOS_UART_ReceiveHandler(NOS_UART_Struct* data,UART_HandleTypeDef* uart)
         data = NOS_UART_ContinueReceive(data);
     }
     HAL_UART_Receive_IT (uart, data->rx_buff_ptr, 1); 
+    
 }
 
 bool NOS_UART_CheckReceive(NOS_UART_Struct* data)

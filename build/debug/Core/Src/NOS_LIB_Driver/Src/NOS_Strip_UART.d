@@ -34,7 +34,8 @@ build/debug/Core/Src/NOS_LIB_Driver/Src/NOS_Strip_UART.o: \
  Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h \
  Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h \
  Core/Src/NOS_LIB_Driver/Inc/NOS_WS2812B_Strip.h \
- Core/Src/NOS_LIB_Driver/Inc/WS2812B_Core.h
+ Core/Src/NOS_LIB_Driver/Inc/WS2812B_Core.h \
+ Core/Src/NOS_LIB_Driver/Inc/NOS_Math.h
 Core/Src/NOS_LIB_Driver/Inc/NOS_Strip_UART.h:
 Core/Src/NOS_LIB_Driver/Inc/NOS_Includes.h:
 Core/Src/NOS_LIB_Driver/Inc/NOS_Typedefs.h:
@@ -72,3 +73,4 @@ Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h:
 Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h:
 Core/Src/NOS_LIB_Driver/Inc/NOS_WS2812B_Strip.h:
 Core/Src/NOS_LIB_Driver/Inc/WS2812B_Core.h:
+Core/Src/NOS_LIB_Driver/Inc/NOS_Math.h:
