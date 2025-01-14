@@ -58,7 +58,7 @@ void NOS_UART_ReceiveHandler(NOS_UART_Struct* data,UART_HandleTypeDef* uart)
     data->fuckBuff[data->fuckIndex] = *data->rx_buff_ptr;
     data->fuckIndex++;
 
-    if(*data->rx_buff_ptr == UART_ADDRESS && !data->startReceive)
+    if((*data->rx_buff_ptr == UART_ADDRESS || *data->rx_buff_ptr == 0x66 || *data->rx_buff_ptr == 0x67 || *data->rx_buff_ptr == 0x64) && !data->startReceive)
     {
         data->startReceive = true;
         data->currMessageLenght = 0;

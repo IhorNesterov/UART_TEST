@@ -50,13 +50,21 @@ PCD_HandleTypeDef hpcd_USB_OTG_FS;
 
 /* USER CODE BEGIN PV */
 extern uint8_t frameBuffer1[3 * 256];
+extern uint8_t frameBuffer2[3 * 256];
+extern uint8_t frameBuffer3[3 * 256];
 
 NOS_TimeEvent tetrisUpdateEvent = {0};
 NOS_TimeEvent screenUpdateEvent = {0};
 NOS_TimeEvent uartTestEvent = {0};
 
 WS2812B_Strip stripA = {0};
+WS2812B_Strip stripB = {0};
+WS2812B_Strip stripC = {0};
+
 PixelColor pixelsA[128];
+PixelColor pixelsB[128];
+PixelColor pixelsC[128];
+
 
 NOS_UART_Struct UART2;
 
@@ -139,6 +147,8 @@ int main(void)
   visInit();
 
   NOS_WS2812B_Strip_FullInit(&stripA,&frameBuffer1,&pixelsA,128);
+    NOS_WS2812B_Strip_FullInit(&stripB,&frameBuffer2,&pixelsB,48);
+    NOS_WS2812B_Strip_FullInit(&stripC,&frameBuffer3,&pixelsC,48);
 
   NOS_TimeEvent_Init(&tetrisUpdateEvent, 50);
   NOS_TimeEvent_Init(&screenUpdateEvent, 20);
@@ -160,10 +170,14 @@ int main(void)
   //NOS_WS2812B_Strip_ColorFill(&stripA,red);
 
   //addr count1 count0 0x50 speed1 speed0 step1 step0 min1 min0 max1 max0 
-  NOS_WS2812B_Strip_Effect_Breathe_Init(&breatheA,20,1,30,100);
+  NOS_WS2812B_Strip_Effect_Rainbow_Init(&breatheA,20,5,0,1524);
   NOS_WS2812B_Strip_Effects_AddEffect(&stripA,breatheA);
-  
+  NOS_WS2812B_Strip_Effects_AddEffect(&stripB,breatheA);
+  NOS_WS2812B_Strip_Effects_AddEffect(&stripC,breatheA);
+
   NOS_WS2812B_Strip_Update(&stripA);
+  NOS_WS2812B_Strip_Update(&stripB);
+  NOS_WS2812B_Strip_Update(&stripC);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -177,22 +191,55 @@ int main(void)
           NOS_TimeEvent_TickHandler(&screenUpdateEvent);
           //NOS_Button_TimerHandler(&button);
           NOS_WS2812B_Strip_Effects_Handler(&stripA);
-
+          NOS_WS2812B_Strip_Effects_Handler(&stripB);
+          NOS_WS2812B_Strip_Effects_Handler(&stripC);
           tick = false;
     }
 
     if(NOS_UART_CheckReceive(&UART2))
     {
       
-      if(NOS_Strip_Uart_ParseCommand(&stripA,NOS_UART_GetReceivedData(&UART2)) == "ready!")
+      switch (NOS_UART_GetReceivedData(&UART2)[0])
       {
-        HAL_UART_Transmit(&huart2,"ready!",7,1000);
+        case 0x64:
+          NOS_Strip_Uart_ParseCommand(&stripA,NOS_UART_GetReceivedData(&UART2));
+          NOS_Strip_Uart_ParseCommand(&stripB,NOS_UART_GetReceivedData(&UART2));
+          NOS_Strip_Uart_ParseCommand(&stripC,NOS_UART_GetReceivedData(&UART2));
+
+          break;
+
+      case 0x65:
+              if(NOS_Strip_Uart_ParseCommand(&stripA,NOS_UART_GetReceivedData(&UART2)) == "ready!")
+              {
+                  HAL_UART_Transmit(&huart2,"ready!",7,1000);
+              }
+        break;
+
+      case 0x66:
+              if(NOS_Strip_Uart_ParseCommand(&stripB,NOS_UART_GetReceivedData(&UART2)) == "ready!")
+              {
+                  //HAL_UART_Transmit(&huart2,"ready!",7,1000);
+              }
+              break;
+
+      case 0x67:
+              if(NOS_Strip_Uart_ParseCommand(&stripC,NOS_UART_GetReceivedData(&UART2)) == "ready!")
+              {
+                 //HAL_UART_Transmit(&huart2,"ready!",7,1000);
+              }
+      break;
+
+
+      default:
+        break;
       }
-      
+
       NOS_UART_EndReceive(&UART2);
       HAL_GPIO_TogglePin(GPIOA,GPIO_PIN_7);
       //HAL_UART_Transmit(&huart2,"ready!",7,1000);
       NOS_WS2812B_Strip_Update(&stripA);
+      NOS_WS2812B_Strip_Update(&stripB);
+      NOS_WS2812B_Strip_Update(&stripC);
       visHandle();
     }
 
@@ -209,6 +256,8 @@ int main(void)
       //NOS_WS2812B_Strip_ColorFill(&stripA,red);
       //stripA.bright = NOS_Math_GetSinValue(&bright);
       NOS_WS2812B_Strip_Update(&stripA);
+      NOS_WS2812B_Strip_Update(&stripB);
+      NOS_WS2812B_Strip_Update(&stripC);
       visHandle();
       NOS_TimeEvent_FinishEvent(&screenUpdateEvent);
     }

@@ -358,11 +358,6 @@ void NOS_WS2812B_Matrix_FillColor(WS2812B_Matrix *matrix, PixelColor *color)
     matrix->textColor = color;
 }
 
-void NOS_WS2812B_EffectEngineHandler(WS2812B_EffectEngine *engine)
-{
-
-    engine->counter++;
-}
 
 uint16_t Test_GetPixelPos(uint8_t x, uint8_t y)
 {

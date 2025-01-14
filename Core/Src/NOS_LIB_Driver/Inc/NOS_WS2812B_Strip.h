@@ -56,8 +56,12 @@ void NOS_WS2812B_Strip_Effects_UpdateEffect(WS2812B_Strip* strip,Effect_Struct e
 
 void NOS_WS2812B_Strip_Effects_Handler(WS2812B_Strip* strip);
 
-void NOS_WS2812B_Strip_Effect_Breathe_Init(Effect_Struct* effect,uint16_t speed,uint16_t step,uint8_t minValue,uint8_t maxValue);
+void NOS_WS2812B_Strip_Effect_Breathe_Init(Effect_Struct* effect,uint16_t speed,uint16_t step,uint16_t minValue,uint16_t maxValue);
 
 void NOS_WS2812B_Strip_Effect_Breathe_Handler(WS2812B_Strip* strip,Effect_Struct* effect);
+
+void NOS_WS2812B_Strip_Effect_Rainbow_Init(Effect_Struct* effect,uint16_t speed,uint16_t step,uint16_t minValue,uint16_t maxValue);
+
+void NOS_WS2812B_Strip_Effect_Rainbow_Handler(WS2812B_Strip* strip,Effect_Struct* effect);
 
 #endif

@@ -123,6 +123,32 @@ const char* NOS_Strip_Uart_ParseCommand(WS2812B_Strip* strip,uint8_t* command)
 
                 break;
 
+                case SET_RAINBOW_EFFECT_COMMAND:
+
+                pos = command[currPos++];
+
+                tempShort.bytes[1] = command[currPos++];
+                tempShort.bytes[0] = command[currPos++];
+                speed = tempShort.data;
+
+                tempShort.bytes[1] = command[currPos++];
+                tempShort.bytes[0] = command[currPos++];
+                step = tempShort.data;
+
+                tempShort.bytes[1] = command[currPos++];
+                tempShort.bytes[0] = command[currPos++];
+                min = tempShort.data;
+
+                tempShort.bytes[1] = command[currPos++];
+                tempShort.bytes[0] = command[currPos++];
+                max = tempShort.data;
+
+                tempEffect.effectId = EFFECT_RAINBOW_ID;
+                NOS_WS2812B_Strip_Effect_Rainbow_Init(&tempEffect,speed,step,min,max);
+                NOS_WS2812B_Strip_Effects_UpdateEffect(strip,tempEffect,pos);
+
+                break;
+
                       
             default:
                 return false;

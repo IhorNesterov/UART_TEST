@@ -1,5 +1,7 @@
+
 #ifndef NOS_TYPEDEFS
 #define NOS_TYPEDEFS
+
 #include "stdint.h"
 #include "stm32f4xx.h"
 //#include "stm32f1xx.h"
@@ -75,20 +77,7 @@ typedef struct WS2812B_Matrix_t
     Symvol* symvols;
 } WS2812B_Matrix;
 
-typedef enum WS2812B_EffectEncoder_e {NONE,Breathe,Rainbow} WS2812B_EffectEncoder;
 
-typedef struct WS2812B_Effect_t
-{
-  WS2812B_Matrix* matrix;
-  WS2812B_EffectEncoder effect;
-} WS2812B_Effect;
-
-typedef struct WS2812B_EffectEngine_t
-{
-  WS2812B_Effect* effects;
-  uint8_t effectsCount;
-  uint32_t counter;
-} WS2812B_EffectEngine;
 
 /*WS2812B Matrix*/
 
@@ -239,15 +228,15 @@ typedef struct Effect_Struct_t
   NOS_Short step;
   uint16_t timer;
 
-  uint8_t minValue;
-  uint8_t maxValue;
+  uint16_t minValue;
+  uint16_t maxValue;
 
   bool enabled;
   uint8_t effectId;
 }Effect_Struct;
 
-#define EFFECTS_MAX_COUNT 10
-#define EFFECT_BREATHE_ID 0x20
+
+
 
 /**
   * @brief  Strip structure.
@@ -265,7 +254,7 @@ typedef struct NOS_WS2812B_STRIP_t
     int pixelCount;
     int bright;
 
-    Effect_Struct effects[EFFECTS_MAX_COUNT];
+    Effect_Struct effects[10];
     uint8_t effectsCounter;
 }WS2812B_Strip;
 

@@ -36,8 +36,6 @@ void NOS_WS2812B_Matrix_FillColor(WS2812B_Matrix* matrix,PixelColor* color);
 
 void NOS_WS2812B_EffectRainbow(WS2812B_Matrix*matrix,uint32_t counter);
 
-void NOS_WS2812B_EffectEngineHandler(WS2812B_EffectEngine* engine);
-
 uint8_t* Symvol_GetBitMap(char sym);
 
 uint16_t GetPixelPos(uint8_t x, uint8_t y);

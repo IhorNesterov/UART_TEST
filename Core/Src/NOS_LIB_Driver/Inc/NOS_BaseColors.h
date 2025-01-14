@@ -3,7 +3,7 @@
 
 #include "NOS_Includes.h"
 
-typedef enum NOS_BaseColors_e {RED,ORANGE,YELLOW,SGREEN,GREEN,TURQUOISE,CYAN,OCEAN,BLUE,VIOLET,MAGENTA,RASPBERRY} NOS_BaseColors;
+typedef enum NOS_BaseColors_e {BLUE,OCEAN,CYAN,TURQUOISE,GREEN,SGREEN,YELLOW,ORANGE,RED,RASPBERRY,MAGENTA,VIOLET} NOS_BaseColors;
 
 void NOS_PixelColor_SetColor(PixelColor* color,uint8_t R,uint8_t G,uint8_t B);
 PixelColor NOS_GetBaseColor(NOS_BaseColors color);
